@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NewScreen extends StatelessWidget {
-  var kullanici;
+  final kullanici;
 
-  NewScreen({super.key, required this.kullanici});
+  const NewScreen({super.key, required this.kullanici});
 
   @override
   Widget build(BuildContext context) {

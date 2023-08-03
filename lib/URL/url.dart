@@ -5,13 +5,18 @@ import 'package:http/http.dart' as http;
 class TokenClass {
   final String accessToken;
   final String tokenType;
+  final int expiresIn;
 
-  TokenClass({required this.accessToken, required this.tokenType});
+  TokenClass(
+      {required this.accessToken,
+      required this.tokenType,
+      required this.expiresIn});
 
   factory TokenClass.fromJson(Map<String, dynamic> json) {
     return TokenClass(
       accessToken: json['access_token'],
       tokenType: json['token_type'],
+      expiresIn: json['expires_in'],
     );
   }
 }
@@ -20,7 +25,6 @@ class TokenService {
   static const String uri = 'https://localhost:44399/';
 
   static Future<TokenClass> getToken({
-    String grant_type = 'password',
     String kullaniciAdi = '',
     String parola = '',
     bool loginMi = false,
@@ -35,9 +39,9 @@ class TokenService {
       };
 
       response = await client.post(url, headers: headers, body: {
-        grant_type: 'password',
-        kullaniciAdi: kullaniciAdi,
-        parola: parola
+        'grant_type': 'password',
+        'username': kullaniciAdi,
+        'password': parola
       });
     } finally {
       client.close();
