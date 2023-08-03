@@ -1,13 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:kutuphane_mobil_d/Controllers/Degiskenler/Kullanici.dart';
 
 class LoginController {
   static const String baseUrl = "https://localhost:44399/api";
 
-  Future<bool> loginUser(
-      BuildContext context, String kullaniciAdi, String parola) async {
+  Future<Kullanici?> loginUser(BuildContext context, String kullaniciAdi,
+      String parola, bool islogged) async {
     try {
-      // API'ye login isteği gönderiyoruz.
       final response = await http.get(
         Uri.parse(
             '$baseUrl/kullanici/kullaniciBul?kullaniciAdi=$kullaniciAdi&parola=$parola'),
@@ -17,20 +19,22 @@ class LoginController {
         },
       );
 
-      // API'den başarılı bir şekilde cevap döndü mü kontrol ediyoruz.
       if (response.statusCode == 200) {
         // API'den dönen cevabı JSON olarak çözüyoruz.
-        print('Giriş Başarılı');
+        final Map<String, dynamic> responseData = json.decode(response.body);
 
-        return true;
-        // // Cevap true ise giriş başarılı oldu, true değeri dönüyoruz.
+        // Kullanıcı bilgilerini kullanarak Kullanici nesnesini oluşturuyoruz.
+        Kullanici kullanici = Kullanici.fromJson(responseData);
+
+        // Kullanıcıyı dönüyoruz.
+        return kullanici;
       } else {
-        // Giriş başarısız oldu, false değeri dönüyoruz.
-        return false;
+        // Giriş başarısız oldu, null değeri dönüyoruz.
+        return null;
       }
     } catch (e) {
-      // Hata oluştuğunda veya API'ye ulaşılamadığında false dönüyoruz.
-      return false;
+      // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
+      return null;
     }
   }
 }

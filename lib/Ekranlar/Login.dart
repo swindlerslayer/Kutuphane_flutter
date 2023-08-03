@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kutuphane_mobil_d/Controllers/loginControls.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
+import 'package:kutuphane_mobil_d/Controllers/Degiskenler/Kullanici.dart';
+import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.title}) : super(key: key);
@@ -15,7 +17,6 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController kullaniciadicontroller = TextEditingController();
   TextEditingController sifrecontroller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,14 +93,23 @@ class _LoginState extends State<Login> {
   final String routeName = '/new_screen';
 
   void _loginUser(
-      BuildContext context, String kullaniciAdi, String parola) async {
+    BuildContext context,
+    String kullaniciAdi,
+    String parola,
+  ) async {
     LoginController loginController = LoginController();
-    bool loggedIn =
-        await loginController.loginUser(context, kullaniciAdi, parola);
-    if (loggedIn) {
-      //Giriş kontrol burada
+    TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+    Kullanici? loggedInUser =
+        await loginController.loginUser(context, kullaniciAdi, parola, false);
+    if (loggedInUser?.kullaniciAdi != null) {
+      // Giriş kontrol burada
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const NewScreen()));
+        context,
+        MaterialPageRoute(
+          builder: (context) => NewScreen(kullanici: loggedInUser),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Bilgileriniz Yanlış')),
