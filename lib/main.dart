@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         home: const Login(
-          title: 'Giriş Sayfası',
+          title: ('baba'),
+          key: null,
         ));
   }
 }

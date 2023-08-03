@@ -4,6 +4,10 @@ class ApiEndPoints {
 }
 
 class _AuthEndPoints {
+
+  
   final String registerEmail = 'api/kullanici/kullaniciKayit';
   final String loginEmail = 'api/kullanici/kullaniciKontrol';
 }
+
+

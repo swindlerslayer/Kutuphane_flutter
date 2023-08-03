@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kutuphane_mobil_d/Controllers/loginControls.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  const Login({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -34,8 +27,6 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
-            // child içerisinde birden fazlar children öğesi alabiliyor aşşağıda
-            //olduğu gibi içerisine birden fazla text veya button veya başka componentlerden birini ekleyebilirsin
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
@@ -47,7 +38,7 @@ class _LoginState extends State<Login> {
                       border: OutlineInputBorder(), labelText: "Kullanıcı Adı"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Lutfen Kullanıcı Adınızı Giriniz';
+                      return 'Lütfen Kullanıcı Adınızı Giriniz';
                     }
                     return null;
                   },
@@ -76,11 +67,14 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // Navigate the user to the Home page
+                        String kullaniciAdi = kullaniciadicontroller.text;
+                        String parola = sifrecontroller.text;
+                        _loginUser(context, kullaniciAdi, parola);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Lütfen Bilgilerinizi Giriniz')),
+                            content: Text('Lütfen Bilgilerinizi Giriniz'),
+                          ),
                         );
                       }
                     },
@@ -93,5 +87,23 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  final String routeName = '/new_screen';
+
+  void _loginUser(
+      BuildContext context, String kullaniciAdi, String parola) async {
+    LoginController loginController = LoginController();
+    bool loggedIn =
+        await loginController.loginUser(context, kullaniciAdi, parola);
+    if (loggedIn) {
+      //Giriş kontrol burada
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const NewScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Bilgileriniz Yanlış')),
+      );
+    }
   }
 }

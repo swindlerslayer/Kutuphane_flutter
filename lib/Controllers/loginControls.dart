@@ -1,36 +1,36 @@
-import 'dart:convert';
-
-import 'package:kutuphane_mobil_d/URL/url.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class RegisterationController extends GetxController {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class LoginController {
+  static const String baseUrl = "https://localhost:44399/api";
 
-  final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
-
-  Future<void> loginWithEmail() async {
+  Future<bool> loginUser(
+      BuildContext context, String kullaniciAdi, String parola) async {
     try {
-      var headers = {'Content-Type': 'application/json'};
-      var url = Uri.parse(
-          ApiEndPoints.baseUrl + ApiEndPoints.authEndPoints.registerEmail);
-      Map body = {
-        'kullaniciAdi': nameController.text,
-        'Parola': passwordController.text
-      };
+      // API'ye login isteği gönderiyoruz.
+      final response = await http.get(
+        Uri.parse(
+            '$baseUrl/kullanici/kullaniciBul?kullaniciAdi=$kullaniciAdi&parola=$parola'),
+        headers: {
+          "Authorization":
+              "Bearer 45qPUaItaP7-Xp5jypspdYUe4pGpzOoIH9RGkiffKgVKXgPq6IO3CMbZKK_vS_lrdGl3L-5d9Bwh1WAdkd_VQfyEgIaWSDyFqg0FWjUSn4Y5uydKFNxgH3JqanCHyal2kTh7zjNqDNbBBLwa7SJKG_6bUpAmlWySYSBy6JuMdCWPwkvCr9M4sFOO_QDYRk8GsG6r6Vd6G-6QW9Ln0lNvf1ya5nroxvAvcnIWYkytaY4"
+        },
+      );
 
-      http.Response response =
-          await http.post(url, body: jsonEncode(body), headers: headers);
+      // API'den başarılı bir şekilde cevap döndü mü kontrol ediyoruz.
+      if (response.statusCode == 200) {
+        // API'den dönen cevabı JSON olarak çözüyoruz.
+        print('Giriş Başarılı');
 
-      if (response == true) {
-        // final json = jsonDecode(response.body);
-        print("Kayıt Başarılı");
+        return true;
+        // // Cevap true ise giriş başarılı oldu, true değeri dönüyoruz.
       } else {
-        print("Kayit Başarısız");
+        // Giriş başarısız oldu, false değeri dönüyoruz.
+        return false;
       }
-    } catch (e) {}
+    } catch (e) {
+      // Hata oluştuğunda veya API'ye ulaşılamadığında false dönüyoruz.
+      return false;
+    }
   }
 }
