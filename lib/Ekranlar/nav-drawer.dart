@@ -10,11 +10,9 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const DrawerHeader(
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 62, 62, 62),
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/cover.jpg'))),
+            decoration: BoxDecoration(color: Color.fromARGB(255, 62, 62, 62)
+                //Resim eklenecekse decoration'un içerisine eklenecek
+                ),
             child: Text(
               'Menü',
               style: TextStyle(color: Colors.white, fontSize: 25),

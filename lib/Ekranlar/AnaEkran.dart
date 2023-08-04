@@ -9,12 +9,12 @@ class NewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(kullanici);
+    print(kullanici.kullaniciAdi);
     return MaterialApp(
       title: 'Ana Ekran',
       theme: ThemeData.dark(),
       home: Scaffold(
-        drawer: NavDrawer(),
+        drawer: const NavDrawer(),
         appBar: AppBar(
           title: const Text('Ana Ekran'),
         ),
