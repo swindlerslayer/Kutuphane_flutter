@@ -67,6 +67,9 @@ class _LoginState extends State<Login> {
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
+                      TokenService.getToken(
+                          kullaniciAdi: kullaniciadicontroller.text,
+                          parola: sifrecontroller.text);
                       if (_formKey.currentState!.validate()) {
                         String kullaniciAdi = kullaniciadicontroller.text;
                         String parola = sifrecontroller.text;
@@ -98,10 +101,9 @@ class _LoginState extends State<Login> {
     String parola,
   ) async {
     LoginController loginController = LoginController();
-    TokenService.getToken(
-        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+  
     Kullanici? loggedInUser =
-        await loginController.loginUser(context, kullaniciAdi, parola, false);
+        await loginController.loginUser(context, kullaniciAdi, parola);
     if (loggedInUser?.kullaniciAdi != null) {
       // Giriş kontrol burada
       Navigator.push(
