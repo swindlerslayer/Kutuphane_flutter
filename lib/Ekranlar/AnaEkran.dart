@@ -16,7 +16,7 @@ class NewScreen extends StatelessWidget {
           title: const Text('Ana Ekran'),
         ),
         body: const Center(
-          child: Text('n'),
+          child: Text('Giriş Başarılı'),
         ),
       ),
     );

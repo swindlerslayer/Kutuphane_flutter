@@ -18,8 +18,6 @@ class LoginController {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer $token"
-          //"Bearer  ${TokenClass.fromJson(json.decode("access_token"))} "
-          //"Bearer  45qPUaItaP7-Xp5jypspdYUe4pGpzOoIH9RGkiffKgVKXgPq6IO3CMbZKK_vS_lrdGl3L-5d9Bwh1WAdkd_VQfyEgIaWSDyFqg0FWjUSn4Y5uydKFNxgH3JqanCHyal2kTh7zjNqDNbBBLwa7SJKG_6bUpAmlWySYSBy6JuMdCWPwkvCr9M4sFOO_QDYRk8GsG6r6Vd6G-6QW9Ln0lNvf1ya5nroxvAvcnIWYkytaY4"
         },
       );
 
