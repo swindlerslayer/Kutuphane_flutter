@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+//
 
 class NewScreen extends StatelessWidget {
   final kullanici;
@@ -12,6 +14,7 @@ class NewScreen extends StatelessWidget {
       title: 'Ana Ekran',
       theme: ThemeData.dark(),
       home: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           title: const Text('Ana Ekran'),
         ),

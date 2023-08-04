@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kutuphane_mobil_d/Controllers/loginControls.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/Kullanici.dart';
-import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.title}) : super(key: key);
@@ -67,9 +66,6 @@ class _LoginState extends State<Login> {
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      TokenService.getToken(
-                          kullaniciAdi: kullaniciadicontroller.text,
-                          parola: sifrecontroller.text);
                       if (_formKey.currentState!.validate()) {
                         String kullaniciAdi = kullaniciadicontroller.text;
                         String parola = sifrecontroller.text;
@@ -101,7 +97,7 @@ class _LoginState extends State<Login> {
     String parola,
   ) async {
     LoginController loginController = LoginController();
-  
+
     Kullanici? loggedInUser =
         await loginController.loginUser(context, kullaniciAdi, parola);
     if (loggedInUser?.kullaniciAdi != null) {
