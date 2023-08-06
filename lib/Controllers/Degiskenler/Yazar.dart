@@ -3,7 +3,7 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */
-class Root {
+class Yazar {
   int? iD;
   String? adiSoyadi;
   String? kayitYapan;
@@ -11,7 +11,7 @@ class Root {
   String? degisiklikYapan;
   String? degisiklikTarihi;
 
-  Root(
+  Yazar(
       {this.iD,
       this.adiSoyadi,
       this.kayitYapan,
@@ -19,7 +19,7 @@ class Root {
       this.degisiklikYapan,
       this.degisiklikTarihi});
 
-  Root.fromJson(Map<String, dynamic> json) {
+  Yazar.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     adiSoyadi = json['AdiSoyadi'];
     kayitYapan = json['KayitYapan'];

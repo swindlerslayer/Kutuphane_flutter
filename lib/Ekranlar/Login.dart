@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kutuphane_mobil_d/Controllers/loginControls.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
-import 'package:kutuphane_mobil_d/Controllers/Degiskenler/Kullanici.dart';
+import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/anaekran.dart';
+import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kullanici.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.title}) : super(key: key);

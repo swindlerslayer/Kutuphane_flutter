@@ -1,5 +1,4 @@
-
-class Root {
+class Kitap {
   int? iD;
   String? adi;
   int? sayfaSayisi;
@@ -12,7 +11,7 @@ class Root {
   String? degisiklikYapan;
   String? degisiklikTarihi;
 
-  Root(
+  Kitap(
       {this.iD,
       this.adi,
       this.sayfaSayisi,
@@ -25,7 +24,7 @@ class Root {
       this.degisiklikYapan,
       this.degisiklikTarihi});
 
-  Root.fromJson(Map<String, dynamic> json) {
+  Kitap.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     adi = json['adi'];
     sayfaSayisi = json['SayfaSayisi'];

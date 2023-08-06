@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Controllers/Degiskenler/Kullanici.dart';
+import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kullanici.dart';
 
 class LoginController {
   static const String baseUrl = "https://localhost:44399/api";
