@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/login.dart';
 
 void main() {
@@ -13,12 +14,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         title: 'Login Dars',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
         home: const Login(
-          title: ('baba'),
+          title: ('Giriş'),
           key: null,
         ));
   }

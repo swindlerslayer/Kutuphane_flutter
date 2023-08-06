@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/ogrenciekran.dart';
 
 class NavDrawer extends StatelessWidget {
-  const NavDrawer({super.key});
+  final kullanici; // User information variable
+
+  const NavDrawer({Key? key, required this.kullanici}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +28,22 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Anasayfa'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(NewScreen(kullanici: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.book),
             title: const Text('Kitap Teslim'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(KitapTeslimSayfasi(loggedInUser: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Öğrenci'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(OgrenciSayfasi(kullanici: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(KitapSayfasi(kullanici: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),
