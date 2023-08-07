@@ -7,7 +7,6 @@ TokenClass tokenFromJson(String str) => TokenClass.fromJson(json.decode(str));
 String tokenToJson(TokenClass data) => json.encode(data.toJson());
 
 class TokenClass {
-  
   String? accessToken;
   String? tokenType;
   int? expiresIn;
@@ -32,7 +31,7 @@ class TokenClass {
 }
 
 class TokenService {
-  static const String uri = 'https://localhost:44399/';
+  //static const String uri = 'https://localhost:44399/';
 
   static Future<TokenClass> getToken({
     String kullaniciAdi = '',
@@ -42,7 +41,7 @@ class TokenService {
     var client = http.Client();
     http.Response response;
     try {
-      var url = Uri.parse('${uri}token');
+      var url = Uri.parse('${ApiEndPoints.baseUrl}token');
       var headers = <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded'
