@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 Kitap KitapFromJson(String str) => Kitap.fromJson(json.decode(str));
@@ -16,13 +14,9 @@ class Kitap {
   int? barkod;
   String? kayitYapan;
   String? kayitTarihi;
-  dynamic degisiklikYapan;
+  String? degisiklikYapan;
   String? degisiklikTarihi;
   String? resim;
-  dynamic kitapTuru;
-  dynamic yayinEvi;
-  dynamic yazar;
-  List<dynamic>? kitapOgrenci;
 
   Kitap({
     this.id,
@@ -37,10 +31,6 @@ class Kitap {
     this.degisiklikYapan,
     this.degisiklikTarihi,
     this.resim,
-    this.kitapTuru,
-    this.yayinEvi,
-    this.yazar,
-    this.kitapOgrenci,
   });
 
   factory Kitap.fromJson(Map<String, dynamic> json) => Kitap(
@@ -56,10 +46,6 @@ class Kitap {
         degisiklikYapan: json["DegisiklikYapan"],
         degisiklikTarihi: json["DegisiklikTarihi"],
         resim: json["Resim"],
-        kitapTuru: json["KitapTuru"],
-        yayinEvi: json["YayinEvi"],
-        yazar: json["Yazar"],
-        kitapOgrenci: List<dynamic>.from(json["KitapOgrenci"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,9 +61,47 @@ class Kitap {
         "DegisiklikYapan": degisiklikYapan,
         "DegisiklikTarihi": degisiklikTarihi,
         "Resim": resim,
-        "KitapTuru": kitapTuru,
-        "YayinEvi": yayinEvi,
-        "Yazar": yazar,
-        "KitapOgrenci": List<dynamic>.from(kitapOgrenci!.map((x) => x)),
+      };
+}
+
+// To parse this JSON data, do
+//
+//     final listeKitap = listeKitapFromJson(jsonString);
+
+List<ListeKitap> listeKitapFromJson(String str) =>
+    List<ListeKitap>.from(json.decode(str).map((x) => ListeKitap.fromJson(x)));
+
+String listeKitapToJson(List<ListeKitap> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class ListeKitap {
+  int? id;
+  String? adi;
+  String? yazarAdi;
+  int? yazarId;
+  String? resim;
+
+  ListeKitap({
+    this.id,
+    this.adi,
+    this.yazarAdi,
+    this.yazarId,
+    this.resim,
+  });
+
+  factory ListeKitap.fromJson(Map<String, dynamic> json) => ListeKitap(
+        id: json["ID"],
+        adi: json["Adi"],
+        yazarAdi: json["YazarAdi"],
+        yazarId: json["YazarID"],
+        resim: json["Resim"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "Adi": adi,
+        "YazarAdi": yazarAdi,
+        "YazarID": yazarId,
+        "Resim": resim,
       };
 }
