@@ -16,15 +16,16 @@ class LoginController {
 
   Future<Kullanici?> loginUser(
       BuildContext context, String kullaniciAdi, String parola) async {
-    var token = TokenService.getToken(
+    var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+
     try {
       final response = await http.get(
         Uri.parse(
             '$baseUrl/kullanici/kullaniciBul?kullaniciAdi=$kullaniciAdi&parola=$parola'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer $token"
+          "Authorization": "Bearer ${token.accessToken}"
         },
       );
 
