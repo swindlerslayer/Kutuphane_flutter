@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/ogrenciekran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/yayineviekran.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
 
 class NavDrawer extends StatelessWidget {
   final kullanici; // User information variable
@@ -48,17 +51,17 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),
             title: const Text('Yazar'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(YazarSayfasi(loggedInUser: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.type_specimen),
             title: const Text('Kitap Türü'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(KitapTurSayfasi(loggedInUser: kullanici))},
           ),
           ListTile(
             leading: const Icon(Icons.home_work),
             title: const Text('Yayınevi'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {Get.to(YayineviSayfasi(loggedInUser: kullanici))},
           ),
         ],
       ),
