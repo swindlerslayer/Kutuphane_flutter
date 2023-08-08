@@ -5,11 +5,10 @@ import 'package:kutuphane_mobil_d/URL/url.dart';
 
 Future<Kitap?> GetKitap(String KullaniciAdi, String Parola) async {
   var apilink = ApiEndPoints.baseUrl;
-
+  var token = await TokenService.getToken(
+      kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
   try {
     // Get the token using await to wait for the response
-    var token = await TokenService.getToken(
-        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
 
     final response = await http.get(
       Uri.parse('$apilink/api/kitaplisteyeekle'),
