@@ -40,6 +40,8 @@ class NewScreen extends StatelessWidget {
                 Text('A sufficiently long subtitle warrants three lines.'),
             //trailing liste öğesinin sağına yerleştireceğimiz öğeler için...
             trailing: Icon(Icons.more_vert),
+            //trailing: IconButton(icon: Icon(Icons.more_vert), onPressed:(){}),
+
             isThreeLine: true,
 
             // leading: const Icon(Icons.person),
