@@ -35,9 +35,8 @@ class LoginController {
         //final kullanici = KullaniciGiris.fromJson(responseData);
         KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
 
-        // Oluşturulan kullanici nesnesini KullaniciController içindeki değişkene atayın
+        // Oluşturulan kullanici nesnesini KullaniciController içindeki değişkene atıyoruz
         KullaniciController controller = KullaniciController();
-        //KullaniciGiris kullanicii = KullaniciGiris.fromJson(responseData);
 
         controller.value = kullanici.toString();
         // Kullanıcıyı dönüyoruz.
