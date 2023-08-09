@@ -20,14 +20,16 @@ Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
       // final Map<String, dynamic> responseData = json.decode(response.body);
       // Kitap bilgilerini kullanarak Kitap nesnesini oluşturuyoruz.
 
-      // Kitap dönüyoruz.,
-      print('Giriş başarılı ${response.statusCode}');
+      //İşlemin Başarı durumunu yazdırıyoruz
+      print('Kitap Getirme Başarılı ${response.statusCode}');
 
+      // Kitap dönüyoruz.,
       return listeKitapFromJson(response.body);
     } else {
-      // Giriş başarısız oldu, null değeri dönüyoruz.
-      print('Giriş başarısız ${response.statusCode}   ');
+      //İşlemin Başarı durumunu yazdırıyoruz
+      print('Kitap Getirme Başarısız ${response.statusCode}');
 
+      // Giriş başarısız oldu, null değeri dönüyoruz.
       return null;
     }
   } catch (e) {

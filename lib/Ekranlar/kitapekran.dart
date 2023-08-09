@@ -4,7 +4,7 @@ import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
 
 class KitapSayfasi extends StatelessWidget {
   final kullanici;
-  const KitapSayfasi({Key? key, required this.kullanici}) : super(key: key);
+  const KitapSayfasi({Key? key, this.kullanici}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,8 @@ class KitapSayfasi extends StatelessWidget {
                   const SizedBox(width: 16),
                   FloatingActionButton.small(
                     onPressed: () {
-                      GetKitap(kullanici.kullaniciAdi, kullanici.parola);
+                      GetKitap(kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString());
                     },
                     child: const Icon(Icons.book_online),
                   ),

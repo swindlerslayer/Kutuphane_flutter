@@ -32,13 +32,17 @@ class LoginController {
       if (response.statusCode == 200) {
         // API'den dönen cevabı JSON olarak çözüyoruz.
         final Map<String, dynamic> responseData = json.decode(response.body);
+
+        RxString rxpass = parola.obs;
+
         //final kullanici = KullaniciGiris.fromJson(responseData);
         KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
-
+        kullanici.parola = rxpass;
         // Oluşturulan kullanici nesnesini KullaniciController içindeki değişkene atıyoruz
         KullaniciController controller = KullaniciController();
 
         controller.value = kullanici.toString();
+
         // Kullanıcıyı dönüyoruz.
         return kullanici;
       } else {

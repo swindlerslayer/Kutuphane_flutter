@@ -13,7 +13,7 @@ class KullaniciController {
   set value(String value) => _value.value = value;
 }
 
- class KullaniciGiris {
+class KullaniciGiris {
   int iD = 0;
   var kullaniciAdi = ''.obs;
   var parola = ''.obs;
