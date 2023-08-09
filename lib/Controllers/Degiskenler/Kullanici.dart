@@ -3,43 +3,76 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */
-class Kullanici {
-  int? iD;
-  String? kullaniciAdi;
-  String? parola;
-  String? kayitYapan;
-  String? kayitTarihi;
-  String? degisiklikYapan;
-  String? degisiklikTarihi;
+// ignore: camel_case_types
+import 'package:get/get.dart';
 
-  Kullanici(
-      {this.iD,
-      this.kullaniciAdi,
-      this.parola,
-      this.kayitYapan,
-      this.kayitTarihi,
-      this.degisiklikYapan,
-      this.degisiklikTarihi});
+class KullaniciController {
+  // Burada kullanici, KullaniciGiris türünde olmalıdır.
+  final _value = ''.obs;
+  String get value => _value.value;
+  set value(String value) => _value.value = value;
+}
 
-  Kullanici.fromJson(Map<String, dynamic> json) {
+ class KullaniciGiris {
+  int iD = 0;
+  var kullaniciAdi = ''.obs;
+  var parola = ''.obs;
+  var kayitYapan = ''.obs;
+  var kayitTarihi = ''.obs;
+  var degisiklikYapan = ''.obs;
+  var degisiklikTarihi = ''.obs;
+
+  KullaniciGiris.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
-    kullaniciAdi = json['KullaniciAdi'];
-    parola = json['Parola'];
-    kayitYapan = json['KayitYapan'];
-    kayitTarihi = json['KayitTarihi'];
-    degisiklikYapan = json['DegisiklikYapan'];
-    degisiklikTarihi = json['DegisiklikTarihi'];
+    kullaniciAdi.value = json['KullaniciAdi'];
+    parola.value = json['Parola'];
+    kayitYapan.value = json['KayitYapan'];
+    kayitTarihi.value = json['KayitTarihi'];
+    degisiklikYapan.value = json['DegisiklikYapan'];
+    degisiklikTarihi.value = json['DegisiklikTarihi'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['ID'] = iD;
-    data['KullaniciAdi'] = kullaniciAdi;
-    data['Parola'] = parola;
-    data['KayitYapan'] = kayitYapan;
-    data['KayitTarihi'] = kayitTarihi;
-    data['DegisiklikYapan'] = degisiklikYapan;
-    data['DegisiklikTarihi'] = degisiklikTarihi;
+    data['KullaniciAdi'] = kullaniciAdi.value;
+    data['Parola'] = parola.value;
+    data['KayitYapan'] = kayitYapan.value;
+    data['KayitTarihi'] = kayitTarihi.value;
+    data['DegisiklikYapan'] = degisiklikYapan.value;
+    data['DegisiklikTarihi'] = degisiklikTarihi.value;
     return data;
   }
 }
+
+// class Degiskenler {
+//   class EntityFullKitap {
+//     int? id;
+//     String? adi;
+//     int? sayfaSayisi;
+//     int? kitapTurID;
+//     int? yayinEviID;
+//     int? yazarID;
+//     int? barkod;
+//     String? kayitYapan;
+//     DateTime? kayitTarihi;
+//     String? degisiklikYapan;
+//     DateTime? degisiklikTarihi;
+//     List<int>? resim; // Byte dizisi yerine bir tür liste kullanıldı
+
+//     EntityFullKitap({
+//       this.id,
+//       this.adi,
+//       this.sayfaSayisi,
+//       this.kitapTurID,
+//       this.yayinEviID,
+//       this.yazarID,
+//       this.barkod,
+//       this.kayitYapan,
+//       this.kayitTarihi,
+//       this.degisiklikYapan,
+//       this.degisiklikTarihi,
+//       this.resim,
+//     });
+//   }
+// }

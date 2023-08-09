@@ -14,7 +14,7 @@ class LoginController {
   get id => _id.value;
   set id(value) => _id.value = value;
 
-  Future<Kullanici?> loginUser(
+  Future<KullaniciGiris?> loginUser(
       BuildContext context, String kullaniciAdi, String parola) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
@@ -32,10 +32,14 @@ class LoginController {
       if (response.statusCode == 200) {
         // API'den dönen cevabı JSON olarak çözüyoruz.
         final Map<String, dynamic> responseData = json.decode(response.body);
+        //final kullanici = KullaniciGiris.fromJson(responseData);
+        KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
 
-        // Kullanıcı bilgilerini kullanarak Kullanici nesnesini oluşturuyoruz.
-        Kullanici kullanici = Kullanici.fromJson(responseData);
+        // Oluşturulan kullanici nesnesini KullaniciController içindeki değişkene atayın
+        KullaniciController controller = KullaniciController();
+        //KullaniciGiris kullanicii = KullaniciGiris.fromJson(responseData);
 
+        controller.value = kullanici.toString();
         // Kullanıcıyı dönüyoruz.
         return kullanici;
       } else {
@@ -43,6 +47,7 @@ class LoginController {
         return null;
       }
     } catch (e) {
+      print('Olmadı $e');
       // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
       return null;
     }

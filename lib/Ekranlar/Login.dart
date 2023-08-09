@@ -98,8 +98,9 @@ class _LoginState extends State<Login> {
   ) async {
     LoginController loginController = LoginController();
 
-    Kullanici? loggedInUser =
+    KullaniciGiris? loggedInUser =
         await loginController.loginUser(context, kullaniciAdi, parola);
+
     if (loggedInUser?.kullaniciAdi != null) {
       // Giriş kontrol burada
       Navigator.push(
