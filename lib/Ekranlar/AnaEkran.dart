@@ -1,3 +1,5 @@
+// ignore: file_names
+
 import 'package:flutter/material.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
 
@@ -34,26 +36,33 @@ class NewScreen extends StatelessWidget {
           title: Text(kullanici.toString()),
         ),
         itemBuilder: (context, index) {
-          return const ListTile(
-            title: Text('Three-line ListTile'),
-            subtitle:
-                Text('A sufficiently long subtitle warrants three lines.'),
+          return ListTile(
+            //  title: Text('Three-line ListTile'),
+            subtitle: Text(
+                'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),
             //trailing liste öğesinin sağına yerleştireceğimiz öğeler için...
-            trailing: Icon(Icons.more_vert),
+            // trailing: Icon(Icons.more_vert),
             //trailing: IconButton(icon: Icon(Icons.more_vert), onPressed:(){}),
-
+            trailing: GestureDetector(
+              child: const Icon(
+                Icons.more_vert,
+                color: Color.fromARGB(255, 231, 128, 37),
+              ),
+              onTap: () {
+                //logic to open POPUP window
+                print('Düğmeye basildi');
+              },
+            ),
             isThreeLine: true,
 
             // leading: const Icon(Icons.person),
-            leading: Column(
+            leading: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('leading Line 1'),
-                Text('leading Line 2'),
+                Text('Üst Yazi'),
+                Text('Alt Yazi'),
               ],
             ),
-            // title: Text(kullanici.kullaniciAdi.toString()),
-            // textColor: const Color.fromARGB(255, 94, 94, 94)
           );
         },
       ),

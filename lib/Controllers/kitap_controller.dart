@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
+// ignore: non_constant_identifier_names
 Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
   var apilink = ApiEndPoints.baseUrl;
   var token = await TokenService.getToken(

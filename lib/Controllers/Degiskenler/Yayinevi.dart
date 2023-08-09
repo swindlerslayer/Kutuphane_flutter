@@ -3,6 +3,7 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */
+// ignore: camel_case_types
 class yayinevi {
   int? iD;
   String? adi;

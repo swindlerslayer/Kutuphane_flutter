@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+// ignore: non_constant_identifier_names
 Kitap KitapFromJson(String str) => Kitap.fromJson(json.decode(str));
 
+// ignore: non_constant_identifier_names
 String KitapToJson(Kitap data) => json.encode(data.toJson());
 
 class Kitap {
