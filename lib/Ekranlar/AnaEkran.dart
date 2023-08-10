@@ -48,6 +48,7 @@ class NewScreen extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return ListTile(
+                
                 //  title: Text('Three-line ListTile'),
                 subtitle: Text(
                     'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),

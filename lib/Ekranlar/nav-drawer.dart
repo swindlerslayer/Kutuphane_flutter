@@ -48,10 +48,10 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
-              var dd = await Get.put(kitapcontroller()).GetKitap(
+              var dd = await Get.put(KitapController()).GetKitap(
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString());
-              Get.put(kitapcontroller()).kitapList = dd ?? [];
+              Get.put(KitapController()).kitapList = dd ?? [];
               Get.back();
 
               Get.to(KitapSayfasi(kullanici: kullanici));

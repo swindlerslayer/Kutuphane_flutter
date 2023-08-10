@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
-class kitapcontroller extends GetxController {
+class KitapController extends GetxController {
   final _kitapList = <ListeKitap>[].obs;
   List<ListeKitap> get kitapList => _kitapList;
   set kitapList(List<ListeKitap> value) => _kitapList.value = value;
