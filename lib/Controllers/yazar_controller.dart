@@ -1,22 +1,22 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
-class KitapController extends GetxController {
-  final _kitapList = <ListeKitap>[].obs;
-  List<ListeKitap> get kitapList => _kitapList;
-  set kitapList(List<ListeKitap> value) => _kitapList.value = value;
+class YazarController extends GetxController {
+  final _yazarliste = <ListeYazar>[].obs;
+  List<ListeYazar> get yazarliste => _yazarliste;
+  set yazarliste(List<ListeYazar> value) => _yazarliste.value = value;
 
   // ignore: non_constant_identifier_names
-  Future<List<ListeKitap>?> getKitap(String KullaniciAdi, String Parola) async {
+  Future<List<ListeYazar>?> getYazar(String KullaniciAdi, String Parola) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
 
     try {
       final response = await http.get(
-        Uri.parse('$apilink/api/kitaplisteyeekle'),
+        Uri.parse('$apilink/api/yazarlisteyeekle'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer ${token.accessToken}"
@@ -24,10 +24,10 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Kitap Getirme Başarılı ${response.statusCode}');
+        print('yazar Getirme Başarılı ${response.statusCode}');
 
-        List<ListeKitap> kitap = listeKitapFromJson(response.body);
-        return kitap;
+        List<ListeYazar> yazar = listeYazarFromJson(response.body);
+        return yazar;
       } else {
         print('Kitap Getirme Başarısız ${response.statusCode}');
 

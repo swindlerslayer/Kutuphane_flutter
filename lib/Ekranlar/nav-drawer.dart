@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
@@ -48,7 +50,7 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
-              var dd = await Get.put(KitapController()).GetKitap(
+              var dd = await Get.put(KitapController()).getKitap(
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString());
               Get.put(KitapController()).kitapList = dd ?? [];
@@ -60,7 +62,15 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),
             title: const Text('Yazar'),
-            onTap: () => {Get.to(YazarSayfasi(loggedInUser: kullanici))},
+            onTap: ()async {
+              var dd = await Get.put(YazarController()).getYazar(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(YazarController()).yazarliste = dd ?? [];
+              Get.back();
+
+              Get.to(YazarSayfasi(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.type_specimen),
