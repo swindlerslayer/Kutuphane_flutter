@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kullanici.dart';
 
-class LoginController {
+class LoginController extends GetxController {
   static const String baseUrl = "https://localhost:44399/api";
 
 // getfinal_   aşşağıdaki 3 satırlık get-set propertie'yi oluşturur.

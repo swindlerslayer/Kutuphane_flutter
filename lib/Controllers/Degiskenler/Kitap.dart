@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
-
 // ignore: non_constant_identifier_names
 Kitap KitapFromJson(String str) => Kitap.fromJson(json.decode(str));
 
@@ -78,12 +76,12 @@ List<ListeKitap> listeKitapFromJson(String str) =>
 String listeKitapToJson(List<ListeKitap> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class KitapController {
-  // Burada Kitap, ListeKitap türünde olmalıdır.
-  final _value = ''.obs;
-  String get value => _value.value;
-  set value(String value) => _value.value = value;
-}
+// class KitapController {
+//   // Burada Kitap, ListeKitap türünde olmalıdır.
+//   final _value = ''.obs;
+//   String get value => _value.value;
+//   set value(String value) => _value.value = value;
+// }
 
 class ListeKitap {
   int? id;

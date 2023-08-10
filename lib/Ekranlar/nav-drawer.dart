@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
@@ -46,7 +47,15 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
-            onTap: () => {Get.to(KitapSayfasi(kullanici: kullanici))},
+            onTap: () async {
+              var dd = await Get.put(kitapcontroller()).GetKitap(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(kitapcontroller()).kitapList = dd ?? [];
+              Get.back();
+
+              Get.to(KitapSayfasi(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),

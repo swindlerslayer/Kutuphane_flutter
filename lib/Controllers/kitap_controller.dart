@@ -1,43 +1,40 @@
-import 'dart:convert';
-
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
-Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
-  var apilink = ApiEndPoints.baseUrl;
-  var token = await TokenService.getToken(
-      kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
-  try {
-    final response = await http.get(
-      Uri.parse('$apilink/api/kitaplisteyeekle'),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization":
-            "Bearer ${token.accessToken}" // Use the actual token value
-      },
-    );
+class kitapcontroller extends GetxController {
+  final _kitapList = <ListeKitap>[].obs;
+  List<ListeKitap> get kitapList => _kitapList;
+  set kitapList(List<ListeKitap> value) => _kitapList.value = value;
 
-    if (response.statusCode == 200) {
-      print('Kitap Getirme Başarılı ${response.statusCode}');
+  Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
+    var apilink = ApiEndPoints.baseUrl;
+    var token = await TokenService.getToken(
+        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
 
-      final Map<String, dynamic> responseData = json.decode(response.body);
+    try {
+      final response = await http.get(
+        Uri.parse('$apilink/api/kitaplisteyeekle'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer ${token.accessToken}"
+        },
+      );
 
-      List<ListeKitap> kitap = listeKitapFromJson(responseData.toString());
+      if (response.statusCode == 200) {
+        print('Kitap Getirme Başarılı ${response.statusCode}');
 
-      return kitap;
-     
-     
-    } else {
-      //İşlemin Başarı durumunu yazdırıyoruz
-      print('Kitap Getirme Başarısız ${response.statusCode}');
+        List<ListeKitap> kitap = listeKitapFromJson(response.body);
+        return kitap;
+      } else {
+        print('Kitap Getirme Başarısız ${response.statusCode}');
 
-      // Giriş başarısız oldu, null değeri dönüyoruz.
+        return null;
+      }
+    } catch (e) {
+      print('??? ?? $e  ');
       return null;
     }
-  } catch (e) {
-    // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
-    print('??? ?? $e  ');
-    return null;
   }
 }

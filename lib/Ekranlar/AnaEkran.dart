@@ -25,47 +25,58 @@ class NewScreen extends StatelessWidget {
       ],
     );
     return Scaffold(
-      drawer: NavDrawer(kullanici: kullanici),
-      appBar: AppBar(
-        title: const Text('Ana Ekran'),
-      ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        itemCount: 10,
-        prototypeItem: ListTile(
-          title: Text(kullanici.toString()),
+        drawer: NavDrawer(kullanici: kullanici),
+        appBar: AppBar(
+          title: const Text('Ana Ekran'),
         ),
-        itemBuilder: (context, index) {
-          return ListTile(
-            //  title: Text('Three-line ListTile'),
-            subtitle: Text(
-                'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),
-            //trailing liste öğesinin sağına yerleştireceğimiz öğeler için...
-            // trailing: Icon(Icons.more_vert),
-            //trailing: IconButton(icon: Icon(Icons.more_vert), onPressed:(){}),
-            trailing: GestureDetector(
-              child: const Icon(
-                Icons.more_vert,
-                color: Color.fromARGB(255, 231, 128, 37),
-              ),
-              onTap: () {
-                //logic to open POPUP window
-                print('Düğmeye basildi');
-              },
+        body: Container(
+          // SAYFA İÇERİSİNDE RENK GEÇİŞLİ ARKAPLAN
+          // decoration: const BoxDecoration(
+          //     gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [
+          //     Color.fromARGB(255, 131, 44, 208),
+          //     Color.fromARGB(255, 71, 32, 88),
+          //   ],
+          // )),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: 10,
+            prototypeItem: ListTile(
+              title: Text(kullanici.toString()),
             ),
-            isThreeLine: true,
+            itemBuilder: (context, index) {
+              return ListTile(
+                //  title: Text('Three-line ListTile'),
+                subtitle: Text(
+                    'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),
+                //trailing liste öğesinin sağına yerleştireceğimiz öğeler için...
+                // trailing: Icon(Icons.more_vert),
+                //trailing: IconButton(icon: Icon(Icons.more_vert), onPressed:(){}),
+                trailing: GestureDetector(
+                  child: const Icon(
+                    Icons.more_vert,
+                    color: Color.fromARGB(255, 231, 128, 37),
+                  ),
+                  onTap: () {
+                    //logic to open POPUP window
+                    print('Düğmeye basildi');
+                  },
+                ),
+                isThreeLine: true,
 
-            // leading: const Icon(Icons.person),
-            leading: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Üst Yazi'),
-                Text('Alt Yazi'),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+                // leading: const Icon(Icons.person),
+                leading: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Üst Yazi'),
+                    Text('Alt Yazi'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ));
   }
 }
