@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
-// ignore: non_constant_identifier_names
 Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
   var apilink = ApiEndPoints.baseUrl;
   var token = await TokenService.getToken(
@@ -18,14 +19,15 @@ Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
     );
 
     if (response.statusCode == 200) {
-      // final Map<String, dynamic> responseData = json.decode(response.body);
-      // Kitap bilgilerini kullanarak Kitap nesnesini oluşturuyoruz.
-
-      //İşlemin Başarı durumunu yazdırıyoruz
       print('Kitap Getirme Başarılı ${response.statusCode}');
 
-      // Kitap dönüyoruz.,
-      return listeKitapFromJson(response.body);
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      List<ListeKitap> kitap = listeKitapFromJson(responseData.toString());
+
+      return kitap;
+     
+     
     } else {
       //İşlemin Başarı durumunu yazdırıyoruz
       print('Kitap Getirme Başarısız ${response.statusCode}');
@@ -36,7 +38,6 @@ Future<List<ListeKitap>?> GetKitap(String KullaniciAdi, String Parola) async {
   } catch (e) {
     // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
     print('??? ?? $e  ');
-
     return null;
   }
 }
