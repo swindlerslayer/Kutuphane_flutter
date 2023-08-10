@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
+
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
@@ -44,7 +46,15 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Öğrenci'),
-            onTap: () => {Get.to(OgrenciSayfasi(kullanici: kullanici))},
+            onTap: () async {
+              var dd = await Get.put(OgrenciController()).getOgrenci(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(OgrenciController()).ogrenciliste = dd ?? [];
+              Get.back();
+
+              Get.to(OgrenciSayfasi(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.library_books),
@@ -62,7 +72,7 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),
             title: const Text('Yazar'),
-            onTap: ()async {
+            onTap: () async {
               var dd = await Get.put(YazarController()).getYazar(
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString());
@@ -75,7 +85,15 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.type_specimen),
             title: const Text('Kitap Türü'),
-            onTap: () => {Get.to(KitapTurSayfasi(loggedInUser: kullanici))},
+            onTap: () async {
+              var dd = await Get.put(KitapTurController()).getKitapTur(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(KitapTurController()).kitapturList = dd ?? [];
+              Get.back();
+
+              Get.to(KitapTurSayfasi(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.home_work),

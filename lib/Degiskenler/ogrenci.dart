@@ -1,53 +1,82 @@
-/* 
-// Example Usage
-Map<String, dynamic> map = jsonDecode(<myJSONString>);
-var myRootNode = Root.fromJson(map);
-*/
+// To parse this JSON data, do
+//
+//     final ogrenci = ogrenciFromJson(jsonString);
+
+import 'dart:convert';
+
+Ogrenci ogrenciFromJson(String str) => Ogrenci.fromJson(json.decode(str));
+
+String ogrenciToJson(Ogrenci data) => json.encode(data.toJson());
+
 class Ogrenci {
-  int? iD;
+  int? id;
   String? adiSoyadi;
-  String? snf;
-  String? bolum;
   int? okulNo;
-  String? kayitYapan;
   String? kayitTarihi;
-  String? degisiklikYapan;
+  String? kayitYapan;
   String? degisiklikTarihi;
+  String? degisiklikYapan;
 
-  Ogrenci(
-      {this.iD,
-      this.adiSoyadi,
-      this.snf,
-      this.bolum,
-      this.okulNo,
-      this.kayitYapan,
-      this.kayitTarihi,
-      this.degisiklikYapan,
-      this.degisiklikTarihi});
+  Ogrenci({
+    this.id,
+    this.adiSoyadi,
+    this.okulNo,
+    this.kayitTarihi,
+    this.kayitYapan,
+    this.degisiklikTarihi,
+    this.degisiklikYapan,
+  });
 
-  Ogrenci.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    adiSoyadi = json['AdiSoyadi'];
-    snf = json['Sınıf'];
-    bolum = json['Bolum'];
-    okulNo = json['OkulNo'];
-    kayitYapan = json['KayitYapan'];
-    kayitTarihi = json['KayitTarihi'];
-    degisiklikYapan = json['DegisiklikYapan'];
-    degisiklikTarihi = json['DegisiklikTarihi'];
-  }
+  factory Ogrenci.fromJson(Map<String, dynamic> json) => Ogrenci(
+        id: json["ID"],
+        adiSoyadi: json["AdiSoyadi"],
+        okulNo: json["OkulNo"],
+        kayitTarihi: json["KayitTarihi"],
+        kayitYapan: json["KayitYapan"],
+        degisiklikTarihi: json["DegisiklikTarihi"],
+        degisiklikYapan: json["DegisiklikYapan"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['ID'] = iD;
-    data['AdiSoyadi'] = adiSoyadi;
-    data['Sınıf'] = snf;
-    data['Bolum'] = bolum;
-    data['OkulNo'] = okulNo;
-    data['KayitYapan'] = kayitYapan;
-    data['KayitTarihi'] = kayitTarihi;
-    data['DegisiklikYapan'] = degisiklikYapan;
-    data['DegisiklikTarihi'] = degisiklikTarihi;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "AdiSoyadi": adiSoyadi,
+        "OkulNo": okulNo,
+        "KayitTarihi": kayitTarihi,
+        "KayitYapan": kayitYapan,
+        "DegisiklikTarihi": degisiklikTarihi,
+        "DegisiklikYapan": degisiklikYapan,
+      };
+}
+// To parse this JSON data, do
+//
+//     final ogrenciList = ogrenciListFromJson(jsonString);
+
+List<OgrenciList> ogrenciListFromJson(String str) => List<OgrenciList>.from(
+    json.decode(str).map((x) => OgrenciList.fromJson(x)));
+
+String ogrenciListToJson(List<OgrenciList> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class OgrenciList {
+  int? id;
+  String? adiSoyadi;
+  int? okulNo;
+
+  OgrenciList({
+    this.id,
+    this.adiSoyadi,
+    this.okulNo,
+  });
+
+  factory OgrenciList.fromJson(Map<String, dynamic> json) => OgrenciList(
+        id: json["ID"],
+        adiSoyadi: json["AdiSoyadi"],
+        okulNo: json["OkulNo"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "AdiSoyadi": adiSoyadi,
+        "OkulNo": okulNo,
+      };
 }
