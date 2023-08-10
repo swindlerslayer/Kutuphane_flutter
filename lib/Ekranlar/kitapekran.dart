@@ -47,14 +47,15 @@ class KitapSayfasi extends StatelessWidget {
                 child: Card(
                   child: ListTile(
                     subtitle: Text(
-                        'Orta yazi,        ${kullanici.kullaniciAdi /*  */}                                        yeteri uzunlukta alt satira iniyor'),
+                        'Yazarı :  ${data.yazarAdi ?? ""}                                              '),
                     leading: const Icon(
                       Icons.menu_book_rounded,
                     ),
                     title: Text(data.adi ?? ""),
-                  ),
-                ),
-              );
+                    onTap: () {},
+                  ), //listtile
+                ), //card
+              ); //guesturedetector
             },
           ),
         ),

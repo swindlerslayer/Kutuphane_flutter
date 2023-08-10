@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Controllers/Degiskenler/kitap.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class KitapController extends GetxController {
