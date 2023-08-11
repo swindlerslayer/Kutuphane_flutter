@@ -1,22 +1,23 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/yayinevi.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
-class YazarController extends GetxController {
-  final _yazarliste = <ListeYazar>[].obs;
-  List<ListeYazar> get yazarliste => _yazarliste;
-  set yazarliste(List<ListeYazar> value) => _yazarliste.value = value;
+class YayineviController extends GetxController {
+  final _yayineviliste = <YayineviListe>[].obs;
+  List<YayineviListe> get yayineviliste => _yayineviliste;
+  set yayineviliste(List<YayineviListe> value) => _yayineviliste.value = value;
 
   // ignore: non_constant_identifier_names
-  Future<List<ListeYazar>?> getYazar(String KullaniciAdi, String Parola) async {
+  Future<List<YayineviListe>?> getYayinevi(
+      String KullaniciAdi, String Parola) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
 
     try {
       final response = await http.get(
-        Uri.parse('$apilink/api/yazarlisteyeekle'),
+        Uri.parse('$apilink/api/yayinevilisteyeekle'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer ${token.accessToken}"
@@ -24,12 +25,12 @@ class YazarController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('yazar Getirme Başarılı ${response.statusCode}');
+        print('Yayinevi Getirme Başarılı ${response.statusCode}');
 
-        List<ListeYazar> yazar = listeYazarFromJson(response.body);
-        return yazar;
+        List<YayineviListe> yayinevi = yayineviListeFromJson(response.body);
+        return yayinevi;
       } else {
-        print('Yazar Getirme Başarısız ${response.statusCode}');
+        print('yayinevi Getirme Başarısız ${response.statusCode}');
 
         return null;
       }

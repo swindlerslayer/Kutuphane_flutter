@@ -1,42 +1,76 @@
-/* 
-// Example Usage
-Map<String, dynamic> map = jsonDecode(<myJSONString>);
-var myRootNode = Root.fromJson(map);
-*/
-// ignore: camel_case_types
-class yayinevi {
-  int? iD;
+// To parse this JSON data, do
+//
+//     final yayinevi = yayineviFromJson(jsonString);
+
+import 'dart:convert';
+
+Yayinevi yayineviFromJson(String str) => Yayinevi.fromJson(json.decode(str));
+
+String yayineviToJson(Yayinevi data) => json.encode(data.toJson());
+
+class Yayinevi {
+  int? id;
   String? adi;
   String? kayitYapan;
   String? kayitTarihi;
   String? degisiklikYapan;
   String? degisiklikTarihi;
 
-  yayinevi(
-      {this.iD,
-      this.adi,
-      this.kayitYapan,
-      this.kayitTarihi,
-      this.degisiklikYapan,
-      this.degisiklikTarihi});
+  Yayinevi({
+    this.id,
+    this.adi,
+    this.kayitYapan,
+    this.kayitTarihi,
+    this.degisiklikYapan,
+    this.degisiklikTarihi,
+  });
 
-  yayinevi.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    adi = json['Adi'];
-    kayitYapan = json['KayitYapan'];
-    kayitTarihi = json['KayitTarihi'];
-    degisiklikYapan = json['DegisiklikYapan'];
-    degisiklikTarihi = json['DegisiklikTarihi'];
-  }
+  factory Yayinevi.fromJson(Map<String, dynamic> json) => Yayinevi(
+        id: json["ID"],
+        adi: json["Adi"],
+        kayitYapan: json["KayitYapan"],
+        kayitTarihi: json["KayitTarihi"],
+        degisiklikYapan: json["DegisiklikYapan"],
+        degisiklikTarihi: json["DegisiklikTarihi"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['ID'] = iD;
-    data['Adi'] = adi;
-    data['KayitYapan'] = kayitYapan;
-    data['KayitTarihi'] = kayitTarihi;
-    data['DegisiklikYapan'] = degisiklikYapan;
-    data['DegisiklikTarihi'] = degisiklikTarihi;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "Adi": adi,
+        "KayitYapan": kayitYapan,
+        "KayitTarihi": kayitTarihi,
+        "DegisiklikYapan": degisiklikYapan,
+        "DegisiklikTarihi": degisiklikTarihi,
+      };
+}
+
+// To parse this JSON data, do
+//
+//     final yayineviListe = yayineviListeFromJson(jsonString);
+
+List<YayineviListe> yayineviListeFromJson(String str) =>
+    List<YayineviListe>.from(
+        json.decode(str).map((x) => YayineviListe.fromJson(x)));
+
+String yayineviListeToJson(List<YayineviListe> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class YayineviListe {
+  int? id;
+  String? adi;
+
+  YayineviListe({
+    this.id,
+    this.adi,
+  });
+
+  factory YayineviListe.fromJson(Map<String, dynamic> json) => YayineviListe(
+        id: json["ID"],
+        adi: json["Adi"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "Adi": adi,
+      };
 }

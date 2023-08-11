@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
@@ -98,7 +99,15 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_work),
             title: const Text('Yayınevi'),
-            onTap: () => {Get.to(YayineviSayfasi(loggedInUser: kullanici))},
+            onTap: () async {
+              var dd = await Get.put(YayineviController()).getYayinevi(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(YayineviController()).yayineviliste = dd ?? [];
+              Get.back();
+
+              Get.to(YayineviSayfasi(kullanici: kullanici));
+            },
           ),
         ],
       ),
