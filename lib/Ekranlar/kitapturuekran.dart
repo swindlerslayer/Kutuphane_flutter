@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/popup.dart';
 
 class KitapTurSayfasi extends StatelessWidget {
   KitapTurSayfasi({Key? key, this.kullanici}) : super(key: key);
@@ -41,8 +42,8 @@ class KitapTurSayfasi extends StatelessWidget {
             itemBuilder: (context, index) {
               var data = cont.kitapturList[index];
               return GestureDetector(
-                onLongPress: () {
-                  print('LONGPRES');
+                onLongPress: () async {
+                  showContextMenu(context);
                 },
                 child: Card(
                   child: ListTile(

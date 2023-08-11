@@ -12,6 +12,7 @@ dependencies:
   get: ^4.6.5
   http: ^1.1.0
   shared_preferences: ^2.2.0
+  focused_menu: ^1.0.5
   
 dev_dependencies:
   flutter_test:

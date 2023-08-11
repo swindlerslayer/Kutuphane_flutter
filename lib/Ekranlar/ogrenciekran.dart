@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/popup.dart';
 
 class OgrenciSayfasi extends StatelessWidget {
   OgrenciSayfasi({Key? key, this.kullanici}) : super(key: key);
@@ -41,8 +42,8 @@ class OgrenciSayfasi extends StatelessWidget {
             itemBuilder: (context, index) {
               var data = cont.ogrenciliste[index];
               return GestureDetector(
-                onLongPress: () {
-                  print('LONGPRES');
+                onLongPress: () async {
+                  showContextMenu(context);
                 },
                 child: Card(
                   child: ListTile(
