@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/popup.dart';
 
 class YazarSayfasi extends StatelessWidget {
   YazarSayfasi({Key? key, this.kullanici}) : super(key: key);
@@ -41,20 +42,32 @@ class YazarSayfasi extends StatelessWidget {
             itemCount: cont.yazarliste.length,
             itemBuilder: (context, index) {
               var data = cont.yazarliste[index];
-              return GestureDetector(
-                onLongPress: () async {
-                  showContextMenu(context);
-                },
+              return FocusedMenuHolder(
+                menuItems: [
+                  FocusedMenuItem(
+                      backgroundColor: const Color.fromARGB(255, 109, 107, 107),
+                      title: const Text("Düzenle"),
+                      trailingIcon: const Icon(Icons.edit),
+                      onPressed: () {
+                        print('Focus iç item basıldı');
+                      }),
+                  FocusedMenuItem(
+                    backgroundColor: const Color.fromARGB(255, 110, 77, 77),
+                    title: const Text("Sil"),
+                    trailingIcon: const Icon(Icons.delete),
+                    onPressed: () {},
+                  )
+                ],
+                onPressed: () {},
                 child: Card(
                   child: ListTile(
                     leading: const Icon(
-                      Icons.person,
+                      Icons.type_specimen,
                     ),
                     title: Text(data.adiSoyadi ?? ""),
-                    onTap: () {},
-                  ), //listtile
-                ), //card
-              ); //guesturedetector
+                  ),
+                ),
+              );
             },
           ),
         ),

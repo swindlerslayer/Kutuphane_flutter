@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/popup.dart';
 
 class KitapSayfasi extends StatelessWidget {
   KitapSayfasi({Key? key, this.kullanici}) : super(key: key);
@@ -10,8 +11,6 @@ class KitapSayfasi extends StatelessWidget {
   final kullanici;
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-
-  void _showContextMenu(BuildContext context) async {}
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +26,23 @@ class KitapSayfasi extends StatelessWidget {
             itemCount: cont.kitapList.length,
             itemBuilder: (context, index) {
               var data = cont.kitapList[index];
-              return GestureDetector(
-                onLongPress: () async {
-                  showContextMenu(context);
-                },
+              return FocusedMenuHolder(
+                menuItems: [
+                  FocusedMenuItem(
+                      backgroundColor: const Color.fromARGB(255, 109, 107, 107),
+                      title: const Text("Düzenle"),
+                      trailingIcon: const Icon(Icons.edit),
+                      onPressed: () {
+                        print('Focus iç item basıldı');
+                      }),
+                  FocusedMenuItem(
+                    backgroundColor: const Color.fromARGB(255, 110, 77, 77),
+                    title: const Text("Sil"),
+                    trailingIcon: const Icon(Icons.delete),
+                    onPressed: () {},
+                  )
+                ],
+                onPressed: () {},
                 child: Card(
                   child: ListTile(
                     subtitle: Text(
@@ -39,10 +51,9 @@ class KitapSayfasi extends StatelessWidget {
                       Icons.menu_book_rounded,
                     ),
                     title: Text(data.adi ?? ""),
-                    onTap: () {},
-                  ), //listtile
-                ), //card
-              ); //guesturedetector
+                  ),
+                ),
+              );
             },
           ),
         ),
