@@ -9,25 +9,11 @@ class KitapSayfasi extends StatelessWidget {
   final kullanici;
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+
+  void _showContextMenu(BuildContext context) async {}
+
   @override
   Widget build(BuildContext context) {
-    PopupMenuButton(
-      icon: const Icon(Icons.settings),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          child: const Text("Düzenle"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Sil"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Google.com"),
-          onTap: () {},
-        ),
-      ],
-    );
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -41,8 +27,30 @@ class KitapSayfasi extends StatelessWidget {
             itemBuilder: (context, index) {
               var data = cont.kitapList[index];
               return GestureDetector(
-                onLongPress: () {
-                  print('LONGPRES');
+                onLongPress: () async {
+                  final RenderObject? overlay =
+                      Overlay.of(context).context.findRenderObject();
+
+                  await showMenu(
+                      context: context,
+
+                      // Show the context menu at the tap location
+                      position: RelativeRect.fromRect(
+                          const Rect.fromLTWH(30, 30, 30, 30),
+                          Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
+                              overlay.paintBounds.size.height)),
+
+                      // set a list of choices for the context menu
+                      items: [
+                        const PopupMenuItem(
+                          value: 'favorites',
+                          child: Text('Add To Favorites'),
+                        ),
+                        const PopupMenuItem(
+                          value: 'comment',
+                          child: Text('Write Comment'),
+                        ),
+                      ]);
                 },
                 child: Card(
                   child: ListTile(

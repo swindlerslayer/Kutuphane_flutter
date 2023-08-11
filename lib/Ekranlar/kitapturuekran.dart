@@ -12,7 +12,7 @@ class KitapTurSayfasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PopupMenuButton(
-      icon: const Icon(Icons.settings),
+      icon: const Icon(Icons.menu),
       itemBuilder: (context) => [
         PopupMenuItem(
           child: const Text("Düzenle"),
