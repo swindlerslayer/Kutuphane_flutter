@@ -49,8 +49,8 @@ class TokenService {
 
       response = await client.post(url, headers: headers, body: {
         'grant_type': 'password',
-        'username': kullaniciAdi,
-        'password': parola
+        'username': kullaniciAdi.toString(),
+        'password': parola.toString()
       });
     } finally {
       client.close();

@@ -19,43 +19,48 @@ class KitapSayfasi extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kitap Sayfası'),
       ),
-      body: Container(
-        child: Obx(
-          () => ListView.builder(
-            shrinkWrap: true,
-            itemCount: cont.kitapList.length,
-            itemBuilder: (context, index) {
-              var data = cont.kitapList[index];
-              return FocusedMenuHolder(
-                menuItems: [
-                  FocusedMenuItem(
-                      backgroundColor: const Color.fromARGB(255, 109, 107, 107),
-                      title: const Text("Düzenle"),
-                      trailingIcon: const Icon(Icons.edit),
-                      onPressed: () {
-                        print('Focus iç item basıldı');
-                      }),
-                  FocusedMenuItem(
-                    backgroundColor: const Color.fromARGB(255, 110, 77, 77),
-                    title: const Text("Sil"),
-                    trailingIcon: const Icon(Icons.delete),
-                    onPressed: () {},
-                  )
-                ],
-                onPressed: () {},
-                child: Card(
-                  child: ListTile(
-                    subtitle: Text(
-                        'Yazarı :  ${data.yazarAdi ?? ""}                                              '),
-                    leading: const Icon(
-                      Icons.menu_book_rounded,
-                    ),
-                    title: Text(data.adi ?? ""),
+      body: Obx(
+        () => ListView.builder(
+          shrinkWrap: true,
+          itemCount: cont.kitapList.length,
+          itemBuilder: (context, index) {
+            var data = cont.kitapList[index];
+            return FocusedMenuHolder(
+              menuItems: [
+                FocusedMenuItem(
+                    backgroundColor: const Color.fromARGB(255, 109, 107, 107),
+                    title: const Text("Düzenle"),
+                    trailingIcon: const Icon(Icons.edit),
+                    onPressed: () {
+                      print('Focus iç item basıldı');
+                    }),
+                FocusedMenuItem(
+                  backgroundColor: const Color.fromARGB(255, 110, 77, 77),
+                  title: const Text("Sil"),
+                  trailingIcon: const Icon(Icons.delete),
+                  onPressed: () async {
+                    var silindimi = await KitapController().silKitap(
+                        kullanici.kullaniciAdi, kullanici.parola, data.id);
+                    //  bool sil = await silindimi;
+                    if (silindimi) {
+                      cont.kitapList.removeAt(index);
+                    }
+                  },
+                )
+              ],
+              onPressed: () {},
+              child: Card(
+                child: ListTile(
+                  subtitle: Text(
+                      'Yazarı :  ${data.yazarAdi ?? ""}                                              '),
+                  leading: const Icon(
+                    Icons.menu_book_rounded,
                   ),
+                  title: Text(data.adi ?? ""),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

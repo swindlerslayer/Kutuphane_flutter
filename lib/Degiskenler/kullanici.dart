@@ -44,35 +44,3 @@ class KullaniciGiris {
     return data;
   }
 }
-
-// class Degiskenler {
-//   class EntityFullKitap {
-//     int? id;
-//     String? adi;
-//     int? sayfaSayisi;
-//     int? kitapTurID;
-//     int? yayinEviID;
-//     int? yazarID;
-//     int? barkod;
-//     String? kayitYapan;
-//     DateTime? kayitTarihi;
-//     String? degisiklikYapan;
-//     DateTime? degisiklikTarihi;
-//     List<int>? resim; // Byte dizisi yerine bir tür liste kullanıldı
-
-//     EntityFullKitap({
-//       this.id,
-//       this.adi,
-//       this.sayfaSayisi,
-//       this.kitapTurID,
-//       this.yayinEviID,
-//       this.yazarID,
-//       this.barkod,
-//       this.kayitYapan,
-//       this.kayitTarihi,
-//       this.degisiklikYapan,
-//       this.degisiklikTarihi,
-//       this.resim,
-//     });
-//   }
-// }
