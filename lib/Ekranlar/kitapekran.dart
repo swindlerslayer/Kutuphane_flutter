@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
 
+import 'kitap_ekle_duzenle.dart';
+
 class KitapSayfasi extends StatelessWidget {
   KitapSayfasi({Key? key, this.kullanici}) : super(key: key);
   final cont = Get.put(KitapController());
@@ -28,10 +30,19 @@ class KitapSayfasi extends StatelessWidget {
             return FocusedMenuHolder(
               menuItems: [
                 FocusedMenuItem(
-                    backgroundColor: const Color.fromARGB(255, 109, 107, 107),
+                    backgroundColor: const Color.fromARGB(255, 110, 107, 107),
                     title: const Text("Düzenle"),
                     trailingIcon: const Icon(Icons.edit),
-                    onPressed: () {
+                    onPressed: () async {
+                      var tekkitap = await KitapController().getTekKitap(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString(),
+                          data.id);
+                      Get.to(KitapEkleDuzenleSayfasi(
+                        kullanici: kullanici,
+                        giristuru: "Düzenle",
+                        gelenkitap: tekkitap,
+                      ));
                       print('Focus iç item basıldı');
                     }),
                 FocusedMenuItem(
@@ -44,6 +55,12 @@ class KitapSayfasi extends StatelessWidget {
                     //  bool sil = await silindimi;
                     if (silindimi) {
                       cont.kitapList.removeAt(index);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Kitap Silinemiyor'),
+                            backgroundColor: Color.fromARGB(255, 110, 57, 57)),
+                      );
                     }
                   },
                 )

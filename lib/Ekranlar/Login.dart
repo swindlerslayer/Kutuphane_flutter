@@ -14,8 +14,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController kullaniciadicontroller = TextEditingController();
-  TextEditingController sifrecontroller = TextEditingController();
+  TextEditingController kullaniciadicontroller =
+      TextEditingController(text: "deneme");
+  TextEditingController sifrecontroller = TextEditingController(text: "deneme");
   @override
   Widget build(BuildContext context) {
     return Scaffold(

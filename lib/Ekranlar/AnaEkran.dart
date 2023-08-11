@@ -9,7 +9,15 @@ class NewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Kullanıcı Adı: ${kullanici?.kullaniciAdi}');
+    const BoxDecoration(
+        gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        Color.fromARGB(255, 131, 44, 208),
+        Color.fromARGB(255, 71, 32, 88),
+      ],
+    ));
     PopupMenuButton(
       icon: const Icon(Icons.settings),
       itemBuilder: (context) => [
@@ -30,7 +38,6 @@ class NewScreen extends StatelessWidget {
           title: const Text('Ana Ekran'),
         ),
         body: Container(
-          // SAYFA İÇERİSİNDE RENK GEÇİŞLİ ARKAPLAN
           // decoration: const BoxDecoration(
           //     gradient: LinearGradient(
           //   begin: Alignment.topLeft,
@@ -48,7 +55,6 @@ class NewScreen extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return ListTile(
-                
                 //  title: Text('Three-line ListTile'),
                 subtitle: Text(
                     'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),
