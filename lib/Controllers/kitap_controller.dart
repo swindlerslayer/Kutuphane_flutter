@@ -44,14 +44,14 @@ class KitapController extends GetxController {
   }
 
   Future<Kitap?> getTekKitap(
-      String KullaniciAdi, String Parola, int? ID) async {
+      String kullaniciAdi, String parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
-        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
       final response = await http.get(
-        Uri.parse('$apilink/api/kitapgetir?ID=$ID'),
+        Uri.parse('$apilink/api/kitapgetir?ID=$iD'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer ${token.accessToken}"
@@ -105,9 +105,9 @@ class KitapController extends GetxController {
   }
 
   Future<bool> ekleguncelleKitap(
-      RxString KullaniciAdi, RxString Parola, Kitap k) async {
+      RxString kullaniciAdi, RxString parola, Kitap k) async {
     var token = await TokenService.getToken(
-        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/ekleduzenle');
 

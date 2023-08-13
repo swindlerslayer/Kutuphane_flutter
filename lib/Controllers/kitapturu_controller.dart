@@ -10,10 +10,10 @@ class KitapTurController extends GetxController {
 
   // ignore: non_constant_identifier_names
   Future<List<KitapTurListe>?> getKitapTur(
-      String KullaniciAdi, String Parola) async {
+      String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
-        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
       final response = await http.get(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
 
 class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final kullanici;
@@ -13,7 +15,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     final kullaniciadicontroller = TextEditingController(text: gelenkitap.adi);
     final sifrecontroller =
         TextEditingController(text: gelenkitap.sayfaSayisi.toString());
-    final bisilercontroller = TextEditingController();
+    final barkodController =
+        TextEditingController(text: gelenkitap.barkod.toString());
+
     print(gelenkitap.adi);
 
     return Scaffold(
@@ -52,9 +56,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
-                controller: bisilercontroller,
+                controller: barkodController,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Bisiler Sayisi"),
+                    border: OutlineInputBorder(), labelText: "Barkod"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen Sayfa Sayisini Giriniz';
@@ -68,7 +72,12 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final k = Kitap();
+                    k.adi = kullaniciadicontroller.text;
+                    KitapController().ekleguncelleKitap(
+                        kullanici.kullaniciAdi, kullanici.parola, k);
+                  },
                   child: Text(giristuru.toString()),
                 ),
               ),

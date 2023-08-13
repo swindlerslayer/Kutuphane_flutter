@@ -33,21 +33,21 @@ class NewScreen extends StatelessWidget {
       ],
     );
     return Scaffold(
-        drawer: NavDrawer(kullanici: kullanici),
-        appBar: AppBar(
-          title: const Text('Ana Ekran'),
-        ),
-        body: Container(
-          // decoration: const BoxDecoration(
-          //     gradient: LinearGradient(
-          //   begin: Alignment.topLeft,
-          //   end: Alignment.bottomRight,
-          //   colors: [
-          //     Color.fromARGB(255, 131, 44, 208),
-          //     Color.fromARGB(255, 71, 32, 88),
-          //   ],
-          // )),
-          child: ListView.builder(
+      drawer: NavDrawer(kullanici: kullanici),
+      appBar: AppBar(
+        title: const Text('Ana Ekran'),
+      ),
+      body: Container(
+        // decoration: const BoxDecoration(
+        //     gradient: LinearGradient(
+        //   begin: Alignment.topLeft,
+        //   end: Alignment.bottomRight,
+        //   colors: [
+        //     Color.fromARGB(255, 131, 44, 208),
+        //     Color.fromARGB(255, 71, 32, 88),
+        //   ],
+        // )),
+        child: ListView.builder(
             shrinkWrap: true,
             itemCount: 10,
             prototypeItem: ListTile(
@@ -82,8 +82,8 @@ class NewScreen extends StatelessWidget {
                   ],
                 ),
               );
-            },
-          ),
-        ));
+            }),
+      ),
+    );
   }
 }

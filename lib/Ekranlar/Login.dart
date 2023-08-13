@@ -4,9 +4,8 @@ import 'package:kutuphane_mobil_d/Ekranlar/anaekran.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key, required this.title}) : super(key: key);
-
   final String title;
+  const Login({Key? key, required this.title}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
