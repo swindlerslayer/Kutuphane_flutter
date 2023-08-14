@@ -4,23 +4,28 @@ import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/kitapturu.dart';
+import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/yayinevi.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
 
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yazar_controller.dart';
+import 'kitapekran.dart';
 
 class KitapEkleDuzenleSayfasi extends StatelessWidget {
   KitapEkleDuzenleSayfasi(
-      {Key? key, this.kullanici, required this.giristuru, this.gelenkitap})
+      {Key? key,
+      required this.kullanici,
+      required this.giristuru,
+      this.gelenkitap})
       : super(key: key);
   final contyazzar = Get.put(YazarController());
   final contkitapturu = Get.put(KitapTurController());
   final contyayinevi = Get.put(YayineviController());
 
-  final kullanici;
-  final giristuru;
-  final gelenkitap;
+  final KullaniciGiris kullanici;
+  final String giristuru;
+  final Kitap? gelenkitap;
   final selectedYazarListe = Rxn<ListeYazar>();
   final selectedKitapTurListe = Rxn<KitapTurListe>();
   final selectedYayineviListe = Rxn<YayineviListe>();
@@ -28,7 +33,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kullaniciadicontroller =
-        TextEditingController(text: gelenkitap.adi ?? "");
+        TextEditingController(text: gelenkitap?.adi ?? "");
     final kitapadicontroller =
         TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
     final sayfasayisicontroller =
@@ -36,8 +41,34 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     var datayazar = contyazzar.yazarliste;
     var datayayinevi = contyayinevi.yayineviliste;
     var datakitapturu = contkitapturu.kitapturList;
+    KitapTurListe? selectekkitapturuilk;
+    YayineviListe? selectedyeyineviilk;
+    ListeYazar? selectedyazarilk;
+    if (gelenkitap != null) {
+      selectekkitapturuilk =
+          datakitapturu.firstWhere((kt) => kt.id == gelenkitap?.kitapTurId);
+      selectedyeyineviilk =
+          datayayinevi.firstWhere((ye) => ye.id == gelenkitap?.yayinEviId);
+      selectedyazarilk =
+          datayazar.firstWhere((y) => y.id == gelenkitap?.yazarId);
+    }
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,
+              color: Color.fromARGB(255, 255, 252, 252)),
+          onPressed: () async {
+            var dd = await Get.put(KitapController()).getKitap(
+                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+            Get.put(KitapController()).kitapList = dd ?? [];
+            Get.back();
+
+            Get.to(KitapSayfasi(kullanici: kullanici));
+          },
+        ),
+        title: Text("Kitap $giristuru Sayfası"),
+        centerTitle: true,
+      ),
       body: Form(
         child: Column(
           children: [
@@ -46,7 +77,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: TextFormField(
                 controller: kullaniciadicontroller,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "tekkitap"),
+                    border: OutlineInputBorder(), labelText: "kitap adı"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen Kitap Adini Giriniz';
@@ -91,7 +122,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (KitapTurListe? value) {
                       selectedKitapTurListe.value = value;
                     },
-                    value: selectedKitapTurListe.value,
+                    value: selectekkitapturuilk ?? selectedKitapTurListe.value,
                     items: datakitapturu.map(
                       (KitapTurListe items) {
                         return DropdownMenuItem<KitapTurListe>(
@@ -112,7 +143,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (ListeYazar? value) {
                       selectedYazarListe.value = value;
                     },
-                    value: selectedYazarListe.value,
+                    value: selectedyazarilk ?? selectedYazarListe.value,
                     items: datayazar.map(
                       (ListeYazar items) {
                         return DropdownMenuItem<ListeYazar>(
@@ -133,7 +164,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (YayineviListe? value) {
                       selectedYayineviListe.value = value;
                     },
-                    value: selectedYayineviListe.value,
+                    value: selectedyeyineviilk ?? selectedYayineviListe.value,
                     items: datayayinevi.map(
                       (YayineviListe items) {
                         return DropdownMenuItem<YayineviListe>(
@@ -162,7 +193,6 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         kullanici.kullaniciAdi, kullanici.parola, k);
                   },
                   child: Text(giristuru.toString()),
-                  
                 ),
               ),
             ),
