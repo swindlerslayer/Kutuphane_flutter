@@ -152,7 +152,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    final k = Kitap();
+                    // final k = Kitap();
+                    Kitap k = Kitap();
                     k.adi = kullaniciadicontroller.text;
                     k.sayfaSayisi = int.parse(kitapadicontroller.text);
                     k.barkod = int.parse(sayfasayisicontroller.text);
@@ -161,6 +162,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         kullanici.kullaniciAdi, kullanici.parola, k);
                   },
                   child: Text(giristuru.toString()),
+                  
                 ),
               ),
             ),

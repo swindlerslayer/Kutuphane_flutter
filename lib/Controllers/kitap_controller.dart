@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
@@ -116,25 +118,13 @@ class KitapController extends GetxController {
         "Content-Type": "application/json",
         "Authorization": "Bearer ${token.accessToken}"
       };
-      final response = await client.post(url, headers: headers, body: {
-        'ID': k.id,
-        'Adi': k.adi,
-        'SayfaSayisi': k.sayfaSayisi.toString(),
-        'KitapTurID': k.kitapTurId,
-        'YayinEviID': k.yayinEviId,
-        'YazarID': k.yazarId,
-        'Barkod': k.barkod,
-        'KayitYapan': k.kayitYapan,
-        'KayitTarihi': k.kayitTarihi,
-        'DegisiklikYapan': k.kayitTarihi,
-        'DegisiklikTarihi': k.degisiklikTarihi,
-        'Resim': k.resim
-      });
+      var badi = json.encode(k);
+      final response = await client.post(url, headers: headers, body: badi);
       if (response.statusCode == 200) {
-        print('Kitap Ekleme Başarılı ${response.statusCode}');
+        print('Kitap Ekleme Başarili ${response.statusCode}');
         return true;
       } else {
-        print('Kitap Güncelleme Başarılı ${response.statusCode}');
+        print('Kitap Güncelleme Başarili ${response.statusCode}');
         return false;
       }
     } catch (e) {
@@ -143,3 +133,17 @@ class KitapController extends GetxController {
     }
   }
 }
+//  {
+//         'ID': 0,
+//         'Adi': k.adi,
+//         'SayfaSayisi': k.sayfaSayisi,
+//         'KitapTurID': k.kitapTurId,
+//         'YayinEviID': k.yayinEviId,
+//         'YazarID': k.yazarId,
+//         'Barkod': k.barkod,
+//         'KayitYapan': k.kayitYapan,
+//         'KayitTarihi': k.kayitTarihi,
+//         'DegisiklikYapan': k.kayitTarihi,
+//         'DegisiklikTarihi': k.degisiklikTarihi,
+//         'Resim': k.resim
+//       }
