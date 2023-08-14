@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
 
+import '../Controllers/kitapturu_controller.dart';
+import '../Controllers/yayinevi_controller.dart';
+import '../Controllers/yazar_controller.dart';
 import 'kitap_ekle_duzenle.dart';
 
 class KitapSayfasi extends StatelessWidget {
@@ -38,6 +41,22 @@ class KitapSayfasi extends StatelessWidget {
                           kullanici.kullaniciAdi.toString(),
                           kullanici.parola.toString(),
                           data.id);
+                      var dd = await Get.put(YazarController()).getYazar(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString());
+                      var dd1 = await Get.put(KitapTurController()).getKitapTur(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString());
+                      var dd2 = await Get.put(YayineviController()).getYayinevi(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString());
+                      Get.put(YayineviController()).yayineviliste = dd2 ?? [];
+                      Get.back();
+                      Get.put(KitapTurController()).kitapturList = dd1 ?? [];
+                      Get.back();
+                      Get.put(YazarController()).yazarliste = dd ?? [];
+                      Get.back();
+
                       Get.to(KitapEkleDuzenleSayfasi(
                         kullanici: kullanici,
                         giristuru: "Düzenle",

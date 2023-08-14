@@ -48,9 +48,7 @@ class OgrenciSayfasi extends StatelessWidget {
                       backgroundColor: const Color.fromARGB(255, 109, 107, 107),
                       title: const Text("Düzenle"),
                       trailingIcon: const Icon(Icons.edit),
-                      onPressed: () {
-                        print('Focus iç item basıldı');
-                      }),
+                      onPressed: () {}),
                   FocusedMenuItem(
                     backgroundColor: const Color.fromARGB(255, 110, 77, 77),
                     title: const Text("Sil"),
