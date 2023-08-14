@@ -103,13 +103,12 @@ class _LoginState extends State<Login> {
         await loginController.loginUser(context, kullaniciAdi, parola);
 
     if (loggedInUser?.kullaniciAdi != null) {
-      // Giriş kontrol burada
-
       Get.to(NewScreen(kullanici: loggedInUser!));
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Bilgileriniz Yanlış')),
-      );
+      Get.defaultDialog(
+          title: "Giriş Başarısız",
+          middleText: "Girdiğiniz bilgiler Yanlış",
+          backgroundColor: const Color.fromARGB(255, 110, 57, 57));
     }
   }
 }

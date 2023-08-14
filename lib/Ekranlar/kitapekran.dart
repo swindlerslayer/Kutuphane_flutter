@@ -103,12 +103,11 @@ class BodyWidget extends StatelessWidget {
                         if (silindimi) {
                           cont.kitapList.removeAt(index);
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Kitap Silinemiyor'),
-                                backgroundColor:
-                                    Color.fromARGB(255, 110, 57, 57)),
-                          );
+                          Get.defaultDialog(
+                              title: "Kitap Silinemedi",
+                              middleText: "Kitap Bir Öğrencide kayıtlı",
+                              backgroundColor:
+                                  const Color.fromARGB(255, 110, 57, 57));
                         }
                       },
                     )

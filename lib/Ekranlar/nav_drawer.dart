@@ -14,10 +14,11 @@ import 'package:kutuphane_mobil_d/Ekranlar/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
 
-class NavDrawer extends StatelessWidget {
-  final kullanici; // User information variable
+import '../Degiskenler/kullanici.dart';
 
+class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);
+  final KullaniciGiris kullanici;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class NavDrawer extends StatelessWidget {
                 //Resim eklenecekse decoration'un içerisine eklenecek
                 ),
             child: Text(
-              'Menü',
+              'Akdeniz Kütüphanesi ',
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),

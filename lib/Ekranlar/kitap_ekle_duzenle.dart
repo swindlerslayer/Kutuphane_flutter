@@ -183,15 +183,36 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Kitap k = Kitap();
                     k.id = kitapid;
                     k.adi = kullaniciadicontroller.text;
                     k.sayfaSayisi = int.parse(kitapadicontroller.text);
                     k.barkod = int.parse(sayfasayisicontroller.text);
+                    k.yayinEviId = selectedyeyineviilk?.id ??
+                        selectedYayineviListe.value?.id;
+                    k.yazarId =
+                        selectedyazarilk?.id ?? selectedYazarListe.value?.id;
+                    k.kitapTurId = selectekkitapturuilk?.id ??
+                        selectedKitapTurListe.value?.id;
 
-                    KitapController().ekleguncelleKitap(
-                        kullanici.kullaniciAdi, kullanici.parola, k);
+                    var kaydetGuncelleKontrol = await KitapController()
+                        .ekleguncelleKitap(
+                            kullanici.kullaniciAdi, kullanici.parola, k);
+
+                    if (kaydetGuncelleKontrol == "Eklendi") {
+                      Get.defaultDialog(
+                          title: "Kitap Eklendi",
+                          middleText: "",
+                          backgroundColor:
+                              const Color.fromARGB(255, 141, 141, 141));
+                    } else if (kaydetGuncelleKontrol == "Güncellendi") {
+                      Get.defaultDialog(
+                          title: "Kitap Güncellendi",
+                          middleText: "",
+                          backgroundColor:
+                              const Color.fromARGB(255, 141, 141, 141));
+                    }
                   },
                   child: Text(giristuru.toString()),
                 ),

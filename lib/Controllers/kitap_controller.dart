@@ -106,7 +106,7 @@ class KitapController extends GetxController {
     }
   }
 
-  Future<bool> ekleguncelleKitap(
+  Future<String> ekleguncelleKitap(
       RxString kullaniciAdi, RxString parola, Kitap k) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
@@ -120,16 +120,16 @@ class KitapController extends GetxController {
       };
       var badi = json.encode(k);
       final response = await client.post(url, headers: headers, body: badi);
-      if (response.statusCode == 200) {
+      if (response.body == "true") {
         print('Kitap Ekleme Başarili ${response.statusCode}');
-        return true;
+        return "Eklendi";
       } else {
-        print('Kitap Güncelleme Başarili ${response.statusCode}');
-        return false;
+        print('Kitap Güncellendi ${response.statusCode}');
+        return "Güncellendi";
       }
     } catch (e) {
       print('??? ?? $e  ');
-      return false;
+      return "?";
     }
   }
 }
