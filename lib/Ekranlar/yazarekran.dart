@@ -4,6 +4,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/yazar_ekle_duzenle.dart';
 
 import '../Degiskenler/kullanici.dart';
 
@@ -37,39 +38,107 @@ class YazarSayfasi extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Yazar Sayfası'),
       ),
-      body: Obx(
-        () => ListView.builder(
-          shrinkWrap: true,
-          itemCount: cont.yazarliste.length,
-          itemBuilder: (context, index) {
-            var data = cont.yazarliste[index];
-            return FocusedMenuHolder(
-              menuItems: [
-                FocusedMenuItem(
-                    backgroundColor: const Color.fromARGB(255, 109, 107, 107),
-                    title: const Text("Düzenle"),
-                    trailingIcon: const Icon(Icons.edit),
-                    onPressed: () {
-                    }),
-                FocusedMenuItem(
-                  backgroundColor: const Color.fromARGB(255, 110, 77, 77),
-                  title: const Text("Sil"),
-                  trailingIcon: const Icon(Icons.delete),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 121, 121, 121),
+              Color.fromARGB(255, 44, 44, 44),
+            ],
+          ),
+        ),
+        child: Stack(fit: StackFit.expand, children: [
+          Obx(
+            () => ListView.builder(
+              shrinkWrap: true,
+              itemCount: cont.yazarliste.length,
+              itemBuilder: (context, index) {
+                var data = cont.yazarliste[index];
+                return FocusedMenuHolder(
+                  menuItems: [
+                    FocusedMenuItem(
+                        backgroundColor:
+                            const Color.fromARGB(255, 109, 107, 107),
+                        title: const Text("Düzenle"),
+                        trailingIcon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          var tekyazar = await YazarController().getTekYazar(
+                              kullanici.kullaniciAdi.toString(),
+                              kullanici.parola.toString(),
+                              data.id);
+
+                          Get.to(YazarEkleDuzenleSayfasi(
+                            kullanici: kullanici,
+                            giristuru: "Düzenle",
+                            gelenyazar: tekyazar,
+                          ));
+                        }),
+                    FocusedMenuItem(
+                      backgroundColor: const Color.fromARGB(255, 110, 77, 77),
+                      title: const Text("Sil"),
+                      trailingIcon: const Icon(Icons.delete),
+                      onPressed: () async {
+                        var silindimi = await YazarController().silYazar(
+                            kullanici.kullaniciAdi, kullanici.parola, data.id);
+                        //  bool sil = await silindimi;
+                        if (silindimi) {
+                          cont.yazarliste.removeAt(index);
+                        } else {
+                          Get.defaultDialog(
+                              title: "Yazar Silinemedi",
+                              middleText: "Yazazr Bir Öğrencide kayıtlı",
+                              backgroundColor:
+                                  const Color.fromARGB(255, 110, 57, 57));
+                        }
+                      },
+                    )
+                  ],
                   onPressed: () {},
-                )
-              ],
-              onPressed: () {},
-              child: Card(
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.type_specimen,
+                  child: Card(
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.type_specimen,
+                      ),
+                      title: Text(data.adiSoyadi ?? ""),
+                    ),
                   ),
-                  title: Text(data.adiSoyadi ?? ""),
+                );
+              },
+            ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                onTap: () async {
+                  var dd = await Get.put(YazarController()).getYazar(
+                      kullanici.kullaniciAdi.toString(),
+                      kullanici.parola.toString());
+
+                  Get.put(YazarController()).yazarliste = dd ?? [];
+                  Get.back();
+
+                  Get.to(YazarEkleDuzenleSayfasi(
+                    kullanici: kullanici,
+                    giristuru: "Ekle",
+                  ));
+                },
+                child: const CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Color.fromARGB(255, 138, 137, 137),
+                  child: Icon(
+                    Icons.add,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ]),
       ),
     );
   }

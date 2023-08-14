@@ -30,11 +30,9 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-
         List<ListeKitap> kitap = listeKitapFromJson(response.body);
         return kitap;
       } else {
-
         return null;
       }
     } catch (e) {
@@ -58,11 +56,9 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-
         Kitap kitap = KitapFromJson(response.body);
         return kitap;
       } else {
-
         return null;
       }
     } catch (e) {
@@ -86,10 +82,8 @@ class KitapController extends GetxController {
       );
 
       if (response.body.toString() == "true") {
-
         return true;
       } else {
-
         return false;
       }
     } catch (e) {

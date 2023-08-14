@@ -74,7 +74,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               child: TextFormField(
                 controller: kullaniciadicontroller,
                 decoration: const InputDecoration(
@@ -88,7 +88,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               child: TextFormField(
                 controller: kitapadicontroller,
                 decoration: const InputDecoration(
@@ -102,7 +102,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               child: TextFormField(
                 controller: sayfasayisicontroller,
                 decoration: const InputDecoration(
@@ -116,7 +116,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               child: Center(
                 child: Obx(
                   () => DropdownButton<KitapTurListe>(
@@ -137,7 +137,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               child: Center(
                 child: Obx(
                   () => DropdownButton<ListeYazar>(
@@ -158,7 +158,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               child: Center(
                 child: Obx(
                   () => DropdownButton<YayineviListe>(
@@ -179,8 +179,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               child: Center(
                 child: ElevatedButton(
                   onPressed: () async {
