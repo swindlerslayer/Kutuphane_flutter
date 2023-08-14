@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 
+import '../Degiskenler/kullanici.dart';
+
 class KitapTeslimSayfasi extends StatelessWidget {
-  final loggedInUser;
   const KitapTeslimSayfasi({Key? key, required this.loggedInUser})
       : super(key: key);
+  final KullaniciGiris loggedInUser;
 
   @override
   Widget build(BuildContext context) {
