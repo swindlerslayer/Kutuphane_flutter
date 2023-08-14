@@ -90,7 +90,6 @@ class BodyWidget extends StatelessWidget {
                             giristuru: "Düzenle",
                             gelenkitap: tekkitap,
                           ));
-                          print('Focus iç item basıldı');
                         }),
                     FocusedMenuItem(
                       backgroundColor: const Color.fromARGB(255, 110, 77, 77),

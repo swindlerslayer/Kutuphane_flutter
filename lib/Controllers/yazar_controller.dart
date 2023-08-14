@@ -24,17 +24,14 @@ class YazarController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('yazar Getirme Başarılı ${response.statusCode}');
 
         List<ListeYazar> yazar = listeYazarFromJson(response.body);
         return yazar;
       } else {
-        print('Yazar Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }

@@ -25,17 +25,14 @@ class KitapTurController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Kitap Türü Getirme Başarılı ${response.statusCode}');
 
         List<KitapTurListe> kitaptur = kitapTurListeFromJson(response.body);
         return kitaptur;
       } else {
-        print('Kitap Tur Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }

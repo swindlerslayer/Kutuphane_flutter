@@ -50,7 +50,6 @@ class LoginController extends GetxController {
         return null;
       }
     } catch (e) {
-      print('Olmadı $e');
       // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
       return null;
     }

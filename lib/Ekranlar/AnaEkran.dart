@@ -75,7 +75,6 @@ class NewScreen extends StatelessWidget {
                         ),
                         onTap: () {
                           //logic to open POPUP window
-                          print('Düğmeye basildi');
                         },
                       ),
                       isThreeLine: true,

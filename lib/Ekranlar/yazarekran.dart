@@ -50,7 +50,6 @@ class YazarSayfasi extends StatelessWidget {
                     title: const Text("Düzenle"),
                     trailingIcon: const Icon(Icons.edit),
                     onPressed: () {
-                      print('Focus iç item basıldı${data.id}');
                     }),
                 FocusedMenuItem(
                   backgroundColor: const Color.fromARGB(255, 110, 77, 77),

@@ -25,17 +25,14 @@ class AnasayfaController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Ogrenci Getirme Başarılı ${response.statusCode}');
 
         List<OgrenciList> ogrenci = ogrenciListFromJson(response.body);
         return ogrenci;
       } else {
-        print('Ogrenci Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }

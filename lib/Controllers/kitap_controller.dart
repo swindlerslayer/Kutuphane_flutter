@@ -30,17 +30,14 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Kitap Getirme Başarılı ${response.statusCode}');
 
         List<ListeKitap> kitap = listeKitapFromJson(response.body);
         return kitap;
       } else {
-        print('Kitap Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }
@@ -61,17 +58,14 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Tek Kitap Getirme Başarılı ${response.statusCode}');
 
         Kitap kitap = KitapFromJson(response.body);
         return kitap;
       } else {
-        print('Kitap Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }
@@ -92,16 +86,13 @@ class KitapController extends GetxController {
       );
 
       if (response.body.toString() == "true") {
-        print('Kitap Silme Başarılı ${response.statusCode}');
 
         return true;
       } else {
-        print('Kitap Silme Başarısız ${response.statusCode}');
 
         return false;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return false;
     }
   }
@@ -121,14 +112,11 @@ class KitapController extends GetxController {
       var badi = json.encode(k);
       final response = await client.post(url, headers: headers, body: badi);
       if (response.body == "true") {
-        print('Kitap Ekleme Başarili ${response.statusCode}');
         return "Eklendi";
       } else {
-        print('Kitap Güncellendi ${response.statusCode}');
         return "Güncellendi";
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return "?";
     }
   }

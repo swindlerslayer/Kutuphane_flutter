@@ -25,17 +25,14 @@ class YayineviController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Yayinevi Getirme Başarılı ${response.statusCode}');
 
         List<YayineviListe> yayinevi = yayineviListeFromJson(response.body);
         return yayinevi;
       } else {
-        print('yayinevi Getirme Başarısız ${response.statusCode}');
 
         return null;
       }
     } catch (e) {
-      print('??? ?? $e  ');
       return null;
     }
   }
