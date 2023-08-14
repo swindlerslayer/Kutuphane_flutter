@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/anaekran.dart';
 import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
@@ -103,12 +104,8 @@ class _LoginState extends State<Login> {
 
     if (loggedInUser?.kullaniciAdi != null) {
       // Giriş kontrol burada
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NewScreen(kullanici: loggedInUser),
-        ),
-      );
+
+      Get.to(NewScreen(kullanici: loggedInUser!));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Bilgileriniz Yanlış')),

@@ -1,11 +1,13 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+
+import '../Degiskenler/kullanici.dart';
 
 class NewScreen extends StatelessWidget {
-  final kullanici;
-  const NewScreen({Key? key, this.kullanici}) : super(key: key);
+  const NewScreen({Key? key, required this.kullanici}) : super(key: key);
+  final KullaniciGiris kullanici;
 
   @override
   Widget build(BuildContext context) {

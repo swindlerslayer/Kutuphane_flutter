@@ -3,7 +3,7 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 
 class YazarSayfasi extends StatelessWidget {
   YazarSayfasi({Key? key, this.kullanici}) : super(key: key);
@@ -49,7 +49,6 @@ class YazarSayfasi extends StatelessWidget {
                       title: const Text("Düzenle"),
                       trailingIcon: const Icon(Icons.edit),
                       onPressed: () {
-                        
                         print('Focus iç item basıldı${data.id}');
                       }),
                   FocusedMenuItem(

@@ -3,7 +3,7 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav-drawer.dart';
+import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 
 class YayineviSayfasi extends StatelessWidget {
   YayineviSayfasi({Key? key, this.kullanici}) : super(key: key);

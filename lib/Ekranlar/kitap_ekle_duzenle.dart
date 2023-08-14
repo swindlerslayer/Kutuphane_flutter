@@ -44,6 +44,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     KitapTurListe? selectekkitapturuilk;
     YayineviListe? selectedyeyineviilk;
     ListeYazar? selectedyazarilk;
+    int? kitapid = gelenkitap?.id ?? 0;
     if (gelenkitap != null) {
       selectekkitapturuilk =
           datakitapturu.firstWhere((kt) => kt.id == gelenkitap?.kitapTurId);
@@ -183,8 +184,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // final k = Kitap();
                     Kitap k = Kitap();
+                    k.id = kitapid;
                     k.adi = kullaniciadicontroller.text;
                     k.sayfaSayisi = int.parse(kitapadicontroller.text);
                     k.barkod = int.parse(sayfasayisicontroller.text);
