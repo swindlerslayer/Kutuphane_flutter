@@ -16,23 +16,6 @@ class YazarSayfasi extends StatelessWidget {
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
   Widget build(BuildContext context) {
-    PopupMenuButton(
-      icon: const Icon(Icons.settings),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          child: const Text("Düzenle"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Sil"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Google.com"),
-          onTap: () {},
-        ),
-      ],
-    );
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
