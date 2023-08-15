@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
-import 'package:kutuphane_mobil_d/Model/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
-
-import '../Degiskenler/Ogrenci.dart';
+import 'package:kutuphane_mobil_d/Model/Ogrenci/ogrenci.dart';
 
 class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
   const OgrenciEkleDuzenleSayfasi(

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
-import 'package:kutuphane_mobil_d/Model/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 
 import 'nav_drawer.dart';
 

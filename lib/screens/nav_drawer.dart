@@ -6,7 +6,7 @@ import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 
-import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
+import 'package:kutuphane_mobil_d/screens/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
@@ -14,7 +14,7 @@ import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
-import '../Model/kullanici.dart';
+import '../Model/Kullanici/kullanici.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);

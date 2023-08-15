@@ -6,7 +6,7 @@ import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/screens/yazar_ekle_duzenle.dart';
 
-import '../Model/kullanici.dart';
+import '../Model/Kullanici/kullanici.dart';
 
 class YazarSayfasi extends StatelessWidget {
   YazarSayfasi({Key? key, required this.kullanici}) : super(key: key);

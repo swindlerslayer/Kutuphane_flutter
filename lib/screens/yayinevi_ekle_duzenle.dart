@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
-import 'package:kutuphane_mobil_d/Model/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 
-import '../Model/yayinevi.dart';
+import '../Model/Yayinevi/yayinevi.dart';
 
 class YayineviEkleDuzenleSayfasi extends StatelessWidget {
   const YayineviEkleDuzenleSayfasi(

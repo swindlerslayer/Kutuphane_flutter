@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/Ogrenci.dart';
+import 'package:kutuphane_mobil_d/Model/Ogrenci/ogrenci.dart';
+import 'package:kutuphane_mobil_d/Model/Ogrenci/ogrenciliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class OgrenciController extends GetxController {

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 
-import '../Model/kullanici.dart';
+import '../Model/Kullanici/kullanici.dart';
 import 'ogrenci_ekle_duzenle.dart';
 
 class OgrenciSayfasi extends StatelessWidget {

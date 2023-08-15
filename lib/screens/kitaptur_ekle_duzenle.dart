@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
-import 'package:kutuphane_mobil_d/Model/kitapturu.dart';
-import 'package:kutuphane_mobil_d/Model/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturu.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 
 class KitapTurEkleDuzenleSayfasi extends StatelessWidget {

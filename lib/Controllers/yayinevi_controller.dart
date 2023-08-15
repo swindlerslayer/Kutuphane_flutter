@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Model/yayinevi.dart';
+import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
+
+import 'package:kutuphane_mobil_d/Model/Yayinevi/yayineviliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class YayineviController extends GetxController {

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Model/ogrenci_kitap.dart';
+import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitapliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class AnasayfaController extends GetxController {
