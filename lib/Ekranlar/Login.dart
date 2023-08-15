@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/anaekran.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/kullanici.dart';
 
 class Login extends StatefulWidget {
   final String title;

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/kullanici.dart';
 
 class LoginController extends GetxController {
   static const String baseUrl = "https://localhost:44399/api";

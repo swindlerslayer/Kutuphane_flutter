@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 
-import '../Degiskenler/kullanici.dart';
+import '../Model/kullanici.dart';
 
 class KitapTeslimSayfasi extends StatelessWidget {
   const KitapTeslimSayfasi({Key? key, required this.loggedInUser})

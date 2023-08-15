@@ -6,7 +6,7 @@ import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yazar_ekle_duzenle.dart';
 
-import '../Degiskenler/kullanici.dart';
+import '../Model/kullanici.dart';
 
 class YazarSayfasi extends StatelessWidget {
   YazarSayfasi({Key? key, required this.kullanici}) : super(key: key);
@@ -71,7 +71,7 @@ class YazarSayfasi extends StatelessWidget {
                         } else {
                           Get.defaultDialog(
                               title: "Yazar Silinemedi",
-                              middleText: "Yazazr Bir Öğrencide kayıtlı",
+                              middleText: "Yazar Bir Öğrencide kayıtlı",
                               backgroundColor:
                                   const Color.fromARGB(255, 110, 57, 57));
                         }

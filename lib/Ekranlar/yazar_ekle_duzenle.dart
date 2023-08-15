@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/kullanici.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
 
-import '../Degiskenler/yazar.dart';
+import '../Model/yazar.dart';
 
 class YazarEkleDuzenleSayfasi extends StatelessWidget {
   const YazarEkleDuzenleSayfasi(

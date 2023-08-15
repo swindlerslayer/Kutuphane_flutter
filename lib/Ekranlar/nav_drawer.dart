@@ -14,7 +14,7 @@ import 'package:kutuphane_mobil_d/Ekranlar/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
 
-import '../Degiskenler/kullanici.dart';
+import '../Model/kullanici.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);

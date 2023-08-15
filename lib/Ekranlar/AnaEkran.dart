@@ -1,16 +1,20 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
+import 'package:kutuphane_mobil_d/Model/kullanici.dart';
 
-import '../Degiskenler/kullanici.dart';
+import 'nav_drawer.dart';
 
 class NewScreen extends StatelessWidget {
-  const NewScreen({Key? key, required this.kullanici}) : super(key: key);
+  NewScreen({Key? key, required this.kullanici}) : super(key: key);
   final KullaniciGiris kullanici;
+  final cont = Get.put(AnasayfaController());
 
   @override
   Widget build(BuildContext context) {
+    print(cont.kitapogrenci.length);
     const BoxDecoration(
         gradient: LinearGradient(
       begin: Alignment.topLeft,
@@ -20,20 +24,7 @@ class NewScreen extends StatelessWidget {
         Color.fromARGB(255, 71, 32, 88),
       ],
     ));
-    PopupMenuButton(
-      icon: const Icon(Icons.settings),
-      itemBuilder: (context) => [
-        const PopupMenuItem(
-          child: Text("Settings"),
-        ),
-        const PopupMenuItem(
-          child: Text("Flutter.io"),
-        ),
-        const PopupMenuItem(
-          child: Text("Google.com"),
-        ),
-      ],
-    );
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -50,36 +41,21 @@ class NewScreen extends StatelessWidget {
             ],
           ),
         ),
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Center(
-          child: Column(
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  prototypeItem: ListTile(
-                    title: Text(kullanici.toString()),
-                  ),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      //  title: Text('Three-line ListTile'),
-                      subtitle: Text(
-                          'Orta yazi,          ${kullanici.kullaniciAdi /*  */}                               yeteri uzunlukta alt satira iniyor'),
-                      //trailing liste öğesinin sağına yerleştireceğimiz öğeler için...
-                      // trailing: Icon(Icons.more_vert),
-                      //trailing: IconButton(icon: Icon(Icons.more_vert), onPressed:(){}),
-                      trailing: GestureDetector(
-                        child: const Icon(
-                          Icons.more_vert,
-                          color: Color.fromARGB(255, 231, 128, 37),
-                        ),
-                        onTap: () {
-                          //logic to open POPUP window
-                        },
-                      ),
-                      isThreeLine: true,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: cont.kitapogrenci.length,
+                itemBuilder: (context, index) {
+                  var data = cont.kitapogrenci[index];
 
-                      // leading: const Icon(Icons.person),
+                  return Card(
+                    child: ListTile(
+                      title: Text(kullanici.toString()),
+                      subtitle: Text(
+                          'Orta yazi,          ${data.adiSoyadi /*  */}                               yeteri uzunlukta alt satira iniyor'),
+                      isThreeLine: true,
                       leading: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -87,10 +63,10 @@ class NewScreen extends StatelessWidget {
                           Text('Alt Yazi'),
                         ],
                       ),
-                    );
-                  }),
-            ],
-          ),
+                    ),
+                  );
+                }),
+          ],
         ),
       ),
     );

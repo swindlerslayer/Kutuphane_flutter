@@ -6,7 +6,7 @@ import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/kitaptur_ekle_duzenle.dart';
 import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
 
-import '../Degiskenler/kullanici.dart';
+import '../Model/kullanici.dart';
 
 class KitapTurSayfasi extends StatelessWidget {
   KitapTurSayfasi({Key? key, required this.kullanici}) : super(key: key);

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/kitap.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/kitapturu.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/kullanici.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/yayinevi.dart';
-import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
+import 'package:kutuphane_mobil_d/Model/kitap.dart';
+import 'package:kutuphane_mobil_d/Model/kitapturu.dart';
+import 'package:kutuphane_mobil_d/Model/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/yayinevi.dart';
+import 'package:kutuphane_mobil_d/Model/yazar.dart';
 
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yazar_controller.dart';

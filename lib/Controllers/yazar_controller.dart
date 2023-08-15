@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/yazar.dart';
+import 'package:kutuphane_mobil_d/Model/yazar.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class YazarController extends GetxController {

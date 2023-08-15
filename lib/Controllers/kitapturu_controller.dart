@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:kutuphane_mobil_d/Degiskenler/kitapturu.dart';
+import 'package:kutuphane_mobil_d/Model/kitapturu.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class KitapTurController extends GetxController {
