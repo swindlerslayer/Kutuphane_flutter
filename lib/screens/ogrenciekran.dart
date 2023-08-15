@@ -87,7 +87,7 @@ class OgrenciSayfasi extends StatelessWidget {
                         } else {
                           Get.defaultDialog(
                               title: "Öğrenci Silinemedi",
-                              middleText: "Öğrenci Bir Öğrencide kayıtlı",
+                              middleText: "Öğrenci Adına Açık Bir Kayıt Var ",
                               backgroundColor:
                                   const Color.fromARGB(255, 110, 57, 57));
                         }

@@ -14,8 +14,6 @@ import 'kitap_ekle_duzenle.dart';
 class KitapSayfasi extends StatelessWidget {
   const KitapSayfasi({Key? key, required this.kullanici}) : super(key: key);
   final KullaniciGiris kullanici;
-  // var kitaplar = kitapcontroller.GetKitap(
-  //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +33,7 @@ class BodyWidget extends StatelessWidget {
   final KullaniciGiris kullanici;
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(

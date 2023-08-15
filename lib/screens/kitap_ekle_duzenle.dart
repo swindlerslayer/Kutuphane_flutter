@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
@@ -41,17 +43,20 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     var datayazar = contyazzar.yazarliste;
     var datayayinevi = contyayinevi.yayineviliste;
     var datakitapturu = contkitapturu.kitapturList;
-    KitapTurListe? selectekkitapturuilk;
+    KitapTurListe? selectedkitapturuilk;
     YayineviListe? selectedyeyineviilk;
     ListeYazar? selectedyazarilk;
     int? kitapid = gelenkitap?.id ?? 0;
     if (gelenkitap != null) {
-      selectekkitapturuilk =
+      selectedkitapturuilk =
           datakitapturu.firstWhere((kt) => kt.id == gelenkitap?.kitapTurId);
       selectedyeyineviilk =
           datayayinevi.firstWhere((ye) => ye.id == gelenkitap?.yayinEviId);
       selectedyazarilk =
           datayazar.firstWhere((y) => y.id == gelenkitap?.yazarId);
+      selectedKitapTurListe.value = selectedkitapturuilk;
+      selectedYayineviListe.value = selectedyeyineviilk;
+      selectedYazarListe.value = selectedyazarilk;
     }
     return Scaffold(
       appBar: AppBar(
@@ -73,6 +78,10 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
       body: Form(
         child: Column(
           children: [
+            gelenkitap?.resim != null
+                ? Image.memory(base64Decode(gelenkitap!.resim.toString()),
+                    width: 200, height: 200)
+                : const Icon(Icons.signal_cellular_no_sim_sharp),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
               child: TextFormField(
@@ -123,7 +132,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (KitapTurListe? value) {
                       selectedKitapTurListe.value = value;
                     },
-                    value: selectekkitapturuilk ?? selectedKitapTurListe.value,
+                    value: selectedKitapTurListe.value,
                     items: datakitapturu.map(
                       (KitapTurListe items) {
                         return DropdownMenuItem<KitapTurListe>(
@@ -144,7 +153,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (ListeYazar? value) {
                       selectedYazarListe.value = value;
                     },
-                    value: selectedyazarilk ?? selectedYazarListe.value,
+                    value: selectedYazarListe.value,
                     items: datayazar.map(
                       (ListeYazar items) {
                         return DropdownMenuItem<ListeYazar>(
@@ -165,7 +174,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     onChanged: (YayineviListe? value) {
                       selectedYayineviListe.value = value;
                     },
-                    value: selectedyeyineviilk ?? selectedYayineviListe.value,
+                    value: selectedYayineviListe.value,
                     items: datayayinevi.map(
                       (YayineviListe items) {
                         return DropdownMenuItem<YayineviListe>(
@@ -192,7 +201,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         selectedYayineviListe.value?.id;
                     k.yazarId =
                         selectedyazarilk?.id ?? selectedYazarListe.value?.id;
-                    k.kitapTurId = selectekkitapturuilk?.id ??
+                    k.kitapTurId = selectedkitapturuilk?.id ??
                         selectedKitapTurListe.value?.id;
 
                     var kaydetGuncelleKontrol = await KitapController()

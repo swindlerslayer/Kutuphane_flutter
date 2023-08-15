@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/screens/anaekran.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
@@ -103,6 +104,10 @@ class _LoginState extends State<Login> {
         await loginController.loginUser(context, kullaniciAdi, parola);
 
     if (loggedInUser?.kullaniciAdi != null) {
+      var dd = await Get.put(AnasayfaController())
+          .getOgrenciKitap(kullaniciAdi.toString(), parola.toString());
+      Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
+      Get.back();
       Get.to(NewScreen(kullanici: loggedInUser!));
     } else {
       Get.defaultDialog(

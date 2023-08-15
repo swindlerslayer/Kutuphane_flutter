@@ -7,6 +7,10 @@ import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
+Future sleep2() {
+  return Future.delayed(const Duration(seconds: 2), () => "2");
+}
+
 class KitapController extends GetxController {
   final _kitapList = <ListeKitap>[].obs;
   List<ListeKitap> get kitapList => _kitapList;
