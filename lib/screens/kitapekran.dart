@@ -4,7 +4,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/kullanici.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yayinevi_controller.dart';

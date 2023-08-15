@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 
 import '../Model/kullanici.dart';
 

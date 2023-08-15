@@ -3,8 +3,8 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/yazar_ekle_duzenle.dart';
+import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/screens/yazar_ekle_duzenle.dart';
 
 import '../Model/kullanici.dart';
 

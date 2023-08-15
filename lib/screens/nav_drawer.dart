@@ -7,12 +7,12 @@ import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 
 import 'package:kutuphane_mobil_d/Ekranlar/AnaEkran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/kitapekran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/kitapteslimekran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/kitapturuekran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/ogrenciekran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/yayineviekran.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
+import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
+import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
+import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
+import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
+import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
+import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
 import '../Model/kullanici.dart';
 

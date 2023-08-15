@@ -54,7 +54,7 @@ class NewScreen extends StatelessWidget {
                     child: ListTile(
                       title: Text(kullanici.toString()),
                       subtitle: Text(
-                          'Orta yazi,          ${data.adiSoyadi /*  */}                               yeteri uzunlukta alt satira iniyor'),
+                          'Orta yazi,          ${data.adiSoyadi /*  */}                               ${data.teslimDurumu} uzunlukta alt satira iniyor'),
                       isThreeLine: true,
                       leading: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,

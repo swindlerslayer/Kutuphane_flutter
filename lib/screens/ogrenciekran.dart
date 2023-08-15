@@ -2,24 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/kitaptur_ekle_duzenle.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
+import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 
 import '../Model/kullanici.dart';
+import 'ogrenci_ekle_duzenle.dart';
 
-class KitapTurSayfasi extends StatelessWidget {
-  KitapTurSayfasi({Key? key, required this.kullanici}) : super(key: key);
-  final cont = Get.put(KitapTurController());
+class OgrenciSayfasi extends StatelessWidget {
+  OgrenciSayfasi({Key? key, required this.kullanici}) : super(key: key);
+  final cont = Get.put(OgrenciController());
   final KullaniciGiris kullanici;
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
   Widget build(BuildContext context) {
+    PopupMenuButton(
+      icon: const Icon(Icons.settings),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: const Text("Düzenle"),
+          onTap: () {},
+        ),
+        PopupMenuItem(
+          child: const Text("Sil"),
+          onTap: () {},
+        ),
+        PopupMenuItem(
+          child: const Text("Google.com"),
+          onTap: () {},
+        ),
+      ],
+    );
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
-        title: const Text('Kitap Türü Sayfası'),
+        title: const Text('Ogrenci Sayfası'),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -36,9 +53,9 @@ class KitapTurSayfasi extends StatelessWidget {
           Obx(
             () => ListView.builder(
               shrinkWrap: true,
-              itemCount: cont.kitapturList.length,
+              itemCount: cont.ogrenciliste.length,
               itemBuilder: (context, index) {
-                var data = cont.kitapturList[index];
+                var data = cont.ogrenciliste[index];
                 return FocusedMenuHolder(
                   menuItems: [
                     FocusedMenuItem(
@@ -47,14 +64,14 @@ class KitapTurSayfasi extends StatelessWidget {
                         title: const Text("Düzenle"),
                         trailingIcon: const Icon(Icons.edit),
                         onPressed: () async {
-                          var tekitaptur = await KitapTurController()
-                              .getTekKitapTur(kullanici.kullaniciAdi.toString(),
+                          var tekogrenci = await OgrenciController()
+                              .getTekOgrenci(kullanici.kullaniciAdi.toString(),
                                   kullanici.parola.toString(), data.id);
 
-                          Get.to(KitapTurEkleDuzenleSayfasi(
+                          Get.to(OgrenciEkleDuzenleSayfasi(
                             kullanici: kullanici,
                             giristuru: "Düzenle",
-                            gelenkitaptur: tekitaptur,
+                            gelenogrenci: tekogrenci,
                           ));
                         }),
                     FocusedMenuItem(
@@ -62,15 +79,15 @@ class KitapTurSayfasi extends StatelessWidget {
                       title: const Text("Sil"),
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
-                        var silindimi = await KitapTurController().silKitapTuru(
+                        var silindimi = await OgrenciController().silOgrenci(
                             kullanici.kullaniciAdi, kullanici.parola, data.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
-                          cont.kitapturList.removeAt(index);
+                          cont.ogrenciliste.removeAt(index);
                         } else {
                           Get.defaultDialog(
-                              title: "Kitap Türü Silinemedi",
-                              middleText: "Kitap Türü Bir Kitapta kayıtlı",
+                              title: "Öğrenci Silinemedi",
+                              middleText: "Öğrenci Bir Öğrencide kayıtlı",
                               backgroundColor:
                                   const Color.fromARGB(255, 110, 57, 57));
                         }
@@ -83,7 +100,7 @@ class KitapTurSayfasi extends StatelessWidget {
                       leading: const Icon(
                         Icons.type_specimen,
                       ),
-                      title: Text(data.adi ?? ""),
+                      title: Text(data.adiSoyadi ?? ""),
                     ),
                   ),
                 );
@@ -97,14 +114,14 @@ class KitapTurSayfasi extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () async {
-                  var dd = await Get.put(KitapTurController()).getKitapTur(
+                  var dd = await Get.put(OgrenciController()).getOgrenci(
                       kullanici.kullaniciAdi.toString(),
                       kullanici.parola.toString());
 
-                  Get.put(KitapTurController()).kitapturList = dd ?? [];
+                  Get.put(OgrenciController()).ogrenciliste = dd ?? [];
                   Get.back();
 
-                  Get.to(KitapTurEkleDuzenleSayfasi(
+                  Get.to(OgrenciEkleDuzenleSayfasi(
                     kullanici: kullanici,
                     giristuru: "Ekle",
                   ));

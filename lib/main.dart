@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/login.dart';
+import 'package:kutuphane_mobil_d/screens/login.dart';
 
 void main() {
   runApp(const MyApp());

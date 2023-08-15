@@ -1,40 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Model/kullanici.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/yazarekran.dart';
+import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 
-import '../Model/yazar.dart';
+import '../Degiskenler/Ogrenci.dart';
 
-class YazarEkleDuzenleSayfasi extends StatelessWidget {
-  const YazarEkleDuzenleSayfasi(
+class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
+  const OgrenciEkleDuzenleSayfasi(
       {Key? key,
       required this.kullanici,
       required this.giristuru,
-      this.gelenyazar})
+      this.gelenogrenci})
       : super(key: key);
   final KullaniciGiris kullanici;
   final String giristuru;
-  final Yazar? gelenyazar;
+  final Ogrenci? gelenogrenci;
   @override
   Widget build(BuildContext context) {
-    int? kitapid = gelenyazar?.id ?? 0;
+    int? kitapid = gelenogrenci?.id ?? 0;
 
-    final yazartextcontrol = TextEditingController(text: gelenyazar?.adiSoyadi);
+    final ogrencitextcontrol =
+        TextEditingController(text: gelenogrenci?.adiSoyadi);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(YazarController()).getYazar(
+            var dd = await Get.put(OgrenciController()).getOgrenci(
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(YazarController()).yazarliste = dd ?? [];
+            Get.put(OgrenciController()).ogrenciliste = dd ?? [];
             Get.back();
-            Get.to(YazarSayfasi(kullanici: kullanici));
+            Get.to(OgrenciSayfasi(kullanici: kullanici));
           },
         ),
-        title: Text("Yazar $giristuru Sayfası"),
+        title: Text("Öğrenci $giristuru Sayfası"),
         centerTitle: true,
       ),
       body: Form(
@@ -43,12 +44,12 @@ class YazarEkleDuzenleSayfasi extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
-                controller: yazartextcontrol,
+                controller: ogrencitextcontrol,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Yazar adı"),
+                    border: OutlineInputBorder(), labelText: "Öğrenci adı"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen Yazar Adını Giriniz';
+                    return 'Lütfen Öğrenci Adını Giriniz';
                   }
                   return null;
                 },
@@ -59,23 +60,23 @@ class YazarEkleDuzenleSayfasi extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    Yazar y = Yazar();
-                    y.id = kitapid;
-                    y.adiSoyadi = yazartextcontrol.text;
+                    Ogrenci o = Ogrenci();
+                    o.id = kitapid;
+                    o.adiSoyadi = ogrencitextcontrol.text;
 
-                    var kaydetGuncelleKontrol = await YazarController()
-                        .ekleguncelleYazar(
-                            kullanici.kullaniciAdi, kullanici.parola, y);
+                    var kaydetGuncelleKontrol = await OgrenciController()
+                        .ekleguncelleOgrenci(
+                            kullanici.kullaniciAdi, kullanici.parola, o);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(
-                          title: "Yazar Eklendi",
+                          title: "Öğrenci Eklendi",
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
                     } else if (kaydetGuncelleKontrol == "Güncellendi") {
                       Get.defaultDialog(
-                          title: "Yazar Güncellendi",
+                          title: "Öğrenci Güncellendi",
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));

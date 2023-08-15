@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
-import 'package:kutuphane_mobil_d/Model/kitapturu.dart';
+import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/kullanici.dart';
-import 'package:kutuphane_mobil_d/Ekranlar/kitapturuekran.dart';
+import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 
-class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
-  const KitapTurEkleDuzenleSayfasi(
+import '../Model/yayinevi.dart';
+
+class YayineviEkleDuzenleSayfasi extends StatelessWidget {
+  const YayineviEkleDuzenleSayfasi(
       {Key? key,
       required this.kullanici,
       required this.giristuru,
-      this.gelenkitaptur})
+      this.gelenyayinevi})
       : super(key: key);
   final KullaniciGiris kullanici;
   final String giristuru;
-  final KitapTur? gelenkitaptur;
+  final Yayinevi? gelenyayinevi;
   @override
   Widget build(BuildContext context) {
-    int? kitapid = gelenkitaptur?.id ?? 0;
+    int? kitapid = gelenyayinevi?.id ?? 0;
 
-    final kitapturtextcontrol = TextEditingController(text: gelenkitaptur?.adi);
+    final yayinevitextcontrol = TextEditingController(text: gelenyayinevi?.adi);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(KitapTurController()).getKitapTur(
+            var dd = await Get.put(YayineviController()).getYayinevi(
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(KitapTurController()).kitapturList = dd ?? [];
+            Get.put(YayineviController()).yayineviliste = dd ?? [];
             Get.back();
-            Get.to(KitapTurSayfasi(kullanici: kullanici));
+            Get.to(YayineviSayfasi(kullanici: kullanici));
           },
         ),
-        title: Text("Kitap Tür $giristuru Sayfası"),
+        title: Text("Yayınevi $giristuru Sayfası"),
         centerTitle: true,
       ),
       body: Form(
@@ -42,12 +43,12 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
-                controller: kitapturtextcontrol,
+                controller: yayinevitextcontrol,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Kitap Türü adı"),
+                    border: OutlineInputBorder(), labelText: "Yayınevi adı"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen Kitap Türünü Giriniz';
+                    return 'Lütfen Yayınevi Adını Giriniz';
                   }
                   return null;
                 },
@@ -58,23 +59,23 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    KitapTur y = KitapTur();
+                    Yayinevi y = Yayinevi();
                     y.id = kitapid;
-                    y.adi = kitapturtextcontrol.text;
+                    y.adi = yayinevitextcontrol.text;
 
-                    var kaydetGuncelleKontrol = await KitapTurController()
-                        .ekleguncelleKitapTur(
+                    var kaydetGuncelleKontrol = await YayineviController()
+                        .ekleguncelleYayinevi(
                             kullanici.kullaniciAdi, kullanici.parola, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(
-                          title: "Kitap Türü Eklendi",
+                          title: "Yayınevi Eklendi",
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
                     } else if (kaydetGuncelleKontrol == "Güncellendi") {
                       Get.defaultDialog(
-                          title: "Kitap Türü Güncellendi",
+                          title: "Yayınevi Güncellendi",
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
