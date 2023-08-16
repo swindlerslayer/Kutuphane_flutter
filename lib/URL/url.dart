@@ -31,8 +31,6 @@ class TokenClass {
 }
 
 class TokenService {
-  //static const String uri = 'https://localhost:44399/';
-
   static Future<TokenClass> getToken({
     var kullaniciAdi = '',
     var parola = '',
@@ -66,5 +64,5 @@ class TokenService {
 }
 
 class ApiEndPoints {
-  static const String baseUrl = 'https://localhost:44399/';
+  static const String baseUrl = 'http://192.168.1.199/';
 }

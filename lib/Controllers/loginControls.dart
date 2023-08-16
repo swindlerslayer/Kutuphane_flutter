@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 
 class LoginController extends GetxController {
-  static const String baseUrl = "https://localhost:44399/api";
+  static const String baseUrl = "http://192.168.1.199/api";
 
 // getfinal_   aşşağıdaki 3 satırlık get-set propertie'yi oluşturur.
 
@@ -32,9 +32,7 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         // API'den dönen cevabı JSON olarak çözüyoruz.
         final Map<String, dynamic> responseData = json.decode(response.body);
-
         RxString rxpass = parola.obs;
-
         //final kullanici = KullaniciGiris.fromJson(responseData);
         KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
         kullanici.parola = rxpass;

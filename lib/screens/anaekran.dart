@@ -66,18 +66,13 @@ class BodyWidget extends StatelessWidget {
                           onPressed: () {})
                     ],
                     child: Card(
-                      child: ListTile(
+                      child: CheckboxListTile(
                         title: Text(data.adiSoyadi.toString()),
                         subtitle: Text(
-                            'Orta yazi,                                     ${data.teslimDurumu} uzunlukta alt satira iniyor'),
+                            '${data.adi},                                         ${data.alisTarihi}'),
                         isThreeLine: true,
-                        leading: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(' ${data.alisTarihi}'),
-                            Text('${data.teslimTarihi}'),
-                          ],
-                        ),
+                        onChanged: (bool? value) {},
+                        value: data.teslimDurumu,
                       ),
                     ),
                   );

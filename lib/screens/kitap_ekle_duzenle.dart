@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
@@ -34,6 +36,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? gelenresim = gelenkitap!.resim;
     final kullaniciadicontroller =
         TextEditingController(text: gelenkitap?.adi ?? "");
     final kitapadicontroller =
@@ -78,12 +81,71 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
       body: Form(
         child: Column(
           children: [
-            gelenkitap?.resim != null
-                ? Image.memory(base64Decode(gelenkitap!.resim.toString()),
-                    width: 200, height: 200)
-                : const Icon(Icons.signal_cellular_no_sim_sharp),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              child: gelenkitap?.resim != null
+                  ? Image.memory(base64Decode(gelenresim!),
+                      width: 200, height: 200)
+                  : const Icon(Icons.signal_cellular_no_sim_sharp),
+            ),
+
+            //gfcg
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                child: Center(
+                    child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                    foregroundColor: const Color.fromARGB(255, 1, 153, 255),
+                    backgroundColor: const Color.fromARGB(
+                        255, 32, 32, 32), // Background color
+                  ),
+                  onPressed: () async {
+                    bool? isCamera = await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                final ImagePicker picker = ImagePicker();
+                                final XFile? photo = await picker.pickImage(
+                                    source: ImageSource.camera);
+                                Image.file(photo as File);
+                                Navigator.of(context).pop(true);
+                              },
+                              child: const Text("Kamera"),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final ImagePicker picker = ImagePicker();
+
+                                final XFile? image = await picker.pickImage(
+                                    source: ImageSource.gallery);
+
+                                File? file = File(image!.path);
+                                gelenresim =
+                                    base64.encode(await file.readAsBytes());
+
+                                Navigator.of(context).pop(true);
+                              },
+                              child: const Text("Galeri "),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+
+                    if (isCamera == null) return;
+                  },
+                  child: Text("Resim ${giristuru.toString()}"),
+                ))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: TextFormField(
                 controller: kullaniciadicontroller,
                 decoration: const InputDecoration(
@@ -97,7 +159,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: TextFormField(
                 controller: kitapadicontroller,
                 decoration: const InputDecoration(
@@ -111,7 +173,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: TextFormField(
                 controller: sayfasayisicontroller,
                 decoration: const InputDecoration(
@@ -125,7 +187,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: Center(
                 child: Obx(
                   () => DropdownButton<KitapTurListe>(
@@ -146,7 +208,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: Center(
                 child: Obx(
                   () => DropdownButton<ListeYazar>(
@@ -167,7 +229,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: Center(
                 child: Obx(
                   () => DropdownButton<YayineviListe>(
@@ -188,9 +250,15 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               child: Center(
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shadowColor: const Color.fromARGB(255, 0, 0, 0),
+                    foregroundColor: const Color.fromARGB(255, 1, 153, 255),
+                    backgroundColor: const Color.fromARGB(
+                        255, 32, 32, 32), // Background color
+                  ),
                   onPressed: () async {
                     Kitap k = Kitap();
                     k.id = kitapid;
@@ -203,6 +271,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         selectedyazarilk?.id ?? selectedYazarListe.value?.id;
                     k.kitapTurId = selectedkitapturuilk?.id ??
                         selectedKitapTurListe.value?.id;
+                    k.resim = gelenresim;
 
                     var kaydetGuncelleKontrol = await KitapController()
                         .ekleguncelleKitap(
