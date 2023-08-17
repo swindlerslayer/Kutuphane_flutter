@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 
-import 'package:kutuphane_mobil_d/screens/AnaEkran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
@@ -15,6 +15,7 @@ import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
 import '../Model/Kullanici/kullanici.dart';
+import 'AnaEkran.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);
@@ -38,7 +39,14 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Anasayfa'),
-            onTap: () => {Get.to(NewScreen(kullanici: kullanici))},
+            onTap: () async {
+              var dd = await Get.put(AnasayfaController()).getOgrenciKitap(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
+              Get.back();
+              Get.to(NewScreen(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.book),

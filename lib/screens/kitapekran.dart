@@ -33,7 +33,6 @@ class BodyWidget extends StatelessWidget {
   final KullaniciGiris kullanici;
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(

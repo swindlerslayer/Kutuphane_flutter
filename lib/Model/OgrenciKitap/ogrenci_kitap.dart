@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final ogrenciKitap = ogrenciKitapFromJson(jsonString);
+
 import 'dart:convert';
 
 OgrenciKitap ogrenciKitapFromJson(String str) =>
@@ -7,44 +11,52 @@ String ogrenciKitapToJson(OgrenciKitap data) => json.encode(data.toJson());
 
 class OgrenciKitap {
   int? id;
-  String? adiSoyadi;
-  int? okulNo;
-  String? adi;
-  String? yayinEviAdi;
+  int? ogrenciId;
+  int? kitapId;
   String? alisTarihi;
   String? teslimTarihi;
+  int? kullancId;
+  String? kayitTarihi;
+  String? degisiklikYapan;
+  String? degisiklikTarihi;
   bool? teslimDurumu;
 
   OgrenciKitap({
     this.id,
-    this.adiSoyadi,
-    this.okulNo,
-    this.adi,
-    this.yayinEviAdi,
+    this.ogrenciId,
+    this.kitapId,
     this.alisTarihi,
     this.teslimTarihi,
+    this.kullancId,
+    this.kayitTarihi,
+    this.degisiklikYapan,
+    this.degisiklikTarihi,
     this.teslimDurumu,
   });
 
   factory OgrenciKitap.fromJson(Map<String, dynamic> json) => OgrenciKitap(
         id: json["ID"],
-        adiSoyadi: json["AdiSoyadi"],
-        okulNo: json["OkulNo"],
-        adi: json["Adi"],
-        yayinEviAdi: json["YayinEviAdi"],
+        ogrenciId: json["OgrenciID"],
+        kitapId: json["KitapID"],
         alisTarihi: json["AlisTarihi"],
         teslimTarihi: json["TeslimTarihi"],
+        kullancId: json["KullanıcıID"],
+        kayitTarihi: json["KayitTarihi"],
+        degisiklikYapan: json["DegisiklikYapan"],
+        degisiklikTarihi: json["DegisiklikTarihi"],
         teslimDurumu: json["TeslimDurumu"],
       );
 
   Map<String, dynamic> toJson() => {
         "ID": id,
-        "AdiSoyadi": adiSoyadi,
-        "OkulNo": okulNo,
-        "Adi": adi,
-        "YayinEviAdi": yayinEviAdi,
+        "OgrenciID": ogrenciId,
+        "KitapID": kitapId,
         "AlisTarihi": alisTarihi,
         "TeslimTarihi": teslimTarihi,
+        "KullanıcıID": kullancId,
+        "KayitTarihi": kayitTarihi,
+        "DegisiklikYapan": degisiklikYapan,
+        "DegisiklikTarihi": degisiklikTarihi,
         "TeslimDurumu": teslimDurumu,
       };
 }

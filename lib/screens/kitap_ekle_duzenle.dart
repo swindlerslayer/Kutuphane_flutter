@@ -33,10 +33,11 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final selectedYazarListe = Rxn<ListeYazar>();
   final selectedKitapTurListe = Rxn<KitapTurListe>();
   final selectedYayineviListe = Rxn<YayineviListe>();
-
+  final gelenresim = Rxn<String>();
   @override
   Widget build(BuildContext context) {
-    String? gelenresim = gelenkitap!.resim;
+    gelenresim.value = gelenkitap?.resim;
+
     final kullaniciadicontroller =
         TextEditingController(text: gelenkitap?.adi ?? "");
     final kitapadicontroller =
@@ -81,15 +82,12 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
       body: Form(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              child: gelenkitap?.resim != null
-                  ? Image.memory(base64Decode(gelenresim!),
+            Obx(
+              () => gelenresim.value != null
+                  ? Image.memory(base64Decode(gelenresim.value!),
                       width: 200, height: 200)
-                  : const Icon(Icons.signal_cellular_no_sim_sharp),
+                  : const Icon(Icons.signal_cellular_no_sim),
             ),
-
-            //gfcg
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                 child: Center(
@@ -113,6 +111,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                 final XFile? photo = await picker.pickImage(
                                     source: ImageSource.camera);
                                 Image.file(photo as File);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop(true);
                               },
                               child: const Text("Kamera"),
@@ -128,9 +127,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                     source: ImageSource.gallery);
 
                                 File? file = File(image!.path);
-                                gelenresim =
+                                gelenresim.value =
                                     base64.encode(await file.readAsBytes());
-
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).pop(true);
                               },
                               child: const Text("Galeri "),
@@ -271,7 +270,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         selectedyazarilk?.id ?? selectedYazarListe.value?.id;
                     k.kitapTurId = selectedkitapturuilk?.id ??
                         selectedKitapTurListe.value?.id;
-                    k.resim = gelenresim;
+                    k.resim = gelenresim.value;
 
                     var kaydetGuncelleKontrol = await KitapController()
                         .ekleguncelleKitap(
