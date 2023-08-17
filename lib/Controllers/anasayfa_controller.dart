@@ -12,6 +12,10 @@ class AnasayfaController extends GetxController {
   set kitapogrenci(List<OgrenciKitapListe> value) =>
       _kitapogrenci.value = value;
 
+  void refResh() {
+    _kitapogrenci.refresh();
+  }
+
   Future<OgrenciKitap?> getTekOgrenciKitap(
       String kullaniciAdi, String parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;

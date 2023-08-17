@@ -27,7 +27,6 @@ class BodyWidget extends StatelessWidget {
   BodyWidget({super.key, required this.kullanici});
   final cont = Get.put(AnasayfaController());
   final KullaniciGiris kullanici;
-  final deger = Rxn<bool>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,104 +44,132 @@ class BodyWidget extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: cont.kitapogrenci.length,
-              itemBuilder: (context, index) {
-                var data = cont.kitapogrenci[index];
-                deger.value = data.teslimDurumu;
+          Obx(
+            () => ListView.builder(
+                shrinkWrap: true,
+                itemCount: cont.kitapogrenci.length,
+                itemBuilder: (context, index) {
+                  var data = cont.kitapogrenci[index];
 
-                return FocusedMenuHolder(
+                  return FocusedMenuHolder(
                     onPressed: () {},
                     menuItems: [
                       FocusedMenuItem(
-                          backgroundColor:
-                              const Color.fromARGB(255, 110, 107, 107),
-                          title: const Text("Teslim Alındı"),
-                          trailingIcon: const Icon(Icons.edit),
-                          onPressed: () async {
-                            var gelenok = cont.getTekOgrenciKitap(
-                                kullanici.kullaniciAdi.value,
-                                kullanici.parola.value,
-                                data.id); // data.id
-                            var ogrencikitap = await gelenok;
+                        backgroundColor:
+                            const Color.fromARGB(255, 110, 107, 107),
+                        title: const Text("Teslim Alındı"),
+                        trailingIcon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          var gelenok = cont.getTekOgrenciKitap(
+                              kullanici.kullaniciAdi.value,
+                              kullanici.parola.value,
+                              data.id); // data.id
+                          var ogrencikitap = await gelenok;
 
-                            OgrenciKitap ok = OgrenciKitap();
+                          OgrenciKitap ok = OgrenciKitap();
 
-                            ok.teslimTarihi = DateTime.now().toString();
-                            ok.teslimDurumu = true;
-                            ok.ogrenciId = ogrencikitap?.ogrenciId;
-                            ok.kitapId = ogrencikitap?.kitapId;
-                            ok.kullancId = ogrencikitap?.kullancId;
-                            ok.kayitTarihi = ogrencikitap?.kayitTarihi;
-                            ok.alisTarihi = ogrencikitap?.alisTarihi;
-                            ok.id = data.id;
-                            deger.value = true;
-                            data.teslimDurumu = true;
+                          ok.teslimTarihi = DateTime.now().toString();
+                          ok.teslimDurumu = true;
+                          ok.ogrenciId = ogrencikitap?.ogrenciId;
+                          ok.kitapId = ogrencikitap?.kitapId;
+                          ok.kullancId = ogrencikitap?.kullancId;
+                          ok.kayitTarihi = ogrencikitap?.kayitTarihi;
+                          ok.alisTarihi = ogrencikitap?.alisTarihi;
+                          ok.id = data.id;
+                          data.teslimDurumu = true;
 
-                            var kaydetGuncelleKontrol =
-                                await AnasayfaController()
-                                    .ekleguncelleOgrenciKitap(
-                                        kullanici.kullaniciAdi,
-                                        kullanici.parola,
-                                        ok);
-                            if (kaydetGuncelleKontrol == "Güncellendi") {
-                              Get.defaultDialog(
-                                  title: "Güncellendi",
-                                  middleText: "",
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 141, 141, 141));
-                            }
-                          }),
+                          var kaydetGuncelleKontrol = await AnasayfaController()
+                              .ekleguncelleOgrenciKitap(
+                                  kullanici.kullaniciAdi, kullanici.parola, ok);
+                          if (kaydetGuncelleKontrol == "Güncellendi") {
+                            Get.defaultDialog(
+                                title: "Teslim Alındı!",
+                                middleText: "",
+                                backgroundColor:
+                                    const Color.fromARGB(255, 141, 141, 141));
+                          }
+                          cont.refResh();
+                        },
+                      ),
                       FocusedMenuItem(
-                          backgroundColor:
-                              const Color.fromARGB(255, 110, 57, 57),
-                          title: const Text("Teslim Alınmadı"),
-                          trailingIcon: const Icon(Icons.edit),
-                          onPressed: () async {
-                            var gelenok = cont.getTekOgrenciKitap(
-                                kullanici.kullaniciAdi.value,
-                                kullanici.parola.value,
-                                data.id); // data.id
-                            var ogrencikitap = await gelenok;
+                        backgroundColor: const Color.fromARGB(255, 110, 57, 57),
+                        title: const Text("Teslim Alınmadı"),
+                        trailingIcon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          var gelenok = cont.getTekOgrenciKitap(
+                              kullanici.kullaniciAdi.value,
+                              kullanici.parola.value,
+                              data.id); // data.id
+                          var ogrencikitap = await gelenok;
 
-                            OgrenciKitap ok = OgrenciKitap();
+                          OgrenciKitap ok = OgrenciKitap();
 
-                            ok.teslimDurumu = false;
-                            ok.ogrenciId = ogrencikitap?.ogrenciId;
-                            ok.kitapId = ogrencikitap?.kitapId;
-                            ok.kullancId = ogrencikitap?.kullancId;
-                            ok.kayitTarihi = ogrencikitap?.kayitTarihi;
-                            ok.alisTarihi = ogrencikitap?.alisTarihi;
-                            ok.degisiklikTarihi = DateTime.now().toString();
-                            ok.id = data.id;
-                            deger.value = false;
-                            data.teslimDurumu = false;
-                            var kaydetGuncelleKontrol =
-                                await AnasayfaController()
-                                    .ekleguncelleOgrenciKitap(
-                                        kullanici.kullaniciAdi,
-                                        kullanici.parola,
-                                        ok);
-                            if (kaydetGuncelleKontrol == "Güncellendi") {
-                              Get.defaultDialog(
-                                  title: "Güncellendi",
-                                  middleText: "",
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 141, 141, 141));
-                            }
-                          })
+                          ok.teslimDurumu = false;
+                          ok.ogrenciId = ogrencikitap?.ogrenciId;
+                          ok.kitapId = ogrencikitap?.kitapId;
+                          ok.kullancId = ogrencikitap?.kullancId;
+                          ok.kayitTarihi = ogrencikitap?.kayitTarihi;
+                          ok.alisTarihi = ogrencikitap?.alisTarihi;
+                          ok.degisiklikTarihi = DateTime.now().toString();
+                          ok.id = data.id;
+                          data.teslimDurumu = false;
+
+                          var kaydetGuncelleKontrol = await AnasayfaController()
+                              .ekleguncelleOgrenciKitap(
+                                  kullanici.kullaniciAdi, kullanici.parola, ok);
+                          if (kaydetGuncelleKontrol == "Güncellendi") {
+                            Get.defaultDialog(
+                                title: "Teslim Alınmadı!",
+                                middleText: "",
+                                backgroundColor:
+                                    const Color.fromARGB(255, 141, 141, 141));
+                          }
+                          cont.refResh();
+                        },
+                      )
                     ],
-                    child: Obx(() => Card(
-                            child: CheckboxListTile(
-                          title: Text(data.adiSoyadi.toString()),
-                          subtitle: Text(
-                              '${data.adi}                                                       ${data.alisTarihi}'),
-                          isThreeLine: true,
-                          onChanged: (bool? value) {},
-                          value: data.teslimDurumu,
-                        ))));
-              }),
+                    child: SizedBox(
+                      height: 100,
+                      child: Card(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                child:
+                                    const Icon(Icons.account_balance_wallet)),
+                            Container(
+                                alignment: Alignment.centerRight,
+                                child: Column(
+                                  children: [
+                                    Text(data.adiSoyadi.toString()),
+                                    Text('${data.adi}'),
+                                    Text('${data.alisTarihi}'),
+                                  ],
+                                )),
+                            Checkbox(
+                              value: data.teslimDurumu,
+                              onChanged: (value) {},
+                              checkColor: Colors.white,
+                              activeColor: Colors.blue,
+                            )
+                          ],
+
+                          // child: Obx(
+                          //   () => CheckboxListTile(
+                          //     title: Text(data.adiSoyadi.toString()),
+                          // subtitle: Text(
+                          //     '${data.adi}                                                       ${data.alisTarihi}'),
+                          //     isThreeLine: true,
+                          //     value: data.teslimDurumu.obs.value,
+                          //     onChanged: null,
+                          //   ),
+                          // ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          )
         ],
       ),
     );
