@@ -6,6 +6,7 @@ import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
+import 'package:kutuphane_mobil_d/Model/Sayfalar/KitapSayfa.dart';
 
 import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
@@ -70,10 +71,12 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
-              var dd = await Get.put(KitapController()).getKitap(
+              var dd = await Get.put(KitapController()).getSayfaKitap(
                   kullanici.kullaniciAdi.toString(),
-                  kullanici.parola.toString());
-              Get.put(KitapController()).kitapList = dd ?? [];
+                  kullanici.parola.toString(),
+                  0
+                  );
+              Get.put(KitapController()).sayfakitapList = (dd ?? []) as KitapSayfa?;
               Get.back();
 
               Get.to(KitapSayfasi(kullanici: kullanici));

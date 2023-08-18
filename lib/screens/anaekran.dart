@@ -129,14 +129,12 @@ class BodyWidget extends StatelessWidget {
                       )
                     ],
                     child: SizedBox(
-                      height: 100,
+                      height: 75,
                       child: Card(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                                child:
-                                    const Icon(Icons.account_balance_wallet)),
+                            const Icon(Icons.book_rounded),
                             Container(
                                 alignment: Alignment.centerRight,
                                 child: Column(

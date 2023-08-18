@@ -7,6 +7,8 @@ import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
+import '../Model/Sayfalar/KitapSayfa.dart';
+
 Future sleep2() {
   return Future.delayed(const Duration(seconds: 2), () => "2");
 }
@@ -15,6 +17,11 @@ class KitapController extends GetxController {
   final _kitapList = <ListeKitap>[].obs;
   List<ListeKitap> get kitapList => _kitapList;
   set kitapList(List<ListeKitap> value) => _kitapList.value = value;
+
+  final _sayfakitapList = KitapSayfa();
+  KitapSayfa? get sayfakitapList => _sayfakitapList;
+  set sayfakitapList(KitapSayfa? value) => _sayfakitapList;
+
 
   void get refResh {
     _kitapList.refresh();
@@ -37,6 +44,32 @@ class KitapController extends GetxController {
 
       if (response.statusCode == 200) {
         List<ListeKitap> kitap = listeKitapFromJson(response.body);
+        return kitap;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<KitapSayfa?> getSayfaKitap(
+      String kullaniciAdi, String parola, int sayfa) async {
+    var apilink = ApiEndPoints.baseUrl;
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+
+    try {
+      final response = await http.get(
+        Uri.parse('$apilink/api/kitapgetirfiltre?id=$sayfa'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer ${token.accessToken}"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        KitapSayfa kitap = kitapSayfaFromJson(response.body);
         return kitap;
       } else {
         return null;
@@ -97,6 +130,30 @@ class KitapController extends GetxController {
     }
   }
 
+  Future<String> getByFilter(
+      RxString kullaniciAdi, RxString parola, String k) async {
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+    var client = http.Client();
+    var url = Uri.parse('${ApiEndPoints.baseUrl}api/ekleduzenle');
+
+    try {
+      var headers = <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${token.accessToken}"
+      };
+      var badi = json.encode(k);
+      final response = await client.post(url, headers: headers, body: badi);
+      if (response.body == "true") {
+        return "Eklendi";
+      } else {
+        return "Güncellendi";
+      }
+    } catch (e) {
+      return "?";
+    }
+  }
+
   Future<String> ekleguncelleKitap(
       RxString kullaniciAdi, RxString parola, Kitap k) async {
     var token = await TokenService.getToken(
@@ -121,6 +178,8 @@ class KitapController extends GetxController {
     }
   }
 }
+
+
 //  {
 //         'ID': 0,
 //         'Adi': k.adi,

@@ -20,7 +20,19 @@ class KitapSayfasi extends StatelessWidget {
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
-        title: const Text('Kitap Sayfası'),
+        title: TextField(
+          autofocus: true,
+          decoration: InputDecoration(
+              hintText: " Ara...",
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {},
+              )),
+          style: const TextStyle(color: Colors.white, fontSize: 14.0),
+        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1)),
+        //  backgroundColor: Colors.white,
       ),
       body: BodyWidget(kullanici: kullanici),
     );
@@ -50,9 +62,9 @@ class BodyWidget extends StatelessWidget {
           Obx(
             () => ListView.builder(
               shrinkWrap: true,
-              itemCount: cont.kitapList.length,
+              itemCount: cont.sayfakitapList?.data?.length,
               itemBuilder: (context, index) {
-                var data = cont.kitapList[index];
+                var data = cont.sayfakitapList?.data?[index];
                 return FocusedMenuHolder(
                   menuItems: [
                     FocusedMenuItem(
@@ -64,7 +76,7 @@ class BodyWidget extends StatelessWidget {
                           var tekkitap = await KitapController().getTekKitap(
                               kullanici.kullaniciAdi.toString(),
                               kullanici.parola.toString(),
-                              data.id);
+                              data?.id);
                           var dd = await Get.put(YazarController()).getYazar(
                               kullanici.kullaniciAdi.toString(),
                               kullanici.parola.toString());
@@ -95,7 +107,7 @@ class BodyWidget extends StatelessWidget {
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
                         var silindimi = await KitapController().silKitap(
-                            kullanici.kullaniciAdi, kullanici.parola, data.id);
+                            kullanici.kullaniciAdi, kullanici.parola, data?.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
                           cont.kitapList.removeAt(index);
@@ -113,11 +125,11 @@ class BodyWidget extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       subtitle: Text(
-                          'Yazarı :  ${data.yazarAdi ?? ""}                                              '),
+                          'Yazarı :  ${data?.yazarId ?? ""}                                              '),
                       leading: const Icon(
                         Icons.menu_book_rounded,
                       ),
-                      title: Text(data.adi ?? ""),
+                      title: Text(data?.adi ?? ""),
                     ),
                   ),
                 );
