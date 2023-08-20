@@ -5,26 +5,29 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
+import 'package:kutuphane_mobil_d/Model/Sayfalar/kitap_sayfa.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
-
-import '../Model/Sayfalar/KitapSayfa.dart';
 
 Future sleep2() {
   return Future.delayed(const Duration(seconds: 2), () => "2");
 }
 
 class KitapController extends GetxController {
+  final _totalPageCount = 0.obs;
+  int get totalPageCount => _totalPageCount.value;
+  set totalPageCount(int value) => _totalPageCount.value = value;
+
   final _kitapList = <ListeKitap>[].obs;
   List<ListeKitap> get kitapList => _kitapList;
   set kitapList(List<ListeKitap> value) => _kitapList.value = value;
 
-  final _sayfakitapList = KitapSayfa();
-  KitapSayfa? get sayfakitapList => _sayfakitapList;
-  set sayfakitapList(KitapSayfa? value) => _sayfakitapList;
-
+  final _sayfakitapList = <KitapSayfa>[].obs;
+  List<KitapSayfa>? get sayfakitapList => _sayfakitapList;
+  set sayfakitapList(List<KitapSayfa>? value) => _sayfakitapList;
 
   void get refResh {
     _kitapList.refresh();
+    _sayfakitapList.refresh();
   }
 
   // ignore: non_constant_identifier_names
@@ -53,7 +56,7 @@ class KitapController extends GetxController {
     }
   }
 
-  Future<KitapSayfa?> getSayfaKitap(
+  Future<List<KitapSayfa>?> getSayfaKitap(
       String kullaniciAdi, String parola, int sayfa) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
@@ -69,8 +72,10 @@ class KitapController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        KitapSayfa kitap = kitapSayfaFromJson(response.body);
-        return kitap;
+        var dd = jsonDecode(response.body);
+        totalPageCount = dd["PageCount"];
+        sayfakitapList = kitapSayfaFromJson(jsonEncode(dd["Data"]));
+        return kitapSayfaFromJson(jsonEncode(dd["Data"]));
       } else {
         return null;
       }
@@ -179,18 +184,3 @@ class KitapController extends GetxController {
   }
 }
 
-
-//  {
-//         'ID': 0,
-//         'Adi': k.adi,
-//         'SayfaSayisi': k.sayfaSayisi,
-//         'KitapTurID': k.kitapTurId,
-//         'YayinEviID': k.yayinEviId,
-//         'YazarID': k.yazarId,
-//         'Barkod': k.barkod,
-//         'KayitYapan': k.kayitYapan,
-//         'KayitTarihi': k.kayitTarihi,
-//         'DegisiklikYapan': k.kayitTarihi,
-//         'DegisiklikTarihi': k.degisiklikTarihi,
-//         'Resim': k.resim
-//       }

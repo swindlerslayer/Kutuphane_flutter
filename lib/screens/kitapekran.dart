@@ -45,6 +45,14 @@ class BodyWidget extends StatelessWidget {
   final KullaniciGiris kullanici;
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var dd = await Get.put(KitapController()).getSayfaKitap(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString(), 0);
+
+      // cont.sayfakitapList = dd;
+      //cont.refResh;
+      print(cont.sayfakitapList?.length);
+    });
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -62,9 +70,9 @@ class BodyWidget extends StatelessWidget {
           Obx(
             () => ListView.builder(
               shrinkWrap: true,
-              itemCount: cont.sayfakitapList?.data?.length,
+              itemCount: cont.sayfakitapList?.length,
               itemBuilder: (context, index) {
-                var data = cont.sayfakitapList?.data?[index];
+                var data = cont.sayfakitapList?[index];
                 return FocusedMenuHolder(
                   menuItems: [
                     FocusedMenuItem(
@@ -110,7 +118,7 @@ class BodyWidget extends StatelessWidget {
                             kullanici.kullaniciAdi, kullanici.parola, data?.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
-                          cont.kitapList.removeAt(index);
+                          cont.sayfakitapList?.removeAt(index);
                         } else {
                           Get.defaultDialog(
                               title: "Kitap Silinemedi",

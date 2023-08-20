@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
-import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Model/Sayfalar/KitapSayfa.dart';
 
-import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -17,6 +14,8 @@ import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
 import '../Model/Kullanici/kullanici.dart';
 import 'AnaEkran.dart';
+import 'kitapekran.dart';
+import 'kitapekrandeneme.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);
@@ -71,28 +70,22 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
-              var dd = await Get.put(KitapController()).getSayfaKitap(
-                  kullanici.kullaniciAdi.toString(),
-                  kullanici.parola.toString(),
-                  0
-                  );
-              Get.put(KitapController()).sayfakitapList = (dd ?? []) as KitapSayfa?;
               Get.back();
 
-              Get.to(KitapSayfasi(kullanici: kullanici));
+              Get.to(() => KitapSayfasi(kullanici: kullanici));
             },
           ),
           ListTile(
             leading: const Icon(Icons.perm_contact_cal),
             title: const Text('Yazar'),
             onTap: () async {
-              var dd = await Get.put(YazarController()).getYazar(
+              await Get.put(YazarController()).getYazar(
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString());
-              Get.put(YazarController()).yazarliste = dd ?? [];
+
               Get.back();
 
-              Get.to(YazarSayfasi(kullanici: kullanici));
+              Get.to(() => YazarSayfasi(kullanici: kullanici));
             },
           ),
           ListTile(

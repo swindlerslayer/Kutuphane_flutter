@@ -70,7 +70,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
           onPressed: () async {
             var dd = await Get.put(KitapController()).getKitap(
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(KitapController()).kitapList = dd ?? [];
+            //  Get.put(KitapController()).sayfakitapList = dd;
             Get.back();
 
             Get.to(KitapSayfasi(kullanici: kullanici));
