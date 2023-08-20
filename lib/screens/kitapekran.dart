@@ -42,14 +42,17 @@ class KitapSayfasi extends StatelessWidget {
 class BodyWidget extends StatelessWidget {
   BodyWidget({super.key, required this.kullanici});
   final cont = Get.put(KitapController());
+  final contyazzar = Get.put(YazarController());
+  final contkitapturu = Get.put(KitapTurController());
+  final contyayinevi = Get.put(YayineviController());
   final KullaniciGiris kullanici;
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var dd = await Get.put(KitapController()).getSayfaKitap(
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString(), 0);
-
-      // cont.sayfakitapList = dd;
+      //  print(dd?.length);
+      cont.sayfakitapList = dd;
       //cont.refResh;
       print(cont.sayfakitapList?.length);
     });
@@ -73,6 +76,7 @@ class BodyWidget extends StatelessWidget {
               itemCount: cont.sayfakitapList?.length,
               itemBuilder: (context, index) {
                 var data = cont.sayfakitapList?[index];
+
                 return FocusedMenuHolder(
                   menuItems: [
                     FocusedMenuItem(

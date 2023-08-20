@@ -26,9 +26,11 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final contyazzar = Get.put(YazarController());
   final contkitapturu = Get.put(KitapTurController());
   final contyayinevi = Get.put(YayineviController());
+  final kitcont = Get.put(KitapController());
 
   final KullaniciGiris kullanici;
   final String giristuru;
+
   final Kitap? gelenkitap;
   final selectedYazarListe = Rxn<ListeYazar>();
   final selectedKitapTurListe = Rxn<KitapTurListe>();
@@ -37,7 +39,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     gelenresim.value = gelenkitap?.resim;
-
+    kitcont.getTekKitap(kullanici.kullaniciAdi.toString(),
+        kullanici.parola.toString(), gelenkitap?.id);
     final kullaniciadicontroller =
         TextEditingController(text: gelenkitap?.adi ?? "");
     final kitapadicontroller =
@@ -70,7 +73,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
           onPressed: () async {
             var dd = await Get.put(KitapController()).getKitap(
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            //  Get.put(KitapController()).sayfakitapList = dd;
+            Get.put(KitapController()).sayfakitapList = dd;
             Get.back();
 
             Get.to(KitapSayfasi(kullanici: kullanici));
@@ -264,12 +267,12 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     k.adi = kullaniciadicontroller.text;
                     k.sayfaSayisi = int.parse(kitapadicontroller.text);
                     k.barkod = int.parse(sayfasayisicontroller.text);
-                    k.yayinEviId = selectedyeyineviilk?.id ??
-                        selectedYayineviListe.value?.id;
+                    k.yayinEviId = selectedYayineviListe.value?.id ??
+                        selectedyeyineviilk?.id;
                     k.yazarId =
-                        selectedyazarilk?.id ?? selectedYazarListe.value?.id;
-                    k.kitapTurId = selectedkitapturuilk?.id ??
-                        selectedKitapTurListe.value?.id;
+                        selectedYazarListe.value?.id ?? selectedyazarilk?.id;
+                    k.kitapTurId = selectedKitapTurListe.value?.id ??
+                        selectedkitapturuilk?.id;
                     k.resim = gelenresim.value;
 
                     var kaydetGuncelleKontrol = await KitapController()

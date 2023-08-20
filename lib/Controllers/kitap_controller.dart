@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
-import 'package:kutuphane_mobil_d/Model/Sayfalar/kitap_sayfa.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 Future sleep2() {
@@ -21,9 +20,9 @@ class KitapController extends GetxController {
   List<ListeKitap> get kitapList => _kitapList;
   set kitapList(List<ListeKitap> value) => _kitapList.value = value;
 
-  final _sayfakitapList = <KitapSayfa>[].obs;
-  List<KitapSayfa>? get sayfakitapList => _sayfakitapList;
-  set sayfakitapList(List<KitapSayfa>? value) => _sayfakitapList;
+  final _sayfakitapList = <ListeKitap>[].obs;
+  List<ListeKitap>? get sayfakitapList => _sayfakitapList;
+  set sayfakitapList(List<ListeKitap>? value) => _sayfakitapList;
 
   void get refResh {
     _kitapList.refresh();
@@ -56,7 +55,7 @@ class KitapController extends GetxController {
     }
   }
 
-  Future<List<KitapSayfa>?> getSayfaKitap(
+  Future<List<ListeKitap>?> getSayfaKitap(
       String kullaniciAdi, String parola, int sayfa) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
@@ -74,12 +73,16 @@ class KitapController extends GetxController {
       if (response.statusCode == 200) {
         var dd = jsonDecode(response.body);
         totalPageCount = dd["PageCount"];
-        sayfakitapList = kitapSayfaFromJson(jsonEncode(dd["Data"]));
-        return kitapSayfaFromJson(jsonEncode(dd["Data"]));
+        List<ListeKitap> kitapListesi =
+            listeKitapFromJson(jsonEncode(dd["Data"]));
+        _sayfakitapList.assignAll(kitapListesi);
+        print(sayfakitapList?.length);
+        return listeKitapFromJson(jsonEncode(dd["Data"]));
       } else {
         return null;
       }
     } catch (e) {
+      print(e);
       return null;
     }
   }
@@ -183,4 +186,3 @@ class KitapController extends GetxController {
     }
   }
 }
-
