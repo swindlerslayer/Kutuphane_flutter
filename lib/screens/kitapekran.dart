@@ -3,9 +3,9 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yayinevi_controller.dart';
 import '../Controllers/yazar_controller.dart';
@@ -21,17 +21,18 @@ class KitapSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         title: TextField(
-          autofocus: true,
           decoration: InputDecoration(
               hintText: " Ara...",
-              border: InputBorder.none,
+              enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: 3, color: Color.fromARGB(255, 103, 103, 103))),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.search),
                 onPressed: () {},
               )),
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
-        iconTheme: const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1)),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
         //  backgroundColor: Colors.white,
       ),
       body: BodyWidget(kullanici: kullanici),
@@ -39,6 +40,25 @@ class KitapSayfasi extends StatelessWidget {
   }
 }
 
+ScrollController? _controller;
+@override
+scrollcontrol() {
+  final cont = Get.put(LoginController());
+  final kitcont = Get.put(KitapController());
+  if (_controller?.position.pixels == _controller?.position.maxScrollExtent) {
+    Get.put(KitapController()).getSayfaKitap(
+        cont.kullanicigiris?.kullaniciAdi.toString(),
+        cont.kullanicigiris?.parola.toString(),
+        kitcont.totalPageCount);
+  }
+}
+
+void initState() {
+  _controller = ScrollController();
+  _controller?.addListener(scrollcontrol());
+}
+
+@override
 class BodyWidget extends StatelessWidget {
   BodyWidget({super.key, required this.kullanici});
   final cont = Get.put(KitapController());
@@ -47,6 +67,7 @@ class BodyWidget extends StatelessWidget {
   final contyayinevi = Get.put(YayineviController());
 
   final KullaniciGiris kullanici;
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -78,6 +99,7 @@ class BodyWidget extends StatelessWidget {
             () => ListView.builder(
               shrinkWrap: true,
               itemCount: cont.sayfakitapList?.length,
+              controller: _controller,
               itemBuilder: (context, index) {
                 var data = cont.sayfakitapList?[index];
 
@@ -110,7 +132,6 @@ class BodyWidget extends StatelessWidget {
                           Get.back();
                           Get.put(YazarController()).yazarliste = dd ?? [];
                           Get.back();
-
                           Get.to(KitapEkleDuzenleSayfasi(
                             kullanici: kullanici,
                             giristuru: "Düzenle",

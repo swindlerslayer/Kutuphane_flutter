@@ -14,6 +14,11 @@ class LoginController extends GetxController {
   get id => _id.value;
   set id(value) => _id.value = value;
 
+  final _kullanicigiris = KullaniciGiris;
+  // ignore: recursive_getters
+  KullaniciGiris? get kullanicigiris => kullanicigiris;
+  set kullanicigiris(KullaniciGiris? value) => _kullanicigiris;
+
   Future<KullaniciGiris?> loginUser(
       BuildContext context, String kullaniciAdi, String parola) async {
     var token = await TokenService.getToken(
@@ -40,6 +45,7 @@ class LoginController extends GetxController {
         KullaniciController controller = KullaniciController();
 
         controller.value = kullanici.toString();
+        Get.put(LoginController()).kullanicigiris = kullanici;
 
         // Kullanıcıyı dönüyoruz.
         return kullanici;

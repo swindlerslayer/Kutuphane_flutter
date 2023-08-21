@@ -108,6 +108,8 @@ class _LoginState extends State<Login> {
           .getOgrenciKitap(kullaniciAdi.toString(), parola.toString());
       Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
       Get.back();
+      
+
       Get.to(NewScreen(kullanici: loggedInUser!));
     } else {
       Get.defaultDialog(

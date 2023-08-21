@@ -56,14 +56,14 @@ class KitapController extends GetxController {
   }
 
   Future<List<ListeKitap>?> getSayfaKitap(
-      String kullaniciAdi, String parola, int sayfa) async {
+      String? kullaniciAdi, String? parola, int sayfa) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
       final response = await http.get(
-        Uri.parse('$apilink/api/kitapgetirfiltre?id=$sayfa'),
+        Uri.parse('$apilink/api/kitapgetirsayfa?id=$sayfa'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer ${token.accessToken}"
