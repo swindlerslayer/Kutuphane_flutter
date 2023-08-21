@@ -15,7 +15,6 @@ import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 import '../Model/Kullanici/kullanici.dart';
 import 'AnaEkran.dart';
 import 'kitapekran.dart';
-import 'kitapekrandeneme.dart';
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({Key? key, required this.kullanici}) : super(key: key);

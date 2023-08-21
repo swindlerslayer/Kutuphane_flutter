@@ -45,16 +45,20 @@ class BodyWidget extends StatelessWidget {
   final contyazzar = Get.put(YazarController());
   final contkitapturu = Get.put(KitapTurController());
   final contyayinevi = Get.put(YayineviController());
+
   final KullaniciGiris kullanici;
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var yy = await Get.put(YazarController().getYazar(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
+      contyazzar.yazarliste = yy!;
       var dd = await Get.put(KitapController()).getSayfaKitap(
-          kullanici.kullaniciAdi.toString(), kullanici.parola.toString(), 0);
-      //  print(dd?.length);
+          kullanici.kullaniciAdi.toString(),
+          kullanici.parola.toString(),
+          cont.totalPageCount);
       cont.sayfakitapList = dd;
       //cont.refResh;
-      print(cont.sayfakitapList?.length);
     });
     return Container(
       decoration: const BoxDecoration(
@@ -137,7 +141,7 @@ class BodyWidget extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       subtitle: Text(
-                          'Yazarı :  ${data?.yazarId ?? ""}                                              '),
+                          'Yazarı :  ${data?.adiSoyadi ?? ""}                                              '),
                       leading: const Icon(
                         Icons.menu_book_rounded,
                       ),

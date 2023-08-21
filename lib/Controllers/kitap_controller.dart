@@ -76,13 +76,11 @@ class KitapController extends GetxController {
         List<ListeKitap> kitapListesi =
             listeKitapFromJson(jsonEncode(dd["Data"]));
         _sayfakitapList.assignAll(kitapListesi);
-        print(sayfakitapList?.length);
         return listeKitapFromJson(jsonEncode(dd["Data"]));
       } else {
         return null;
       }
     } catch (e) {
-      print(e);
       return null;
     }
   }
