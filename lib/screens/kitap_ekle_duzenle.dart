@@ -14,7 +14,6 @@ import 'package:kutuphane_mobil_d/Model/Yazar/yazarliste.dart';
 
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yazar_controller.dart';
-import 'kitapekran.dart';
 
 class KitapEkleDuzenleSayfasi extends StatelessWidget {
   KitapEkleDuzenleSayfasi(
@@ -65,20 +64,22 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
       selectedYayineviListe.value = selectedyeyineviilk;
       selectedYazarListe.value = selectedyazarilk;
     }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
+            final cont = Get.put(KitapController());
+
+            // cont.sayfakitapList?.clear();
+            print(cont.totalPageCount);
             var dd = await Get.put(KitapController()).getKitap(
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
             Get.put(KitapController()).sayfakitapList = dd;
             Get.back();
-            final cont = Get.put(KitapController());
-            cont.sayfakitapList?.clear();
-            Get.to(KitapSayfasi(kullanici: kullanici));
-            
+            // Get.to(KitapSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Kitap $giristuru Sayfası"),

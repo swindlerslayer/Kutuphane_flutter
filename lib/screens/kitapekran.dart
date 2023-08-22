@@ -22,8 +22,10 @@ class KitapSayfasi extends StatelessWidget {
       appBar: AppBar(
         title: TextField(
           decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
               hintText: " Ara...",
-              enabledBorder: const OutlineInputBorder(
+              border: const OutlineInputBorder(
                   borderSide: BorderSide(
                       width: 3, color: Color.fromARGB(255, 103, 103, 103))),
               suffixIcon: IconButton(
@@ -73,6 +75,10 @@ class BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final kitcont = Get.put(KitapController());
+
+      var kacincisayfa = kitcont.totalPageCount;
+
       var yy = await Get.put(YazarController().getYazar(
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
       contyazzar.yazarliste = yy!;
@@ -87,7 +93,6 @@ class BodyWidget extends StatelessWidget {
       contR.addListener(() async {
         if (contR.position.atEdge) {
           if (contR.position.pixels != 0.0) {
-            final kitcont = Get.put(KitapController());
             if (kitcont.totalPageCount! > kitcont.sayfakitapList!.length) {
               final cont = Get.put(LoginController());
               var dl = await Get.put(KitapController()).getSayfaKitap(
@@ -96,6 +101,8 @@ class BodyWidget extends StatelessWidget {
                   kitcont.simdikisayfa,
                   false);
               print(dl);
+
+              print("Kacincisayfa: $kacincisayfa");
             }
           }
         }
@@ -148,13 +155,13 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.parola.toString());
                                 Get.put(YayineviController()).yayineviliste =
                                     dd2 ?? [];
-                                Get.back();
+                                // Get.back();
                                 Get.put(KitapTurController()).kitapturList =
                                     dd1 ?? [];
-                                Get.back();
+                                // Get.back();
                                 Get.put(YazarController()).yazarliste =
                                     dd ?? [];
-                                Get.back();
+                                // Get.back();
                                 Get.to(() => KitapEkleDuzenleSayfasi(
                                       kullanici: kullanici,
                                       giristuru: "Düzenle",

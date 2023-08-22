@@ -89,7 +89,6 @@ class KitapController extends GetxController {
         List<Toplamsayfa> totalpage =
             toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
         totalPageCount = totalpage[0].sayfaSayisi;
-        print(totalpage[0].sayfaSayisi);
         print(totalPageCount);
         _sayfakitapList.addAll(kitapListesi);
         return listeKitapFromJson(jsonEncode(dd["Data"]));
@@ -97,7 +96,6 @@ class KitapController extends GetxController {
         return null;
       }
     } catch (e) {
-      print(e);
       return null;
     }
   }
