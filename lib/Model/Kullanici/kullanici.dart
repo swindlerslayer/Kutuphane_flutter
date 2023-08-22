@@ -14,33 +14,42 @@ class KullaniciController {
 }
 
 class KullaniciGiris {
-  int iD = 0;
-  var kullaniciAdi = ''.obs;
-  var parola = ''.obs;
-  var kayitYapan = ''.obs;
-  var kayitTarihi = ''.obs;
-  var degisiklikYapan = ''.obs;
-  var degisiklikTarihi = ''.obs;
+  int? id;
+  String? kullaniciAdi;
+  String? parola;
+  String? kayitYapan;
+  String? kayitTarihi;
+  String? degisiklikYapan;
+  String? degisiklikTarihi;
 
-  KullaniciGiris.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    kullaniciAdi.value = json['KullaniciAdi'];
-    parola.value = json['Parola'];
-    kayitYapan.value = json['KayitYapan'];
-    kayitTarihi.value = json['KayitTarihi'];
-    degisiklikYapan.value = json['DegisiklikYapan'];
-    degisiklikTarihi.value = json['DegisiklikTarihi'];
-  }
+  KullaniciGiris(
+      {this.id,
+      this.parola,
+      this.kullaniciAdi,
+      this.kayitYapan,
+      this.kayitTarihi,
+      this.degisiklikYapan,
+      this.degisiklikTarihi});
+
+  factory KullaniciGiris.fromJson(Map<String, dynamic> json) => KullaniciGiris(
+        id: json['ID'],
+        kullaniciAdi: json['KullaniciAdi'],
+        parola: json['Parola'],
+        kayitYapan: json['KayitYapan'],
+        kayitTarihi: json['KayitTarihi'],
+        degisiklikYapan: json['DegisiklikYapan'],
+        degisiklikTarihi: json['DegisiklikTarihi'],
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['ID'] = iD;
-    data['KullaniciAdi'] = kullaniciAdi.value;
-    data['Parola'] = parola.value;
-    data['KayitYapan'] = kayitYapan.value;
-    data['KayitTarihi'] = kayitTarihi.value;
-    data['DegisiklikYapan'] = degisiklikYapan.value;
-    data['DegisiklikTarihi'] = degisiklikTarihi.value;
+    data['ID'] = id;
+    data['KullaniciAdi'] = kullaniciAdi;
+    data['Parola'] = parola;
+    data['KayitYapan'] = kayitYapan;
+    data['KayitTarihi'] = kayitTarihi;
+    data['DegisiklikYapan'] = degisiklikYapan;
+    data['DegisiklikTarihi'] = degisiklikTarihi;
     return data;
   }
 }

@@ -80,7 +80,7 @@ class YayineviSayfasi extends StatelessWidget {
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
                         var silindimi = await YayineviController().silYayinevi(
-                            kullanici.kullaniciAdi, kullanici.parola, data.id);
+                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, data.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
                           cont.yayineviliste.removeAt(index);

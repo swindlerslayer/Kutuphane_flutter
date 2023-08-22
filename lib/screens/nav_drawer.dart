@@ -44,7 +44,7 @@ class NavDrawer extends StatelessWidget {
                   kullanici.parola.toString());
               Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
               Get.back();
-              Get.to(NewScreen(kullanici: kullanici));
+              Get.to(() => NewScreen(kullanici: kullanici));
             },
           ),
           ListTile(
@@ -61,8 +61,7 @@ class NavDrawer extends StatelessWidget {
                   kullanici.parola.toString());
               Get.put(OgrenciController()).ogrenciliste = dd ?? [];
               Get.back();
-
-              Get.to(OgrenciSayfasi(kullanici: kullanici));
+              Get.to(() => OgrenciSayfasi(kullanici: kullanici));
             },
           ),
           ListTile(
@@ -96,8 +95,7 @@ class NavDrawer extends StatelessWidget {
                   kullanici.parola.toString());
               Get.put(KitapTurController()).kitapturList = dd ?? [];
               Get.back();
-
-              Get.to(KitapTurSayfasi(kullanici: kullanici));
+              Get.to(() => KitapTurSayfasi(kullanici: kullanici));
             },
           ),
           ListTile(
@@ -109,8 +107,7 @@ class NavDrawer extends StatelessWidget {
                   kullanici.parola.toString());
               Get.put(YayineviController()).yayineviliste = dd ?? [];
               Get.back();
-
-              Get.to(YayineviSayfasi(kullanici: kullanici));
+              Get.to(() => YayineviSayfasi(kullanici: kullanici));
             },
           ),
         ],

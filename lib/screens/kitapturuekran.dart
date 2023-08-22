@@ -63,7 +63,9 @@ class KitapTurSayfasi extends StatelessWidget {
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
                         var silindimi = await KitapTurController().silKitapTuru(
-                            kullanici.kullaniciAdi, kullanici.parola, data.id);
+                            kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs,
+                            data.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
                           cont.kitapturList.removeAt(index);

@@ -64,7 +64,9 @@ class YazarSayfasi extends StatelessWidget {
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
                         var silindimi = await YazarController().silYazar(
-                            kullanici.kullaniciAdi, kullanici.parola, data.id);
+                            kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs,
+                            data.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
                           cont.yazarliste.removeAt(index);

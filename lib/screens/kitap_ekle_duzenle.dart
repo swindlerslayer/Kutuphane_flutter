@@ -277,7 +277,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
 
                     var kaydetGuncelleKontrol = await KitapController()
                         .ekleguncelleKitap(
-                            kullanici.kullaniciAdi, kullanici.parola, k);
+                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, k);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

@@ -65,7 +65,7 @@ class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
 
                     var kaydetGuncelleKontrol = await OgrenciController()
                         .ekleguncelleOgrenci(
-                            kullanici.kullaniciAdi, kullanici.parola, o);
+                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, o);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

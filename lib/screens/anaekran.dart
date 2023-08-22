@@ -61,8 +61,8 @@ class BodyWidget extends StatelessWidget {
                         trailingIcon: const Icon(Icons.edit),
                         onPressed: () async {
                           var gelenok = cont.getTekOgrenciKitap(
-                              kullanici.kullaniciAdi.value,
-                              kullanici.parola.value,
+                              kullanici.kullaniciAdi!,
+                              kullanici.parola!,
                               data.id); // data.id
                           var ogrencikitap = await gelenok;
 
@@ -80,7 +80,7 @@ class BodyWidget extends StatelessWidget {
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
-                                  kullanici.kullaniciAdi, kullanici.parola, ok);
+                                  kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, ok);
                           if (kaydetGuncelleKontrol == "Güncellendi") {
                             Get.defaultDialog(
                                 title: "Teslim Alındı!",
@@ -97,8 +97,8 @@ class BodyWidget extends StatelessWidget {
                         trailingIcon: const Icon(Icons.edit),
                         onPressed: () async {
                           var gelenok = cont.getTekOgrenciKitap(
-                              kullanici.kullaniciAdi.value,
-                              kullanici.parola.value,
+                              kullanici.kullaniciAdi!,
+                              kullanici.parola!,
                               data.id); // data.id
                           var ogrencikitap = await gelenok;
 
@@ -116,7 +116,7 @@ class BodyWidget extends StatelessWidget {
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
-                                  kullanici.kullaniciAdi, kullanici.parola, ok);
+                                  kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, ok);
                           if (kaydetGuncelleKontrol == "Güncellendi") {
                             Get.defaultDialog(
                                 title: "Teslim Alınmadı!",

@@ -64,7 +64,7 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
 
                     var kaydetGuncelleKontrol = await KitapTurController()
                         .ekleguncelleKitapTur(
-                            kullanici.kullaniciAdi, kullanici.parola, y);
+                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

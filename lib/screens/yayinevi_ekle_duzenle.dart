@@ -65,7 +65,7 @@ class YayineviEkleDuzenleSayfasi extends StatelessWidget {
 
                     var kaydetGuncelleKontrol = await YayineviController()
                         .ekleguncelleYayinevi(
-                            kullanici.kullaniciAdi, kullanici.parola, y);
+                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

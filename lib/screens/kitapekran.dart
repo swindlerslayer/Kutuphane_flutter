@@ -40,23 +40,24 @@ class KitapSayfasi extends StatelessWidget {
   }
 }
 
-ScrollController? _controller;
-@override
-scrollcontrol() {
-  final cont = Get.put(LoginController());
-  final kitcont = Get.put(KitapController());
-  if (_controller?.position.pixels == _controller?.position.maxScrollExtent) {
-    Get.put(KitapController()).getSayfaKitap(
-        cont.kullanicigiris?.kullaniciAdi.toString(),
-        cont.kullanicigiris?.parola.toString(),
-        kitcont.totalPageCount);
-  }
-}
+// Future<void> getMorePostList() async {
+//   scrollController.addListener(() async {
+//     if (scrollController.position.maxScrollExtent ==
+//         scrollController.position.pixels) {
+//       final kitcont = Get.put(KitapController());
+//       final cont = Get.put(LoginController());
+//       var dl = await Get.put(KitapController()).getSayfaKitap(
+//           cont.kullanicigiris?.kullaniciAdi.toString(),
+//           cont.kullanicigiris?.parola.toString(),
+//           kitcont.totalPageCount,
+//           false);
+//       kitcont.sayfakitapList?.addAll(dl!);
+//       print(dl);
+//     }
+//   });
+// }
 
-void initState() {
-  _controller = ScrollController();
-  _controller?.addListener(scrollcontrol());
-}
+ScrollController scrollController = ScrollController();
 
 @override
 class BodyWidget extends StatelessWidget {
@@ -67,7 +68,7 @@ class BodyWidget extends StatelessWidget {
   final contyayinevi = Get.put(YayineviController());
 
   final KullaniciGiris kullanici;
-
+  final contR = ScrollController();
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -77,10 +78,27 @@ class BodyWidget extends StatelessWidget {
       var dd = await Get.put(KitapController()).getSayfaKitap(
           kullanici.kullaniciAdi.toString(),
           kullanici.parola.toString(),
-          cont.totalPageCount);
+          cont.totalPageCount,
+          true);
+      //print(cont.totalPageCount);
       cont.sayfakitapList = dd;
-      //cont.refResh;
+      contR.addListener(() async {
+        if (contR.position.atEdge) {
+          if (contR.position.pixels != 0.0) {
+            final kitcont = Get.put(KitapController());
+            final cont = Get.put(LoginController());
+            var dl = await Get.put(KitapController()).getSayfaKitap(
+                cont.kullanicigiris.kullaniciAdi.toString(),
+                cont.kullanicigiris.parola.toString(),
+                kitcont.totalPageCount,
+                false);
+            kitcont.sayfakitapList?.addAll(dl!);
+            print(dl);
+          }
+        }
+      });
     });
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -96,81 +114,87 @@ class BodyWidget extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Obx(
-            () => ListView.builder(
+            () => ListView(
               shrinkWrap: true,
-              itemCount: cont.sayfakitapList?.length,
-              controller: _controller,
-              itemBuilder: (context, index) {
-                var data = cont.sayfakitapList?[index];
-
-                return FocusedMenuHolder(
-                  menuItems: [
-                    FocusedMenuItem(
-                        backgroundColor:
-                            const Color.fromARGB(255, 110, 107, 107),
-                        title: const Text("Düzenle"),
-                        trailingIcon: const Icon(Icons.edit),
-                        onPressed: () async {
-                          var tekkitap = await KitapController().getTekKitap(
-                              kullanici.kullaniciAdi.toString(),
-                              kullanici.parola.toString(),
-                              data?.id);
-                          var dd = await Get.put(YazarController()).getYazar(
-                              kullanici.kullaniciAdi.toString(),
-                              kullanici.parola.toString());
-                          var dd1 = await Get.put(KitapTurController())
-                              .getKitapTur(kullanici.kullaniciAdi.toString(),
-                                  kullanici.parola.toString());
-                          var dd2 = await Get.put(YayineviController())
-                              .getYayinevi(kullanici.kullaniciAdi.toString(),
-                                  kullanici.parola.toString());
-                          Get.put(YayineviController()).yayineviliste =
-                              dd2 ?? [];
-                          Get.back();
-                          Get.put(KitapTurController()).kitapturList =
-                              dd1 ?? [];
-                          Get.back();
-                          Get.put(YazarController()).yazarliste = dd ?? [];
-                          Get.back();
-                          Get.to(KitapEkleDuzenleSayfasi(
-                            kullanici: kullanici,
-                            giristuru: "Düzenle",
-                            gelenkitap: tekkitap,
-                          ));
-                        }),
-                    FocusedMenuItem(
-                      backgroundColor: const Color.fromARGB(255, 110, 77, 77),
-                      title: const Text("Sil"),
-                      trailingIcon: const Icon(Icons.delete),
-                      onPressed: () async {
-                        var silindimi = await KitapController().silKitap(
-                            kullanici.kullaniciAdi, kullanici.parola, data?.id);
-                        //  bool sil = await silindimi;
-                        if (silindimi) {
-                          cont.sayfakitapList?.removeAt(index);
-                        } else {
-                          Get.defaultDialog(
-                              title: "Kitap Silinemedi",
-                              middleText: "Kitap Bir Öğrencide kayıtlı",
+              controller: contR,
+              children: [
+                ...cont.sayfakitapList!.asMap().entries.map(
+                      (data) => FocusedMenuHolder(
+                        menuItems: [
+                          FocusedMenuItem(
                               backgroundColor:
-                                  const Color.fromARGB(255, 110, 57, 57));
-                        }
-                      },
-                    )
-                  ],
-                  onPressed: () {},
-                  child: Card(
-                    child: ListTile(
-                      subtitle: Text(
-                          'Yazarı :  ${data?.adiSoyadi ?? ""}                                              '),
-                      leading: const Icon(
-                        Icons.menu_book_rounded,
+                                  const Color.fromARGB(255, 110, 107, 107),
+                              title: const Text("Düzenle"),
+                              trailingIcon: const Icon(Icons.edit),
+                              onPressed: () async {
+                                var tekkitap = await KitapController()
+                                    .getTekKitap(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString(),
+                                        data.value.id);
+                                var dd = await Get.put(YazarController())
+                                    .getYazar(kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString());
+                                var dd1 = await Get.put(KitapTurController())
+                                    .getKitapTur(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString());
+                                var dd2 = await Get.put(YayineviController())
+                                    .getYayinevi(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString());
+                                Get.put(YayineviController()).yayineviliste =
+                                    dd2 ?? [];
+                                Get.back();
+                                Get.put(KitapTurController()).kitapturList =
+                                    dd1 ?? [];
+                                Get.back();
+                                Get.put(YazarController()).yazarliste =
+                                    dd ?? [];
+                                Get.back();
+                                Get.to(KitapEkleDuzenleSayfasi(
+                                  kullanici: kullanici,
+                                  giristuru: "Düzenle",
+                                  gelenkitap: tekkitap,
+                                ));
+                              }),
+                          FocusedMenuItem(
+                            backgroundColor:
+                                const Color.fromARGB(255, 110, 77, 77),
+                            title: const Text("Sil"),
+                            trailingIcon: const Icon(Icons.delete),
+                            onPressed: () async {
+                              var silindimi = await KitapController().silKitap(
+                                  kullanici.kullaniciAdi!.obs,
+                                  kullanici.parola!.obs,
+                                  data.value.id);
+                              //  bool sil = await silindimi;
+                              if (silindimi) {
+                                cont.sayfakitapList?.removeAt(data.key);
+                              } else {
+                                Get.defaultDialog(
+                                    title: "Kitap Silinemedi",
+                                    middleText: "Kitap Bir Öğrencide kayıtlı",
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 110, 57, 57));
+                              }
+                            },
+                          )
+                        ],
+                        onPressed: () {},
+                        child: Card(
+                          child: ListTile(
+                            subtitle: Text(
+                                'Yazarı :  ${data.value.adiSoyadi ?? ""}                                              '),
+                            leading: const Icon(
+                              Icons.menu_book_rounded,
+                            ),
+                            title: Text(data.value.adi ?? ""),
+                          ),
+                        ),
                       ),
-                      title: Text(data?.adi ?? ""),
                     ),
-                  ),
-                );
-              },
+              ],
             ),
           ),
           Positioned(

@@ -56,10 +56,11 @@ class KitapController extends GetxController {
   }
 
   Future<List<ListeKitap>?> getSayfaKitap(
-      String? kullaniciAdi, String? parola, int sayfa) async {
+      String? kullaniciAdi, String? parola, int sayfa, bool ilksayfa) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+    ilksayfa == true ? sayfa = 0 : sayfa = sayfa;
 
     try {
       final response = await http.get(
