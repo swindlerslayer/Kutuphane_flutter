@@ -69,16 +69,18 @@ class BodyWidget extends StatelessWidget {
 
   final KullaniciGiris kullanici;
   final contR = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       var yy = await Get.put(YazarController().getYazar(
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
       contyazzar.yazarliste = yy!;
+
       var dd = await Get.put(KitapController()).getSayfaKitap(
           kullanici.kullaniciAdi.toString(),
           kullanici.parola.toString(),
-          cont.totalPageCount,
+          cont.simdikisayfa,
           true);
       //print(cont.totalPageCount);
       cont.sayfakitapList = dd;
@@ -86,14 +88,15 @@ class BodyWidget extends StatelessWidget {
         if (contR.position.atEdge) {
           if (contR.position.pixels != 0.0) {
             final kitcont = Get.put(KitapController());
-            final cont = Get.put(LoginController());
-            var dl = await Get.put(KitapController()).getSayfaKitap(
-                cont.kullanicigiris.kullaniciAdi.toString(),
-                cont.kullanicigiris.parola.toString(),
-                kitcont.totalPageCount,
-                false);
-            kitcont.sayfakitapList?.addAll(dl!);
-            print(dl);
+            if (kitcont.totalPageCount! > kitcont.sayfakitapList!.length) {
+              final cont = Get.put(LoginController());
+              var dl = await Get.put(KitapController()).getSayfaKitap(
+                  cont.kullanicigiris.kullaniciAdi.toString(),
+                  cont.kullanicigiris.parola.toString(),
+                  kitcont.simdikisayfa,
+                  false);
+              print(dl);
+            }
           }
         }
       });
@@ -152,11 +155,11 @@ class BodyWidget extends StatelessWidget {
                                 Get.put(YazarController()).yazarliste =
                                     dd ?? [];
                                 Get.back();
-                                Get.to(KitapEkleDuzenleSayfasi(
-                                  kullanici: kullanici,
-                                  giristuru: "Düzenle",
-                                  gelenkitap: tekkitap,
-                                ));
+                                Get.to(() => KitapEkleDuzenleSayfasi(
+                                      kullanici: kullanici,
+                                      giristuru: "Düzenle",
+                                      gelenkitap: tekkitap,
+                                    ));
                               }),
                           FocusedMenuItem(
                             backgroundColor:
@@ -185,7 +188,7 @@ class BodyWidget extends StatelessWidget {
                         child: Card(
                           child: ListTile(
                             subtitle: Text(
-                                'Yazarı :  ${data.value.adiSoyadi ?? ""}                                              '),
+                                'Yazarı :  ${data.value.adiSoyadi ?? ""}                                         '),
                             leading: const Icon(
                               Icons.menu_book_rounded,
                             ),
@@ -219,11 +222,10 @@ class BodyWidget extends StatelessWidget {
                   Get.back();
                   Get.put(YazarController()).yazarliste = dd ?? [];
                   Get.back();
-
-                  Get.to(KitapEkleDuzenleSayfasi(
-                    kullanici: kullanici,
-                    giristuru: "Ekle",
-                  ));
+                  Get.to(() => KitapEkleDuzenleSayfasi(
+                        kullanici: kullanici,
+                        giristuru: "Ekle",
+                      ));
                 },
                 child: const CircleAvatar(
                   radius: 30,

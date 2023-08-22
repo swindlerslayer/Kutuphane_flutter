@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
@@ -12,7 +14,6 @@ import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
-import '../Model/Kullanici/kullanici.dart';
 import 'AnaEkran.dart';
 import 'kitapekran.dart';
 
@@ -69,7 +70,8 @@ class NavDrawer extends StatelessWidget {
             title: const Text('Kitap'),
             onTap: () async {
               Get.back();
-
+              final cont = Get.put(KitapController());
+              cont.sayfakitapList?.clear();
               Get.to(() => KitapSayfasi(kullanici: kullanici));
             },
           ),
@@ -80,9 +82,7 @@ class NavDrawer extends StatelessWidget {
               await Get.put(YazarController()).getYazar(
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString());
-
               Get.back();
-
               Get.to(() => YazarSayfasi(kullanici: kullanici));
             },
           ),

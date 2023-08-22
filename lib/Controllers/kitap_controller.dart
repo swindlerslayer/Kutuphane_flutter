@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
+import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 Future sleep2() {
@@ -13,8 +14,16 @@ Future sleep2() {
 
 class KitapController extends GetxController {
   final _totalPageCount = 0.obs;
-  int get totalPageCount => _totalPageCount.value;
-  set totalPageCount(int value) => _totalPageCount.value = value;
+  int? get totalPageCount => _totalPageCount.value;
+  set totalPageCount(int? value) => _totalPageCount.value = value!;
+
+  // final _totalPageCount = <ToplamSayfaa>[].obs;
+  // List<ToplamSayfaa>? get totalPageCount => _totalPageCount;
+  // set totalPageCount(List<ToplamSayfaa>? value) => _totalPageCount;
+
+  final _simdikisayfa = 0.obs;
+  int get simdikisayfa => _simdikisayfa.value;
+  set simdikisayfa(int value) => _simdikisayfa.value = value;
 
   final _kitapList = <ListeKitap>[].obs;
   List<ListeKitap> get kitapList => _kitapList;
@@ -61,7 +70,6 @@ class KitapController extends GetxController {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     ilksayfa == true ? sayfa = 0 : sayfa = sayfa;
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/kitapgetirsayfa?id=$sayfa'),
@@ -73,15 +81,23 @@ class KitapController extends GetxController {
 
       if (response.statusCode == 200) {
         var dd = jsonDecode(response.body);
-        totalPageCount = dd["PageCount"];
+
+        simdikisayfa = dd["PageCount"];
         List<ListeKitap> kitapListesi =
             listeKitapFromJson(jsonEncode(dd["Data"]));
-        _sayfakitapList.assignAll(kitapListesi);
+
+        List<Toplamsayfa> totalpage =
+            toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
+        totalPageCount = totalpage[0].sayfaSayisi;
+        print(totalpage[0].sayfaSayisi);
+        print(totalPageCount);
+        _sayfakitapList.addAll(kitapListesi);
         return listeKitapFromJson(jsonEncode(dd["Data"]));
       } else {
         return null;
       }
     } catch (e) {
+      print(e);
       return null;
     }
   }

@@ -75,8 +75,10 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                 kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
             Get.put(KitapController()).sayfakitapList = dd;
             Get.back();
-
+            final cont = Get.put(KitapController());
+            cont.sayfakitapList?.clear();
             Get.to(KitapSayfasi(kullanici: kullanici));
+            
           },
         ),
         title: Text("Kitap $giristuru Sayfası"),
@@ -276,8 +278,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     k.resim = gelenresim.value;
 
                     var kaydetGuncelleKontrol = await KitapController()
-                        .ekleguncelleKitap(
-                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, k);
+                        .ekleguncelleKitap(kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs, k);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(
