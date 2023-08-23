@@ -188,10 +188,12 @@ class KitapController extends GetxController {
       };
       var badi = json.encode(k);
       final response = await client.post(url, headers: headers, body: badi);
-      if (response.body == "true") {
+      if (response.statusCode == 200) {
         return "Eklendi";
+      } else if (response.statusCode == 500) {
+        return k.id.toString();
       } else {
-        return "Güncellendi";
+        return "?";
       }
     } catch (e) {
       return "?";

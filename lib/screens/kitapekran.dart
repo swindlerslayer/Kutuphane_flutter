@@ -4,6 +4,7 @@ import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
+import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import '../Controllers/kitapturu_controller.dart';
@@ -101,7 +102,6 @@ class BodyWidget extends StatelessWidget {
                   kitcont.simdikisayfa,
                   false);
               print(dl);
-
               print("Kacincisayfa: $kacincisayfa");
             }
           }
@@ -162,11 +162,33 @@ class BodyWidget extends StatelessWidget {
                                 Get.put(YazarController()).yazarliste =
                                     dd ?? [];
                                 // Get.back();
-                                Get.to(() => KitapEkleDuzenleSayfasi(
-                                      kullanici: kullanici,
-                                      giristuru: "Düzenle",
-                                      gelenkitap: tekkitap,
-                                    ));
+                                var result = await Get.to<Kitap>(
+                                    () => KitapEkleDuzenleSayfasi(
+                                          kullanici: kullanici,
+                                          giristuru: "Düzenle",
+                                          gelenkitap: tekkitap,
+                                        ));
+                                if (result != null) {
+                                  data.value.adi = result.adi;
+                                  data.value.sayfaSayisi = result.sayfaSayisi;
+                                  data.value.barkod = result.barkod;
+                                  data.value.degisiklikTarihi =
+                                      result.degisiklikTarihi;
+                                  data.value.degisiklikYapan =
+                                      result.degisiklikYapan;
+                                  data.value.kayitTarihi = result.kayitTarihi;
+                                  data.value.kayitYapan = result.kayitYapan;
+                                  data.value.kitapTurId = result.kitapTurId;
+                                  data.value.yayinEviId = result.yayinEviId;
+                                  data.value.yazarId = result.yazarId;
+                                  data.value.resim = result.resim;
+                                  cont.refResh;
+                                  Get.defaultDialog(
+                                      title: "Kitap Güncellendi",
+                                      middleText: "",
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 141, 141, 141));
+                                }
                               }),
                           FocusedMenuItem(
                             backgroundColor:

@@ -30,6 +30,12 @@ class BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var dd = await Get.put(AnasayfaController()).getOgrenciKitap(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+      Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
+    });
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -80,7 +86,9 @@ class BodyWidget extends StatelessWidget {
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
-                                  kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, ok);
+                                  kullanici.kullaniciAdi!.obs,
+                                  kullanici.parola!.obs,
+                                  ok);
                           if (kaydetGuncelleKontrol == "Güncellendi") {
                             Get.defaultDialog(
                                 title: "Teslim Alındı!",
@@ -116,7 +124,9 @@ class BodyWidget extends StatelessWidget {
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
-                                  kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, ok);
+                                  kullanici.kullaniciAdi!.obs,
+                                  kullanici.parola!.obs,
+                                  ok);
                           if (kaydetGuncelleKontrol == "Güncellendi") {
                             Get.defaultDialog(
                                 title: "Teslim Alınmadı!",

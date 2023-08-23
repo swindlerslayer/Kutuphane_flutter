@@ -72,10 +72,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
             Get.back();
+            // final cont = Get.put(KitapController());
 
-            //final cont = Get.put(KitapController());
-
-            // cont.sayfakitapList?.clear();
+            // // cont.sayfakitapList?.clear();
             // print(cont.totalPageCount);
             // var dd = await Get.put(KitapController()).getKitap(
             //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
@@ -289,9 +288,16 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
-                    } else if (kaydetGuncelleKontrol == "Güncellendi") {
+                    } else if (kaydetGuncelleKontrol == k.id.toString()) {
+                      var tekkitap = await KitapController().getTekKitap(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString(),
+                          k.id);
+
+                      Get.back<Kitap>(result: tekkitap);
+                    } else {
                       Get.defaultDialog(
-                          title: "Kitap Güncellendi",
+                          title: "?????????",
                           middleText: "",
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
