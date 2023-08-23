@@ -16,6 +16,12 @@ class KitapTurSayfasi extends StatelessWidget {
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var dd = await Get.put(KitapTurController()).getKitapTur(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+      Get.put(KitapTurController()).kitapturList = dd ?? [];
+    });
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(

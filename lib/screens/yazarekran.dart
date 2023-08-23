@@ -16,6 +16,11 @@ class YazarSayfasi extends StatelessWidget {
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var dd = await Get.put(YazarController()).getYazar(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+      Get.put(YazarController()).yazarliste = dd ?? [];
+    });
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -105,7 +110,6 @@ class YazarSayfasi extends StatelessWidget {
                       kullanici.parola.toString());
 
                   Get.put(YazarController()).yazarliste = dd ?? [];
-                  Get.back();
 
                   Get.to(YazarEkleDuzenleSayfasi(
                     kullanici: kullanici,

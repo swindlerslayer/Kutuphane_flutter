@@ -224,15 +224,16 @@ class BodyWidget extends StatelessWidget {
                       kullanici.kullaniciAdi.toString(),
                       kullanici.parola.toString());
                   Get.put(YayineviController()).yayineviliste = dd2 ?? [];
-                  Get.back();
                   Get.put(KitapTurController()).kitapturList = dd1 ?? [];
-                  Get.back();
                   Get.put(YazarController()).yazarliste = dd ?? [];
-                  Get.back();
-                  Get.to(() => KitapEkleDuzenleSayfasi(
-                        kullanici: kullanici,
-                        giristuru: "Ekle",
-                      ));
+                  Get.to(KitapEkleDuzenleSayfasi(
+                    kullanici: kullanici,
+                    giristuru: "Ekle",
+                  ));
+                  // Get.to(() => KitapEkleDuzenleSayfasi(
+                  //       kullanici: kullanici,
+                  //       giristuru: "Ekle",
+                  //     ));
                 },
                 child: const CircleAvatar(
                   radius: 30,

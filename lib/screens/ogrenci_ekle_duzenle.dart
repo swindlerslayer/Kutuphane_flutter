@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/ogrenci_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/Model/Ogrenci/ogrenci.dart';
 
 class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
@@ -27,11 +26,10 @@ class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(OgrenciController()).getOgrenci(
-                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(OgrenciController()).ogrenciliste = dd ?? [];
+            // var dd = await Get.put(OgrenciController()).getOgrenci(
+            //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+            // Get.put(OgrenciController()).ogrenciliste = dd ?? [];
             Get.back();
-            Get.to(OgrenciSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Öğrenci $giristuru Sayfası"),
@@ -64,8 +62,8 @@ class OgrenciEkleDuzenleSayfasi extends StatelessWidget {
                     o.adiSoyadi = ogrencitextcontrol.text;
 
                     var kaydetGuncelleKontrol = await OgrenciController()
-                        .ekleguncelleOgrenci(
-                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, o);
+                        .ekleguncelleOgrenci(kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs, o);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

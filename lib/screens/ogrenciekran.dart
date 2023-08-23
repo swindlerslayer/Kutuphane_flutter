@@ -16,23 +16,11 @@ class OgrenciSayfasi extends StatelessWidget {
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
   Widget build(BuildContext context) {
-    PopupMenuButton(
-      icon: const Icon(Icons.settings),
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          child: const Text("Düzenle"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Sil"),
-          onTap: () {},
-        ),
-        PopupMenuItem(
-          child: const Text("Google.com"),
-          onTap: () {},
-        ),
-      ],
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var dd = await Get.put(OgrenciController()).getOgrenci(
+          kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+      Get.put(OgrenciController()).ogrenciliste = dd ?? [];
+    });
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -80,7 +68,9 @@ class OgrenciSayfasi extends StatelessWidget {
                       trailingIcon: const Icon(Icons.delete),
                       onPressed: () async {
                         var silindimi = await OgrenciController().silOgrenci(
-                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, data.id);
+                            kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs,
+                            data.id);
                         //  bool sil = await silindimi;
                         if (silindimi) {
                           cont.ogrenciliste.removeAt(index);
@@ -117,10 +107,7 @@ class OgrenciSayfasi extends StatelessWidget {
                   var dd = await Get.put(OgrenciController()).getOgrenci(
                       kullanici.kullaniciAdi.toString(),
                       kullanici.parola.toString());
-
                   Get.put(OgrenciController()).ogrenciliste = dd ?? [];
-                  Get.back();
-
                   Get.to(OgrenciEkleDuzenleSayfasi(
                     kullanici: kullanici,
                     giristuru: "Ekle",

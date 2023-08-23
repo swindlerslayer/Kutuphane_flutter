@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
 import '../Model/Yazar/yazar.dart';
 
@@ -27,11 +26,7 @@ class YazarEkleDuzenleSayfasi extends StatelessWidget {
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(YazarController()).getYazar(
-                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(YazarController()).yazarliste = dd ?? [];
             Get.back();
-            Get.to(YazarSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Yazar $giristuru Sayfası"),

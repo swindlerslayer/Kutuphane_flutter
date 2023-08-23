@@ -26,9 +26,7 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(KitapTurController()).getKitapTur(
-                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(KitapTurController()).kitapturList = dd ?? [];
+          
             Get.back();
             Get.to(KitapTurSayfasi(kullanici: kullanici));
           },

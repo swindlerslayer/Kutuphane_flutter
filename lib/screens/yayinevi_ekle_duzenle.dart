@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 
 import '../Model/Yayinevi/yayinevi.dart';
 
@@ -27,11 +26,7 @@ class YayineviEkleDuzenleSayfasi extends StatelessWidget {
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            var dd = await Get.put(YayineviController()).getYayinevi(
-                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(YayineviController()).yayineviliste = dd ?? [];
             Get.back();
-            Get.to(YayineviSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Yayınevi $giristuru Sayfası"),
@@ -64,8 +59,8 @@ class YayineviEkleDuzenleSayfasi extends StatelessWidget {
                     y.adi = yayinevitextcontrol.text;
 
                     var kaydetGuncelleKontrol = await YayineviController()
-                        .ekleguncelleYayinevi(
-                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, y);
+                        .ekleguncelleYayinevi(kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

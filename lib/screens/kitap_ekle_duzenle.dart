@@ -71,14 +71,15 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
-            final cont = Get.put(KitapController());
+            Get.back();
+
+            //final cont = Get.put(KitapController());
 
             // cont.sayfakitapList?.clear();
-            print(cont.totalPageCount);
-            var dd = await Get.put(KitapController()).getKitap(
-                kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            Get.put(KitapController()).sayfakitapList = dd;
-            Get.back();
+            // print(cont.totalPageCount);
+            // var dd = await Get.put(KitapController()).getKitap(
+            //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+            // Get.put(KitapController()).sayfakitapList = dd;
             // Get.to(KitapSayfasi(kullanici: kullanici));
           },
         ),
