@@ -18,10 +18,20 @@ class KitapSayfasi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textEditingController = TextEditingController();
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         title: TextField(
+          onSubmitted: (value) {
+            final cont = Get.put(KitapController());
+
+            cont.getByFilter(kullanici.kullaniciAdi!.obs, kullanici.parola!.obs,
+                value, cont.simdikisayfa, true);
+            //     print('value: $value');
+          },
+          controller: textEditingController,
           decoration: InputDecoration(
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
@@ -43,23 +53,6 @@ class KitapSayfasi extends StatelessWidget {
   }
 }
 
-// Future<void> getMorePostList() async {
-//   scrollController.addListener(() async {
-//     if (scrollController.position.maxScrollExtent ==
-//         scrollController.position.pixels) {
-//       final kitcont = Get.put(KitapController());
-//       final cont = Get.put(LoginController());
-//       var dl = await Get.put(KitapController()).getSayfaKitap(
-//           cont.kullanicigiris?.kullaniciAdi.toString(),
-//           cont.kullanicigiris?.parola.toString(),
-//           kitcont.totalPageCount,
-//           false);
-//       kitcont.sayfakitapList?.addAll(dl!);
-//       print(dl);
-//     }
-//   });
-// }
-
 ScrollController scrollController = ScrollController();
 
 @override
@@ -75,11 +68,9 @@ class BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final kitcont = Get.put(KitapController());
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final kitcont = Get.put(KitapController());
-
-      var kacincisayfa = kitcont.totalPageCount;
-
       var yy = await Get.put(YazarController().getYazar(
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
       contyazzar.yazarliste = yy!;
@@ -94,15 +85,15 @@ class BodyWidget extends StatelessWidget {
       contR.addListener(() async {
         if (contR.position.atEdge) {
           if (contR.position.pixels != 0.0) {
-            if (kitcont.totalPageCount! > kitcont.sayfakitapList!.length) {
+            if (kitcont.totalPageCount! >= kitcont.simdikisayfa) {
+              kitcont.isloading = true;
+
               final cont = Get.put(LoginController());
-              var dl = await Get.put(KitapController()).getSayfaKitap(
+              await Get.put(KitapController()).getSayfaKitap(
                   cont.kullanicigiris.kullaniciAdi.toString(),
                   cont.kullanicigiris.parola.toString(),
                   kitcont.simdikisayfa,
                   false);
-              print(dl);
-              print("Kacincisayfa: $kacincisayfa");
             }
           }
         }
@@ -226,6 +217,14 @@ class BodyWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                cont.isloading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : const SizedBox(
+                        width: 0,
+                        height: 0,
+                      )
               ],
             ),
           ),

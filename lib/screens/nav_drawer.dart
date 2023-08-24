@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/static_controllers.dart';
+import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
@@ -33,8 +34,11 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Anasayfa'),
             onTap: () async {
-              //Get.back();
-              Statikler.listetemizle();
+              Get.back();
+              var dd = await Get.put(AnasayfaController()).getOgrenciKitap(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
+              Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
 
               Get.to(() => NewScreen(kullanici: kullanici));
             },
@@ -42,7 +46,9 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.book),
             title: const Text('Kitap Teslim'),
-            onTap: () => {Get.to(KitapTeslimSayfasi(kullanici: kullanici))},
+            onTap: () {
+              Get.to(KitapTeslimSayfasi(kullanici: kullanici));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.supervised_user_circle),
@@ -56,8 +62,6 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
-              // final cont = Get.put(KitapController());
-              // cont.sayfakitapList?.clear();
               Get.to(() => KitapSayfasi(kullanici: kullanici));
             },
           ),

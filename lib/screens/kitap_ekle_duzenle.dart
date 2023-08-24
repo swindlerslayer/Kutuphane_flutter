@@ -293,7 +293,6 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                           kullanici.kullaniciAdi.toString(),
                           kullanici.parola.toString(),
                           k.id);
-
                       Get.back<Kitap>(result: tekkitap);
                     } else {
                       Get.defaultDialog(
