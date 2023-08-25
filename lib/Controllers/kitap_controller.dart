@@ -51,11 +51,10 @@ class KitapController extends GetxController {
     _sayfakitapList.refresh();
   }
 
-  // ignore: non_constant_identifier_names
-  Future<List<ListeKitap>?> getKitap(String KullaniciAdi, String Parola) async {
+  Future<List<ListeKitap>?> getKitap(String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
-        kullaniciAdi: KullaniciAdi, parola: Parola, loginMi: false);
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
       final response = await http.get(
@@ -77,13 +76,6 @@ class KitapController extends GetxController {
     }
   }
 
-  //Oluşturulabilecek Muhtemel Model
-  //KULLANICI ADI
-  //PAROLA
-  //İSLEM => SAYFA / SAYFA FİLTRE
-  //İLK SAYFA => TRUE / FALSE
-  //KALİNANSAYFA
-  //
   Future<List<ListeKitap>?> getSayfaFiltreKitap(MetodModel x) async {
     metodModelFromJson(jsonEncode(x));
     var ka = x.kullaniciAdi;
@@ -95,14 +87,17 @@ class KitapController extends GetxController {
     var q = x.querry;
     var token = await TokenService.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
-    ilk == true ? sayfa = 0 : sayfa = sayfa;
+    ilk == true
+        ? filtresimdikisayfa = 0
+        : filtresimdikisayfa = filtresimdikisayfa;
+
+    ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
     if (ilk == true) {
       sayfakitapList?.clear();
     }
     if (islem == "filtre") {
       final response = await http.get(
-        Uri.parse(
-            '$apilink/api/kitapgetirfiltre?querry=$q&sayfa=$filtresimdikisayfa'),
+        Uri.parse('$apilink/api/kitapgetirfiltre?querry=$q&sayfa=$sayfa'),
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Authorization": "Bearer ${token.accessToken}"
@@ -113,8 +108,8 @@ class KitapController extends GetxController {
         filtresayfa = true;
         filtresimdikisayfa = filtresimdikisayfa + 1;
         List<ListeKitap> kitap = listeKitapFromJson(response.body);
+
         _sayfakitapList.addAll(kitap);
-        print(filtresimdikisayfa);
         return kitap;
       } else {
         return null;
@@ -139,8 +134,7 @@ class KitapController extends GetxController {
             toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
         gelenpagecount = totalpage[0].sayfaSayisi;
         totalPageCount = (gelenpagecount! / 15).ceil();
-        print(" GELEN PAGE COUNT $gelenpagecount");
-        print(" TOTAL PAGE COUNT $totalPageCount");
+
         _sayfakitapList.addAll(kitapListesi);
         isloading = false;
         return listeKitapFromJson(jsonEncode(dd["Data"]));
@@ -151,91 +145,11 @@ class KitapController extends GetxController {
     return null;
   }
 
-  Future<List<ListeKitap>?> getSayfaKitap(
-      String? kullaniciAdi, String? parola, int sayfa, bool ilksayfa) async {
-    var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
-        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-    ilksayfa == true ? sayfa = 0 : sayfa = sayfa;
-    if (ilksayfa == true) {
-      sayfakitapList?.clear();
-    }
-    try {
-      final response = await http.get(
-        Uri.parse('$apilink/api/kitapgetirsayfa?id=$sayfa'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
-
-      if (response.statusCode == 200) {
-        var dd = jsonDecode(response.body);
-
-        simdikisayfa = dd["PageCount"];
-        List<ListeKitap> kitapListesi =
-            listeKitapFromJson(jsonEncode(dd["Data"]));
-
-        List<Toplamsayfa> totalpage =
-            toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
-        gelenpagecount = totalpage[0].sayfaSayisi;
-        totalPageCount = (gelenpagecount! / 15).ceil();
-        print(" GELEN PAGE COUNT $gelenpagecount");
-        print(" TOTAL PAGE COUNT $totalPageCount");
-        _sayfakitapList.addAll(kitapListesi);
-        isloading = false;
-        return listeKitapFromJson(jsonEncode(dd["Data"]));
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<List<ListeKitap>?> getByFilter(RxString kullaniciAdi, RxString parola,
-      String querry, int sayfa, bool ilksayfa) async {
-    var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
-        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-    ilksayfa == true
-        ? filtresimdikisayfa = 0
-        : filtresimdikisayfa = filtresimdikisayfa;
-    if (ilksayfa == true) {
-      _sayfakitapList.clear();
-    } else {}
-
-    try {
-      final response = await http.get(
-        Uri.parse(
-            '$apilink/api/kitapgetirfiltre?querry=$querry&sayfa=$filtresimdikisayfa'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
-
-      if (response.statusCode == 200) {
-        filtresayfa = true;
-        filtresimdikisayfa = filtresimdikisayfa + 1;
-        List<ListeKitap> kitap = listeKitapFromJson(response.body);
-        _sayfakitapList.addAll(kitap);
-        print(filtresimdikisayfa);
-        return kitap;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
-
   Future<Kitap?> getTekKitap(
       String kullaniciAdi, String parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/kitapgetir?ID=$iD'),

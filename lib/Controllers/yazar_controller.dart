@@ -11,6 +11,10 @@ class YazarController extends GetxController {
   List<ListeYazar> get yazarliste => _yazarliste;
   set yazarliste(List<ListeYazar> value) => _yazarliste.value = value;
 
+  final _secilenyazar = 0.obs;
+  int? get secilenyazar => _secilenyazar.value;
+  set secilenyazar(int? value) => _secilenyazar.value = value!;
+
   // ignore: non_constant_identifier_names
   Future<List<ListeYazar>?> getYazar(String KullaniciAdi, String Parola) async {
     var apilink = ApiEndPoints.baseUrl;

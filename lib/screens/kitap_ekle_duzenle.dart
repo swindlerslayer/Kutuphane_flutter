@@ -85,7 +85,17 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
         title: Text("Kitap $giristuru Sayfası"),
         centerTitle: true,
       ),
-      body: Form(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 44, 44, 44),
+            ],
+          ),
+        ),
         child: Column(
           children: [
             Obx(

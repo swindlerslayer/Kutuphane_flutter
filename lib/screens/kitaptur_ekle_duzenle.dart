@@ -25,15 +25,14 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
-          onPressed: () async {
-          
+          onPressed: () async {          
             Get.back();
             Get.to(KitapTurSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Kitap Tür $giristuru Sayfası"),
         centerTitle: true,
-      ),
+      ),              
       body: Form(
         child: Column(
           children: [

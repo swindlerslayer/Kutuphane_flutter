@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/screens/denemedizayn.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -36,7 +37,6 @@ class NavDrawer extends StatelessWidget {
             onTap: () async {
               Get.back();
               Get.delete<KitapController>();
-              
 
               Get.to(() => NewScreen(kullanici: kullanici));
             },
@@ -77,7 +77,10 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              Get.to(() => YazarSayfasi(kullanici: kullanici));
+              Get.to(() => YazarSayfasi(
+                    kullanici: kullanici,
+                    secim: 0,
+                  ));
             },
           ),
           ListTile(
@@ -98,6 +101,16 @@ class NavDrawer extends StatelessWidget {
               Get.delete<KitapController>();
 
               Get.to(() => YayineviSayfasi(kullanici: kullanici));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Deneme Sayfası '),
+            onTap: () async {
+              Get.back();
+              Get.delete<KitapController>();
+
+              Get.to(() => DenemeDizayn(kullanici: kullanici));
             },
           ),
         ],

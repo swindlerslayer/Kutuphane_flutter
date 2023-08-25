@@ -3,8 +3,8 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
-import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
+import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
@@ -31,14 +31,21 @@ class KitapSayfasi extends StatelessWidget {
               degisken.value = false;
             }
           },
-          onSubmitted: (value) {
+          onSubmitted: (value) async {
             if (value != "") {
               final cont = Get.put(KitapController());
-
-              cont.getByFilter(kullanici.kullaniciAdi!.obs,
-                  kullanici.parola!.obs, value, cont.simdikisayfa, true);
               cont.filtrearama = value;
-              //     print('value: $value');
+
+              MetodModel z = MetodModel();
+              z.kalinanSayfa = cont.filtresimdikisayfa;
+              z.islem = "filtre";
+              z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+              z.parola = kullanici.parola.toString();
+              z.lkSayfa = true;
+              z.querry = value;
+              Get.put(KitapController()).getSayfaFiltreKitap(z);
+              // cont.getByFilter(kullanici.kullaniciAdi!.obs,
+              //     kullanici.parola!.obs, value, cont.simdikisayfa, true);
             }
           },
           controller: textEditingController.value,
@@ -57,11 +64,14 @@ class KitapSayfasi extends StatelessWidget {
                     : () async {
                         textEditingController.value.text = "";
                         final cont = Get.put(KitapController());
-                        await Get.put(KitapController()).getSayfaKitap(
-                            kullanici.kullaniciAdi.toString(),
-                            kullanici.parola.toString(),
-                            cont.simdikisayfa,
-                            true);
+                        MetodModel z = MetodModel();
+                        z.kalinanSayfa = cont.simdikisayfa;
+                        z.islem = "sayfa";
+                        z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                        z.parola = kullanici.parola.toString();
+                        z.lkSayfa = true;
+                        Get.put(KitapController()).getSayfaFiltreKitap(z);
+
                         degisken.value = true;
                         cont.filtresayfa = false;
                       },
@@ -99,12 +109,14 @@ class BodyWidget extends StatelessWidget {
       var yy = await Get.put(YazarController().getYazar(
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
       contyazzar.yazarliste = yy!;
+      MetodModel z = MetodModel();
+      z.kalinanSayfa = cont.simdikisayfa;
+      z.islem = "sayfa";
+      z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+      z.parola = kullanici.parola.toString();
+      z.lkSayfa = true;
 
-      var dd = await Get.put(KitapController()).getSayfaKitap(
-          kullanici.kullaniciAdi.toString(),
-          kullanici.parola.toString(),
-          cont.simdikisayfa,
-          true);
+      var dd = await Get.put(KitapController()).getSayfaFiltreKitap(z);
       //print(cont.totalPageCount);
       cont.sayfakitapList = dd;
       contR.addListener(() async {
@@ -112,20 +124,23 @@ class BodyWidget extends StatelessWidget {
           if (contR.position.pixels != 0.0) {
             if (kitcont.totalPageCount! >= kitcont.simdikisayfa) {
               kitcont.isloading = true;
-              final cont = Get.put(LoginController());
-
+              MetodModel x = MetodModel();
+              x.islem = "sayfa";
+              x.kalinanSayfa = kitcont.simdikisayfa;
+              x.kullaniciAdi = kullanici.kullaniciAdi.toString();
+              x.parola = kullanici.parola.toString();
+              x.lkSayfa = false;
+              MetodModel y = MetodModel();
+              y.islem = "filtre";
+              y.kalinanSayfa = kitcont.filtresimdikisayfa;
+              y.kullaniciAdi = kullanici.kullaniciAdi.toString();
+              y.parola = kullanici.parola.toString();
+              y.lkSayfa = false;
+              y.querry = kitcont.filtrearama;
+              // await Get.put(KitapController()).getSayfaFiltreKitap(x);
               kitcont.filtresayfa
-                  ? kitcont.getByFilter(
-                      kullanici.kullaniciAdi!.obs,
-                      kullanici.parola!.obs,
-                      kitcont.filtrearama,
-                      kitcont.filtresimdikisayfa,
-                      false)
-                  : await Get.put(KitapController()).getSayfaKitap(
-                      cont.kullanicigiris.kullaniciAdi.toString(),
-                      cont.kullanicigiris.parola.toString(),
-                      kitcont.simdikisayfa,
-                      false);
+                  ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
+                  : await Get.put(KitapController()).getSayfaFiltreKitap(x);
               kitcont.isloading = false;
             }
           }
