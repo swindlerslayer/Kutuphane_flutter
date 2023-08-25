@@ -7,42 +7,67 @@ import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import '../Controllers/kitapturu_controller.dart';
-import '../Controllers/yayinevi_controller.dart';
-import '../Controllers/yazar_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'kitap_ekle_duzenle.dart';
 
 class KitapSayfasi extends StatelessWidget {
-  const KitapSayfasi({Key? key, required this.kullanici}) : super(key: key);
+  KitapSayfasi({Key? key, required this.kullanici}) : super(key: key);
   final KullaniciGiris kullanici;
-
+  final degisken = false.obs;
   @override
   Widget build(BuildContext context) {
-    final textEditingController = TextEditingController();
+    final textEditingController = TextEditingController().obs;
 
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         title: TextField(
-          onSubmitted: (value) {
-            final cont = Get.put(KitapController());
-
-            cont.getByFilter(kullanici.kullaniciAdi!.obs, kullanici.parola!.obs,
-                value, cont.simdikisayfa, true);
-            //     print('value: $value');
+          onChanged: (value) {
+            if (value.isEmpty) {
+              degisken.value = true;
+            } else {
+              degisken.value = false;
+            }
           },
-          controller: textEditingController,
+          onSubmitted: (value) {
+            if (value != "") {
+              final cont = Get.put(KitapController());
+
+              cont.getByFilter(kullanici.kullaniciAdi!.obs,
+                  kullanici.parola!.obs, value, cont.simdikisayfa, true);
+              cont.filtrearama = value;
+              //     print('value: $value');
+            }
+          },
+          controller: textEditingController.value,
           decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-              hintText: " Ara...",
-              border: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 3, color: Color.fromARGB(255, 103, 103, 103))),
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              )),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
+            hintText: " Ara...",
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    width: 3, color: Color.fromARGB(255, 103, 103, 103))),
+            suffixIcon: Obx(
+              () => IconButton(
+                icon: Icon(degisken.value ? Icons.search : Icons.close),
+                onPressed: degisken.value
+                    ? () {}
+                    : () async {
+                        textEditingController.value.text = "";
+                        final cont = Get.put(KitapController());
+                        await Get.put(KitapController()).getSayfaKitap(
+                            kullanici.kullaniciAdi.toString(),
+                            kullanici.parola.toString(),
+                            cont.simdikisayfa,
+                            true);
+                        degisken.value = true;
+                        cont.filtresayfa = false;
+                      },
+              ),
+            ),
+          ),
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
         iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
@@ -87,13 +112,21 @@ class BodyWidget extends StatelessWidget {
           if (contR.position.pixels != 0.0) {
             if (kitcont.totalPageCount! >= kitcont.simdikisayfa) {
               kitcont.isloading = true;
-
               final cont = Get.put(LoginController());
-              await Get.put(KitapController()).getSayfaKitap(
-                  cont.kullanicigiris.kullaniciAdi.toString(),
-                  cont.kullanicigiris.parola.toString(),
-                  kitcont.simdikisayfa,
-                  false);
+
+              kitcont.filtresayfa
+                  ? kitcont.getByFilter(
+                      kullanici.kullaniciAdi!.obs,
+                      kullanici.parola!.obs,
+                      kitcont.filtrearama,
+                      kitcont.filtresimdikisayfa,
+                      false)
+                  : await Get.put(KitapController()).getSayfaKitap(
+                      cont.kullanicigiris.kullaniciAdi.toString(),
+                      cont.kullanicigiris.parola.toString(),
+                      kitcont.simdikisayfa,
+                      false);
+              kitcont.isloading = false;
             }
           }
         }
@@ -146,13 +179,10 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.parola.toString());
                                 Get.put(YayineviController()).yayineviliste =
                                     dd2 ?? [];
-                                // Get.back();
                                 Get.put(KitapTurController()).kitapturList =
                                     dd1 ?? [];
-                                // Get.back();
                                 Get.put(YazarController()).yazarliste =
                                     dd ?? [];
-                                // Get.back();
                                 var result = await Get.to<Kitap>(
                                     () => KitapEkleDuzenleSayfasi(
                                           kullanici: kullanici,
@@ -251,10 +281,6 @@ class BodyWidget extends StatelessWidget {
                     kullanici: kullanici,
                     giristuru: "Ekle",
                   ));
-                  // Get.to(() => KitapEkleDuzenleSayfasi(
-                  //       kullanici: kullanici,
-                  //       giristuru: "Ekle",
-                  //     ));
                 },
                 child: const CircleAvatar(
                   radius: 30,
