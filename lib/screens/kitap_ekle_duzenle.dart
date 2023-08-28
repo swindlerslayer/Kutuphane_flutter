@@ -33,23 +33,44 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final String giristuru;
 
   final Kitap? gelenkitap;
+
   // final selectedYazarListe = Rxn<ListeYazar>();
   final selectedKitapTurListe = Rxn<KitapTurListe>();
   final selectedYayineviListe = Rxn<YayineviListe>();
   final gelenresim = Rxn<String>();
   @override
   Widget build(BuildContext context) {
+    var yazarcont = Get.put(YazarController());
+    var yayinevicont = Get.put(YayineviController());
+    var kitapturcont = Get.put(KitapTurController());
+
     gelenresim.value = gelenkitap?.resim;
+
     kitcont.getTekKitap(kullanici.kullaniciAdi.toString(),
         kullanici.parola.toString(), gelenkitap?.id);
+
     final kullaniciadicontroller =
         TextEditingController(text: gelenkitap?.adi ?? "");
+
     final kitapadicontroller =
         TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
+
     final sayfasayisicontroller =
         TextEditingController(text: gelenkitap?.barkod.toString());
-    final yayinevicontroller = TextEditingController(text: "Seçilen Yayınevi");
+
+    final yayinevicontroller =
+        TextEditingController(text: yayinevicont.gelenyayinevi.adi).obs;
+
+    final yazarcontroller =
+        TextEditingController(text: yazarcont.gelenyazar.adiSoyadi).obs;
+
+    print(yazarcont.gelenyazar.adiSoyadi);
+
+    final kitapturcontroller =
+        TextEditingController(text: kitapturcont.gelenkitaptur.adi).obs;
+
     //var datayazar = contyazzar.yazarliste;
+
     var datayayinevi = contyayinevi.yayineviliste;
     var datakitapturu = contkitapturu.kitapturList;
     KitapTurListe? selectedkitapturuilk;
@@ -209,28 +230,30 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                child: TextField(
-                  controller: yayinevicontroller,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: "Kitabın Yayınevi",
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.add_box),
-                      onPressed: () {
-                        Get.to(() => YayineviSayfasi(
-                              kullanici: kullanici,
-                              secim: 1,
-                              kitapID: gelenkitap?.id,
-                            ));
-                      },
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
-                    ),
-                  ),
-                ),
+                child: Obx(() => TextField(
+                      controller: yayinevicontroller.value,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: "Kitabın Yayınevi",
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.add_box),
+                          onPressed: () async {
+                            var x = await Get.to(() => YayineviSayfasi(
+                                  kullanici: kullanici,
+                                  secim: 1,
+                                  kitapID: gelenkitap?.id,
+                                ));
+                            yayinevicontroller.value.text = x;
+                          },
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color.fromARGB(255, 164, 164, 164)),
+                        ),
+                      ),
+                    )),
               ),
             ),
             SizedBox(
@@ -238,27 +261,30 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                child: TextField(
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: "Kitabın Yazarı",
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.add_box),
-                      onPressed: () {
-                        Get.to(() => YazarSayfasi(
-                              kullanici: kullanici,
-                              secim: 1,
-                              kitapID: gelenkitap?.id,
-                            ));
-                      },
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
-                    ),
-                  ),
-                ),
+                child: Obx(() => TextField(
+                      controller: yazarcontroller.value,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: "Kitabın Yazarı",
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.add_box),
+                          onPressed: () async {
+                            var x = await Get.to(() => YazarSayfasi(
+                                  kullanici: kullanici,
+                                  secim: 1,
+                                  kitapID: gelenkitap?.id,
+                                ));
+                            yazarcontroller.value.text = x;
+                          },
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color.fromARGB(255, 164, 164, 164)),
+                        ),
+                      ),
+                    )),
               ),
             ),
             SizedBox(
@@ -266,27 +292,30 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                child: TextField(
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: "Kitap Türü",
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.add_box),
-                      onPressed: () {
-                        Get.to(() => KitapTurSayfasi(
-                              kullanici: kullanici,
-                              secim: 1,
-                              kitapID: gelenkitap?.id,
-                            ));
-                      },
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
-                    ),
-                  ),
-                ),
+                child: Obx(() => TextField(
+                      controller: kitapturcontroller.value,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: "Kitap Türü",
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.add_box),
+                          onPressed: () async {
+                            var x = await Get.to(() => KitapTurSayfasi(
+                                  kullanici: kullanici,
+                                  secim: 1,
+                                  kitapID: gelenkitap?.id,
+                                ));
+                            kitapturcontroller.value.text = x;
+                          },
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1,
+                              color: Color.fromARGB(255, 164, 164, 164)),
+                        ),
+                      ),
+                    )),
               ),
             ),
             Padding(
@@ -305,12 +334,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     k.adi = kullaniciadicontroller.text;
                     k.sayfaSayisi = int.parse(kitapadicontroller.text);
                     k.barkod = int.parse(sayfasayisicontroller.text);
-                    k.yayinEviId = selectedYayineviListe.value?.id ??
-                        selectedyeyineviilk?.id;
-                    // k.yazarId =
-                    //     selectedYazarListe.value?.id ?? selectedyazarilk?.id;
-                    k.kitapTurId = selectedKitapTurListe.value?.id ??
-                        selectedkitapturuilk?.id;
+                    k.yayinEviId = yayinevicont.gelenyayinevi.id;
+                    k.yazarId = yazarcont.gelenyazar.id;
+                    k.kitapTurId = kitapturcont.gelenkitaptur.id;
                     k.resim = gelenresim.value;
 
                     var kaydetGuncelleKontrol = await KitapController()

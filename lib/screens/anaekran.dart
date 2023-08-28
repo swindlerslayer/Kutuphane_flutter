@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
@@ -139,7 +140,7 @@ class BodyWidget extends StatelessWidget {
                       )
                     ],
                     child: SizedBox(
-                      height: 75,
+                      height: 90,
                       child: Card(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,7 +152,9 @@ class BodyWidget extends StatelessWidget {
                                   children: [
                                     Text(data.adiSoyadi.toString()),
                                     Text('${data.adi}'),
-                                    Text('${data.alisTarihi}'),
+                                    //  Text('${data.alisTarihi}'),
+                                    Text(
+                                        '${DateFormat('yyyy-MM-dd').parse(data.alisTarihi!, false)}')
                                   ],
                                 )),
                             Checkbox(

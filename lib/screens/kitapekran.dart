@@ -180,9 +180,9 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString(),
                                         data.value.id);
-                                var dd = await Get.put(YazarController())
-                                    .getYazar(kullanici.kullaniciAdi.toString(),
-                                        kullanici.parola.toString());
+                                // var dd = await Get.put(YazarController())
+                                //     .getYazar(kullanici.kullaniciAdi.toString(),
+                                //         kullanici.parola.toString());
                                 var dd1 = await Get.put(KitapTurController())
                                     .getKitapTur(
                                         kullanici.kullaniciAdi.toString(),
@@ -191,12 +191,25 @@ class BodyWidget extends StatelessWidget {
                                     .getYayinevi(
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString());
+                                await Get.put(YazarController()).getTekYazar(
+                                    kullanici.kullaniciAdi.toString(),
+                                    kullanici.parola.toString(),
+                                    data.value.yazarId);
+                                await Get.put(YayineviController())
+                                    .getTekYayinevi(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString(),
+                                        data.value.yayinEviId);
+                                await Get.put(KitapTurController())
+                                    .getTekKitapTur(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString(),
+                                        data.value.kitapTurId);
                                 Get.put(YayineviController()).yayineviliste =
                                     dd2 ?? [];
                                 Get.put(KitapTurController()).kitapturList =
                                     dd1 ?? [];
-                                Get.put(YazarController()).yazarliste =
-                                    dd ?? [];
+
                                 var result = await Get.to<Kitap>(
                                     () => KitapEkleDuzenleSayfasi(
                                           kullanici: kullanici,

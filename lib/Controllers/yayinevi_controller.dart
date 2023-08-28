@@ -12,6 +12,14 @@ class YayineviController extends GetxController {
   List<YayineviListe> get yayineviliste => _yayineviliste;
   set yayineviliste(List<YayineviListe> value) => _yayineviliste.value = value;
 
+  final _secilenyayinevi = 0.obs;
+  int? get secilenyayinevi => _secilenyayinevi.value;
+  set secilenyayinevi(int? value) => _secilenyayinevi.value = value!;
+
+  final _gelenyayinevi = Yayinevi().obs;
+  Yayinevi get gelenyayinevi => _gelenyayinevi.value;
+  set gelenyayinevi(Yayinevi value) => _gelenyayinevi.value = value;
+
   // ignore: non_constant_identifier_names
   Future<List<YayineviListe>?> getYayinevi(
       String kullaniciAdi, String parola) async {
@@ -56,6 +64,7 @@ class YayineviController extends GetxController {
 
       if (response.statusCode == 200) {
         Yayinevi yayinevi = yayineviFromJson(response.body);
+        gelenyayinevi = yayinevi;
         return yayinevi;
       } else {
         return null;

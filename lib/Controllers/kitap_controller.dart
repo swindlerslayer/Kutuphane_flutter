@@ -109,7 +109,6 @@ class KitapController extends GetxController {
       var dd = jsonDecode(response.body);
       List<ListeKitap> kitapListesi =
           listeKitapFromJson(jsonEncode(dd["Data"]));
-      print(kitapListesi);
 
       List<Toplamsayfa> totalpage =
           toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
@@ -117,9 +116,7 @@ class KitapController extends GetxController {
 
       gelenpagecount = totalpage[0].sayfaSayisi;
       totalPageCount = (gelenpagecount! / 15).ceil();
-      print("ŞİMDİKİ SAYFA $simdikisayfa");
 
-      print(gelenpagecount);
       _sayfakitapList.addAll(kitapListesi);
       isloading = false;
       return kitapListesi;

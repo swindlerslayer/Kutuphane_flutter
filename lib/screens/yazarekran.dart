@@ -94,23 +94,12 @@ class YazarSayfasi extends StatelessWidget {
                       if (secim == 1) {
                         cont.secilenyazar = data.id;
                         if (cont.secilenyazar == data.id) {
-                          // var tekkitap = KitapController().getTekKitap(
-                          //     kullanici.kullaniciAdi.toString(),
-                          //     kullanici.parola.toString(),
-                          //     kitapID);
-                          // var dd1 = await Get.put(KitapTurController())
-                          //     .getKitapTur(kullanici.kullaniciAdi.toString(),
-                          //         kullanici.parola.toString());
-                          // var dd2 = await Get.put(YayineviController())
-                          //     .getYayinevi(kullanici.kullaniciAdi.toString(),
-                          //         kullanici.parola.toString());
-                          // Get.put(YayineviController()).yayineviliste =
-                          //     dd2 ?? [];
-                          // Get.put(KitapTurController()).kitapturList =
-                          //     dd1 ?? [];
-                          // var awaited = await tekkitap;
+                          var x = await Get.put(YazarController()).getTekYazar(
+                              kullanici.kullaniciAdi.toString(),
+                              kullanici.parola.toString(),
+                              data.id);
 
-                          Get.back();
+                          Get.back(result: x?.adiSoyadi);
                         }
                       }
                     },

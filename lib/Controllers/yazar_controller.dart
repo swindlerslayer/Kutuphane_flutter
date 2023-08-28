@@ -15,6 +15,10 @@ class YazarController extends GetxController {
   int? get secilenyazar => _secilenyazar.value;
   set secilenyazar(int? value) => _secilenyazar.value = value!;
 
+  final _gelenyazar = Yazar().obs;
+  Yazar get gelenyazar => _gelenyazar.value;
+  set gelenyazar(Yazar value) => _gelenyazar.value = value;
+
   // ignore: non_constant_identifier_names
   Future<List<ListeYazar>?> getYazar(String KullaniciAdi, String Parola) async {
     var apilink = ApiEndPoints.baseUrl;
@@ -32,6 +36,7 @@ class YazarController extends GetxController {
 
       if (response.statusCode == 200) {
         List<ListeYazar> yazar = listeYazarFromJson(response.body);
+
         return yazar;
       } else {
         return null;
@@ -58,6 +63,7 @@ class YazarController extends GetxController {
 
       if (response.statusCode == 200) {
         Yazar yazar = yazarFromJson(response.body);
+        gelenyazar = yazar;
         return yazar;
       } else {
         return null;

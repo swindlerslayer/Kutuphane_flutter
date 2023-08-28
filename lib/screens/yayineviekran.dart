@@ -88,15 +88,17 @@ class YayineviSayfasi extends StatelessWidget {
                       },
                     )
                   ],
-                  onPressed: () {
+                  onPressed: () async {
                     if (secim == 1) {
-                      Get.back();
-                      Get.defaultDialog(
-                          title: "Çalışıyor",
-                          middleText: "!!!!!!!!!!!!!!!!!!!!!",
-                          backgroundColor:
-                              const Color.fromARGB(255, 110, 57, 57));
-                      //Yayınevi seçme işlemi burada olacak
+                      //
+                      cont.secilenyayinevi = data.id;
+                      if (cont.secilenyayinevi == data.id) {
+                        var x = await Get.put(YayineviController())
+                            .getTekYayinevi(kullanici.kullaniciAdi.toString(),
+                                kullanici.parola.toString(), data.id);
+
+                        Get.back(result: x?.adi);
+                      }
                     }
                   },
                   child: Card(

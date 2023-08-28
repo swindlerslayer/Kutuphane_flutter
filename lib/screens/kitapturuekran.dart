@@ -89,8 +89,16 @@ class KitapTurSayfasi extends StatelessWidget {
                       },
                     )
                   ],
-                  onPressed: () {
+                  onPressed: () async {
                     if (secim == 1) {
+                         cont.secilenkitaptur = data.id;
+                      if (cont.secilenkitaptur == data.id) {
+                        var x = await Get.put(KitapTurController())
+                            .getTekKitapTur(kullanici.kullaniciAdi.toString(),
+                                kullanici.parola.toString(), data.id);
+
+                        Get.back(result: x?.adi);
+                      }
                       //kitap türü seçme işlemleri burada olacak
                     }
                   },

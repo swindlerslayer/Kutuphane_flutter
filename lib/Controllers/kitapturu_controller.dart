@@ -12,9 +12,18 @@ class KitapTurController extends GetxController {
   List<KitapTurListe> get kitapturList => _kitapturList;
   set kitapturList(List<KitapTurListe> value) => _kitapturList.value = value;
 
-  // ignore: non_constant_identifier_names
+  final _secilenkitaptur = 0.obs;
+  int? get secilenkitaptur => _secilenkitaptur.value;
+  set secilenkitaptur(int? value) => _secilenkitaptur.value = value!;
+
+  final _gelenkitaptur = KitapTur().obs;
+  KitapTur get gelenkitaptur => _gelenkitaptur.value;
+  set gelenkitaptur(KitapTur value) => _gelenkitaptur.value = value;
+
   Future<List<KitapTurListe>?> getKitapTur(
-      String kullaniciAdi, String parola, ) async {
+    String kullaniciAdi,
+    String parola,
+  ) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
@@ -56,6 +65,7 @@ class KitapTurController extends GetxController {
 
       if (response.statusCode == 200) {
         KitapTur kitaptur = kitapTurFromJson(response.body);
+        gelenkitaptur = kitaptur;
         return kitaptur;
       } else {
         return null;
@@ -89,7 +99,8 @@ class KitapTurController extends GetxController {
     }
   }
 
-  Future<bool> silKitapTuru(RxString kullaniciAdi, RxString parola, int? id) async {
+  Future<bool> silKitapTuru(
+      RxString kullaniciAdi, RxString parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
