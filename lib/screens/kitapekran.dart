@@ -87,8 +87,6 @@ class KitapSayfasi extends StatelessWidget {
   }
 }
 
-ScrollController scrollController = ScrollController();
-
 @override
 class BodyWidget extends StatelessWidget {
   BodyWidget({super.key, required this.kullanici});
@@ -105,9 +103,6 @@ class BodyWidget extends StatelessWidget {
     final kitcont = Get.put(KitapController());
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var yy = await Get.put(YazarController().getYazar(
-          kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
-      contyazzar.yazarliste = yy!;
       MetodModel z = MetodModel();
       z.kalinanSayfa = kitcont.simdikisayfa;
       z.islem = "sayfa";
@@ -180,17 +175,7 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString(),
                                         data.value.id);
-                                // var dd = await Get.put(YazarController())
-                                //     .getYazar(kullanici.kullaniciAdi.toString(),
-                                //         kullanici.parola.toString());
-                                var dd1 = await Get.put(KitapTurController())
-                                    .getKitapTur(
-                                        kullanici.kullaniciAdi.toString(),
-                                        kullanici.parola.toString());
-                                var dd2 = await Get.put(YayineviController())
-                                    .getYayinevi(
-                                        kullanici.kullaniciAdi.toString(),
-                                        kullanici.parola.toString());
+                             
                                 await Get.put(YazarController()).getTekYazar(
                                     kullanici.kullaniciAdi.toString(),
                                     kullanici.parola.toString(),
@@ -205,17 +190,14 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString(),
                                         data.value.kitapTurId);
-                                Get.put(YayineviController()).yayineviliste =
-                                    dd2 ?? [];
-                                Get.put(KitapTurController()).kitapturList =
-                                    dd1 ?? [];
+                           
 
                                 var result = await Get.to<Kitap>(
                                     () => KitapEkleDuzenleSayfasi(
                                           kullanici: kullanici,
                                           giristuru: "Düzenle",
                                           gelenkitap: tekkitap,
-                                        ));
+                                        ));                
                                 if (result != null) {
                                   data.value.adi = result.adi;
                                   data.value.sayfaSayisi = result.sayfaSayisi;
@@ -292,18 +274,6 @@ class BodyWidget extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () async {
-                  var dd = await Get.put(YazarController()).getYazar(
-                      kullanici.kullaniciAdi.toString(),
-                      kullanici.parola.toString());
-                  var dd1 = await Get.put(KitapTurController()).getKitapTur(
-                      kullanici.kullaniciAdi.toString(),
-                      kullanici.parola.toString());
-                  var dd2 = await Get.put(YayineviController()).getYayinevi(
-                      kullanici.kullaniciAdi.toString(),
-                      kullanici.parola.toString());
-                  Get.put(YayineviController()).yayineviliste = dd2 ?? [];
-                  Get.put(KitapTurController()).kitapturList = dd1 ?? [];
-                  Get.put(YazarController()).yazarliste = dd ?? [];
                   Get.to(KitapEkleDuzenleSayfasi(
                     kullanici: kullanici,
                     giristuru: "Ekle",

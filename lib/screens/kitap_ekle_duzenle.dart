@@ -7,9 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
-import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturuliste.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/Model/Yayinevi/yayineviliste.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
@@ -34,9 +32,6 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
 
   final Kitap? gelenkitap;
 
-  // final selectedYazarListe = Rxn<ListeYazar>();
-  final selectedKitapTurListe = Rxn<KitapTurListe>();
-  final selectedYayineviListe = Rxn<YayineviListe>();
   final gelenresim = Rxn<String>();
   @override
   Widget build(BuildContext context) {
@@ -64,30 +59,13 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     final yazarcontroller =
         TextEditingController(text: yazarcont.gelenyazar.adiSoyadi).obs;
 
-    print(yazarcont.gelenyazar.adiSoyadi);
-
     final kitapturcontroller =
         TextEditingController(text: kitapturcont.gelenkitaptur.adi).obs;
 
     //var datayazar = contyazzar.yazarliste;
 
-    var datayayinevi = contyayinevi.yayineviliste;
-    var datakitapturu = contkitapturu.kitapturList;
-    KitapTurListe? selectedkitapturuilk;
-    YayineviListe? selectedyeyineviilk;
     // ListeYazar? selectedyazarilk;
     int? kitapid = gelenkitap?.id ?? 0;
-    if (gelenkitap != null) {
-      selectedkitapturuilk =
-          datakitapturu.firstWhere((kt) => kt.id == gelenkitap?.kitapTurId);
-      selectedyeyineviilk =
-          datayayinevi.firstWhere((ye) => ye.id == gelenkitap?.yayinEviId);
-      // selectedyazarilk =
-      //     datayazar.firstWhere((y) => y.id == gelenkitap?.yazarId);
-      selectedKitapTurListe.value = selectedkitapturuilk;
-      selectedYayineviListe.value = selectedyeyineviilk;
-      // selectedYazarListe.value = selectedyazarilk;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -96,14 +74,6 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               color: Color.fromARGB(255, 255, 252, 252)),
           onPressed: () async {
             Get.back();
-            // final cont = Get.put(KitapController());
-
-            // // cont.sayfakitapList?.clear();
-            // print(cont.totalPageCount);
-            // var dd = await Get.put(KitapController()).getKitap(
-            //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-            // Get.put(KitapController()).sayfakitapList = dd;
-            // Get.to(KitapSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Kitap $giristuru Sayfası"),

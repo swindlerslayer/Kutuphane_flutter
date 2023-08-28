@@ -69,11 +69,11 @@ class YazarEkleDuzenleSayfasi extends StatelessWidget {
                           backgroundColor:
                               const Color.fromARGB(255, 141, 141, 141));
                     } else if (kaydetGuncelleKontrol == "Güncellendi") {
-                      Get.defaultDialog(
-                          title: "Yazar Güncellendi",
-                          middleText: "",
-                          backgroundColor:
-                              const Color.fromARGB(255, 141, 141, 141));
+                      var tekyazar = await YazarController().getTekYazar(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString(),
+                          y.id);
+                      Get.back<Yazar>(result: tekyazar);
                     }
                   },
                   child: Text(giristuru.toString()),

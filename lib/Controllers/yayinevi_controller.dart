@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
 import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
 
 import 'package:kutuphane_mobil_d/Model/Yayinevi/yayineviliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
+
+import '../Model/MetodModel/metodmodel.dart';
 
 class YayineviController extends GetxController {
   final _yayineviliste = <YayineviListe>[].obs;
@@ -20,29 +23,79 @@ class YayineviController extends GetxController {
   Yayinevi get gelenyayinevi => _gelenyayinevi.value;
   set gelenyayinevi(Yayinevi value) => _gelenyayinevi.value = value;
 
-  // ignore: non_constant_identifier_names
-  Future<List<YayineviListe>?> getYayinevi(
-      String kullaniciAdi, String parola) async {
+  final _simdikisayfa = 0.obs;
+  int? get simdikisayfa => _simdikisayfa.value;
+  set simdikisayfa(int? value) => _simdikisayfa.value = value!;
+
+  final _filtrearama = "".obs;
+  String? get filtrearama => _filtrearama.value;
+  set filtrearama(String? value) => _filtrearama.value = value ?? '';
+
+  final _filtresayfa = false.obs;
+  bool get filtresayfa => _filtresayfa.value;
+  set filtresayfa(bool value) => _filtresayfa.value = value;
+
+  final _isloading = true.obs;
+  bool get isloading => _isloading.value;
+  set isloading(bool value) => _isloading.value = value;
+
+  final _gelenpagecount = 0.obs;
+  int? get gelenpagecount => _gelenpagecount.value;
+  set gelenpagecount(int? value) => _gelenpagecount.value = value!;
+
+  final _totalPageCount = 0.obs;
+  int? get totalPageCount => _totalPageCount.value;
+  set totalPageCount(int? value) => _totalPageCount.value = value!;
+
+  void get refResh {
+    _yayineviliste.refresh();
+  }
+
+  Future<List<YayineviListe>?> getSayfaFiltreYayinevi(MetodModel x) async {
+    metodModelFromJson(jsonEncode(x));
+    var ka = x.kullaniciAdi;
+    var kp = x.parola;
+    simdikisayfa = x.kalinanSayfa!;
+    var ilk = x.lkSayfa;
     var apilink = ApiEndPoints.baseUrl;
+
+    filtrearama = x.querry;
+
+    x.querry != null ? filtresayfa = true : filtresayfa = false;
+
     var token = await TokenService.getToken(
-        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+        kullaniciAdi: ka, parola: kp, loginMi: false);
 
-    try {
-      final response = await http.get(
-        Uri.parse('$apilink/api/yayinevilisteyeekle'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
+    ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
 
-      if (response.statusCode == 200) {
-        List<YayineviListe> yayinevi = yayineviListeFromJson(response.body);
-        return yayinevi;
-      } else {
-        return null;
-      }
-    } catch (e) {
+    if (ilk == true) {
+      yayineviliste.clear();
+    }
+    final response = await http.get(
+      Uri.parse(
+          '$apilink/api/yayinevilisteyeekle?query=$filtrearama&sayfa=$simdikisayfa'),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer ${token.accessToken}"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var dd = jsonDecode(response.body);
+      List<YayineviListe> kitapturliste =
+          yayineviListeFromJson(jsonEncode(dd["Data"]));
+
+      List<Toplamsayfa> totalpage =
+          toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
+      simdikisayfa = int.parse(jsonEncode(dd["PageCount"]));
+
+      gelenpagecount = totalpage[0].sayfaSayisi;
+      totalPageCount = (gelenpagecount! / 15).ceil();
+
+      _yayineviliste.addAll(kitapturliste);
+      isloading = false;
+      return kitapturliste;
+    } else {
       return null;
     }
   }

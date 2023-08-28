@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
-import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturu.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+
+import '../Model/KitapTur/kitapturu.dart';
 
 class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
   const KitapTurEkleDuzenleSayfasi(
@@ -28,7 +29,7 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
             Get.back();
           },
         ),
-        title: Text("Kitap Tür $giristuru Sayfası"),
+        title: Text("Kitap Türü $giristuru Sayfası"),
         centerTitle: true,
       ),
       body: Form(
@@ -39,10 +40,10 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
               child: TextFormField(
                 controller: kitapturtextcontrol,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: "Kitap Türü adı"),
+                    border: OutlineInputBorder(), labelText: "Kitap Tür adı"),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen Kitap Türünü Giriniz';
+                    return 'Lütfen Tür Adını Giriniz';
                   }
                   return null;
                 },
@@ -62,17 +63,13 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
                             kullanici.parola!.obs, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
-                      Get.defaultDialog(
-                          title: "Kitap Türü Eklendi",
-                          middleText: "",
-                          backgroundColor:
-                              const Color.fromARGB(255, 141, 141, 141));
+                      Get.back(result: "eklendi");
                     } else if (kaydetGuncelleKontrol == "Güncellendi") {
-                      Get.defaultDialog(
-                          title: "Kitap Türü Güncellendi",
-                          middleText: "",
-                          backgroundColor:
-                              const Color.fromARGB(255, 141, 141, 141));
+                      var tekkitap = await KitapTurController().getTekKitapTur(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString(),
+                          y.id);
+                      Get.back<KitapTur>(result: tekkitap);
                     }
                   },
                   child: Text(giristuru.toString()),
