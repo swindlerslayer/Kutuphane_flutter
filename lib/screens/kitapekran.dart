@@ -37,8 +37,7 @@ class KitapSayfasi extends StatelessWidget {
               cont.filtrearama = value;
 
               MetodModel z = MetodModel();
-              z.kalinanSayfa = cont.filtresimdikisayfa;
-              z.islem = "filtre";
+              z.kalinanSayfa = cont.simdikisayfa;
               z.kullaniciAdi = kullanici.kullaniciAdi.toString();
               z.parola = kullanici.parola.toString();
               z.lkSayfa = true;
@@ -110,7 +109,7 @@ class BodyWidget extends StatelessWidget {
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString()));
       contyazzar.yazarliste = yy!;
       MetodModel z = MetodModel();
-      z.kalinanSayfa = cont.simdikisayfa;
+      z.kalinanSayfa = kitcont.simdikisayfa;
       z.islem = "sayfa";
       z.kullaniciAdi = kullanici.kullaniciAdi.toString();
       z.parola = kullanici.parola.toString();
@@ -125,19 +124,19 @@ class BodyWidget extends StatelessWidget {
             if (kitcont.totalPageCount! >= kitcont.simdikisayfa) {
               kitcont.isloading = true;
               MetodModel x = MetodModel();
-              x.islem = "sayfa";
               x.kalinanSayfa = kitcont.simdikisayfa;
               x.kullaniciAdi = kullanici.kullaniciAdi.toString();
               x.parola = kullanici.parola.toString();
               x.lkSayfa = false;
+
               MetodModel y = MetodModel();
-              y.islem = "filtre";
-              y.kalinanSayfa = kitcont.filtresimdikisayfa;
+              x.islem = "filtre";
+
+              y.kalinanSayfa = kitcont.simdikisayfa;
               y.kullaniciAdi = kullanici.kullaniciAdi.toString();
               y.parola = kullanici.parola.toString();
               y.lkSayfa = false;
               y.querry = kitcont.filtrearama;
-              // await Get.put(KitapController()).getSayfaFiltreKitap(x);
               kitcont.filtresayfa
                   ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
                   : await Get.put(KitapController()).getSayfaFiltreKitap(x);

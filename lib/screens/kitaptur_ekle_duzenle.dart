@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturu.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 
 class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
   const KitapTurEkleDuzenleSayfasi(
@@ -25,14 +24,13 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               color: Color.fromARGB(255, 255, 252, 252)),
-          onPressed: () async {          
+          onPressed: () async {
             Get.back();
-            Get.to(KitapTurSayfasi(kullanici: kullanici));
           },
         ),
         title: Text("Kitap Tür $giristuru Sayfası"),
         centerTitle: true,
-      ),              
+      ),
       body: Form(
         child: Column(
           children: [
@@ -60,8 +58,8 @@ class KitapTurEkleDuzenleSayfasi extends StatelessWidget {
                     y.adi = kitapturtextcontrol.text;
 
                     var kaydetGuncelleKontrol = await KitapTurController()
-                        .ekleguncelleKitapTur(
-                            kullanici.kullaniciAdi!.obs, kullanici.parola!.obs, y);
+                        .ekleguncelleKitapTur(kullanici.kullaniciAdi!.obs,
+                            kullanici.parola!.obs, y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
-import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
-import 'package:kutuphane_mobil_d/screens/kitap_ekle_duzenle.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/screens/yazar_ekle_duzenle.dart';
 
 import '../Model/Kullanici/kullanici.dart';
 
 class YazarSayfasi extends StatelessWidget {
-  YazarSayfasi({Key? key, required this.kullanici, required this.secim, this.kitapID})
+  YazarSayfasi(
+      {Key? key, required this.kullanici, required this.secim, this.kitapID})
       : super(key: key);
   final cont = Get.put(YazarController());
   final KullaniciGiris kullanici;
@@ -95,18 +93,24 @@ class YazarSayfasi extends StatelessWidget {
                     onPressed: () async {
                       if (secim == 1) {
                         cont.secilenyazar = data.id;
-                        if(cont.secilenyazar == data.id) {
-                          var tekkitap = await KitapController()
-                                    .getTekKitap(
-                                        kullanici.kullaniciAdi.toString(),
-                                        kullanici.parola.toString(),
-                                        data.id);
-                          await Get.to<Kitap>(
-                                    () => KitapEkleDuzenleSayfasi(
-                                          kullanici: kullanici,
-                                          giristuru: "Düzenle",
-                                          gelenkitap: tekkitap,
-                                        ));
+                        if (cont.secilenyazar == data.id) {
+                          // var tekkitap = KitapController().getTekKitap(
+                          //     kullanici.kullaniciAdi.toString(),
+                          //     kullanici.parola.toString(),
+                          //     kitapID);
+                          // var dd1 = await Get.put(KitapTurController())
+                          //     .getKitapTur(kullanici.kullaniciAdi.toString(),
+                          //         kullanici.parola.toString());
+                          // var dd2 = await Get.put(YayineviController())
+                          //     .getYayinevi(kullanici.kullaniciAdi.toString(),
+                          //         kullanici.parola.toString());
+                          // Get.put(YayineviController()).yayineviliste =
+                          //     dd2 ?? [];
+                          // Get.put(KitapTurController()).kitapturList =
+                          //     dd1 ?? [];
+                          // var awaited = await tekkitap;
+
+                          Get.back();
                         }
                       }
                     },

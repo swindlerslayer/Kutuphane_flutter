@@ -43,8 +43,8 @@ class KitapController extends GetxController {
   set sayfakitapList(List<ListeKitap>? value) => _sayfakitapList;
 
   final _filtrearama = "".obs;
-  String get filtrearama => _filtrearama.value;
-  set filtrearama(String value) => _filtrearama.value = value;
+  String? get filtrearama => _filtrearama.value;
+  set filtrearama(String? value) => _filtrearama.value = value ?? '';
 
   void get refResh {
     _kitapList.refresh();
@@ -80,69 +80,52 @@ class KitapController extends GetxController {
     metodModelFromJson(jsonEncode(x));
     var ka = x.kullaniciAdi;
     var kp = x.parola;
-    var sayfa = x.kalinanSayfa;
-    var islem = x.islem;
+    simdikisayfa = x.kalinanSayfa!;
     var ilk = x.lkSayfa;
     var apilink = ApiEndPoints.baseUrl;
-    var q = x.querry;
+
+    filtrearama = x.querry;
+
+    x.querry != null ? filtresayfa = true : filtresayfa = false;
+
     var token = await TokenService.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
-    ilk == true
-        ? filtresimdikisayfa = 0
-        : filtresimdikisayfa = filtresimdikisayfa;
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
+
     if (ilk == true) {
       sayfakitapList?.clear();
     }
-    if (islem == "filtre") {
-      final response = await http.get(
-        Uri.parse('$apilink/api/kitapgetirfiltre?querry=$q&sayfa=$sayfa'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
+    final response = await http.get(
+      Uri.parse(
+          '$apilink/api/kitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa'),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer ${token.accessToken}"
+      },
+    );
 
-      if (response.statusCode == 200) {
-        filtresayfa = true;
-        filtresimdikisayfa = filtresimdikisayfa + 1;
-        List<ListeKitap> kitap = listeKitapFromJson(response.body);
+    if (response.statusCode == 200) {
+      var dd = jsonDecode(response.body);
+      List<ListeKitap> kitapListesi =
+          listeKitapFromJson(jsonEncode(dd["Data"]));
+      print(kitapListesi);
 
-        _sayfakitapList.addAll(kitap);
-        return kitap;
-      } else {
-        return null;
-      }
-    } else if (islem == "sayfa") {
-      final response = await http.get(
-        Uri.parse('$apilink/api/kitapgetirsayfa?id=$sayfa'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
+      List<Toplamsayfa> totalpage =
+          toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
+      simdikisayfa = int.parse(jsonEncode(dd["PageCount"]));
 
-      if (response.statusCode == 200) {
-        var dd = jsonDecode(response.body);
+      gelenpagecount = totalpage[0].sayfaSayisi;
+      totalPageCount = (gelenpagecount! / 15).ceil();
+      print("ŞİMDİKİ SAYFA $simdikisayfa");
 
-        simdikisayfa = dd["PageCount"];
-        List<ListeKitap> kitapListesi =
-            listeKitapFromJson(jsonEncode(dd["Data"]));
-
-        List<Toplamsayfa> totalpage =
-            toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
-        gelenpagecount = totalpage[0].sayfaSayisi;
-        totalPageCount = (gelenpagecount! / 15).ceil();
-
-        _sayfakitapList.addAll(kitapListesi);
-        isloading = false;
-        return listeKitapFromJson(jsonEncode(dd["Data"]));
-      } else {
-        return null;
-      }
+      print(gelenpagecount);
+      _sayfakitapList.addAll(kitapListesi);
+      isloading = false;
+      return kitapListesi;
+    } else {
+      return null;
     }
-    return null;
   }
 
   Future<Kitap?> getTekKitap(
@@ -194,10 +177,6 @@ class KitapController extends GetxController {
       return false;
     }
   }
-
-  final _filtresimdikisayfa = 0.obs;
-  int get filtresimdikisayfa => _filtresimdikisayfa.value;
-  set filtresimdikisayfa(int value) => _filtresimdikisayfa.value = value;
 
   Future<String> ekleguncelleKitap(
       RxString kullaniciAdi, RxString parola, Kitap k) async {

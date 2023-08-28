@@ -9,9 +9,13 @@ import 'package:kutuphane_mobil_d/screens/yayinevi_ekle_duzenle.dart';
 import '../Model/Kullanici/kullanici.dart';
 
 class YayineviSayfasi extends StatelessWidget {
-  YayineviSayfasi({Key? key, required this.kullanici}) : super(key: key);
+  YayineviSayfasi(
+      {Key? key, required this.kullanici, required this.secim, this.kitapID})
+      : super(key: key);
   final cont = Get.put(YayineviController());
   final KullaniciGiris kullanici;
+  final int secim;
+  final int? kitapID;
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
@@ -84,7 +88,17 @@ class YayineviSayfasi extends StatelessWidget {
                       },
                     )
                   ],
-                  onPressed: () {},
+                  onPressed: () {
+                    if (secim == 1) {
+                      Get.back();
+                      Get.defaultDialog(
+                          title: "Çalışıyor",
+                          middleText: "!!!!!!!!!!!!!!!!!!!!!",
+                          backgroundColor:
+                              const Color.fromARGB(255, 110, 57, 57));
+                      //Yayınevi seçme işlemi burada olacak
+                    }
+                  },
                   child: Card(
                     child: ListTile(
                       leading: const Icon(

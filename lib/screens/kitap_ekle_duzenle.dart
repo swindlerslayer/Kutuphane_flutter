@@ -10,7 +10,9 @@ import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturuliste.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/Model/Yayinevi/yayineviliste.dart';
-import 'package:kutuphane_mobil_d/Model/Yazar/yazarliste.dart';
+import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
+import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
+import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
 import '../Controllers/kitapturu_controller.dart';
 import '../Controllers/yazar_controller.dart';
@@ -31,7 +33,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final String giristuru;
 
   final Kitap? gelenkitap;
-  final selectedYazarListe = Rxn<ListeYazar>();
+  // final selectedYazarListe = Rxn<ListeYazar>();
   final selectedKitapTurListe = Rxn<KitapTurListe>();
   final selectedYayineviListe = Rxn<YayineviListe>();
   final gelenresim = Rxn<String>();
@@ -46,23 +48,24 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
         TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
     final sayfasayisicontroller =
         TextEditingController(text: gelenkitap?.barkod.toString());
-    var datayazar = contyazzar.yazarliste;
+    final yayinevicontroller = TextEditingController(text: "Seçilen Yayınevi");
+    //var datayazar = contyazzar.yazarliste;
     var datayayinevi = contyayinevi.yayineviliste;
     var datakitapturu = contkitapturu.kitapturList;
     KitapTurListe? selectedkitapturuilk;
     YayineviListe? selectedyeyineviilk;
-    ListeYazar? selectedyazarilk;
+    // ListeYazar? selectedyazarilk;
     int? kitapid = gelenkitap?.id ?? 0;
     if (gelenkitap != null) {
       selectedkitapturuilk =
           datakitapturu.firstWhere((kt) => kt.id == gelenkitap?.kitapTurId);
       selectedyeyineviilk =
           datayayinevi.firstWhere((ye) => ye.id == gelenkitap?.yayinEviId);
-      selectedyazarilk =
-          datayazar.firstWhere((y) => y.id == gelenkitap?.yazarId);
+      // selectedyazarilk =
+      //     datayazar.firstWhere((y) => y.id == gelenkitap?.yazarId);
       selectedKitapTurListe.value = selectedkitapturuilk;
       selectedYayineviListe.value = selectedyeyineviilk;
-      selectedYazarListe.value = selectedyazarilk;
+      // selectedYazarListe.value = selectedyazarilk;
     }
 
     return Scaffold(
@@ -201,65 +204,87 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              child: Center(
-                child: Obx(
-                  () => DropdownButton<KitapTurListe>(
-                    onChanged: (KitapTurListe? value) {
-                      selectedKitapTurListe.value = value;
-                    },
-                    value: selectedKitapTurListe.value,
-                    items: datakitapturu.map(
-                      (KitapTurListe items) {
-                        return DropdownMenuItem<KitapTurListe>(
-                          value: items,
-                          child: Text(items.adi.toString()),
-                        );
+            SizedBox(
+              width: 200,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                child: TextField(
+                  controller: yayinevicontroller,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: "Kitabın Yayınevi",
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.add_box),
+                      onPressed: () {
+                        Get.to(() => YayineviSayfasi(
+                              kullanici: kullanici,
+                              secim: 1,
+                              kitapID: gelenkitap?.id,
+                            ));
                       },
-                    ).toList(),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
+                    ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              child: Center(
-                child: Obx(
-                  () => DropdownButton<ListeYazar>(
-                    onChanged: (ListeYazar? value) {
-                      selectedYazarListe.value = value;
-                    },
-                    value: selectedYazarListe.value,
-                    items: datayazar.map(
-                      (ListeYazar items) {
-                        return DropdownMenuItem<ListeYazar>(
-                          value: items,
-                          child: Text(items.adiSoyadi.toString()),
-                        );
+            SizedBox(
+              width: 200,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                child: TextField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: "Kitabın Yazarı",
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.add_box),
+                      onPressed: () {
+                        Get.to(() => YazarSayfasi(
+                              kullanici: kullanici,
+                              secim: 1,
+                              kitapID: gelenkitap?.id,
+                            ));
                       },
-                    ).toList(),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
+                    ),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              child: Center(
-                child: Obx(
-                  () => DropdownButton<YayineviListe>(
-                    onChanged: (YayineviListe? value) {
-                      selectedYayineviListe.value = value;
-                    },
-                    value: selectedYayineviListe.value,
-                    items: datayayinevi.map(
-                      (YayineviListe items) {
-                        return DropdownMenuItem<YayineviListe>(
-                          value: items,
-                          child: Text(items.adi.toString()),
-                        );
+            SizedBox(
+              width: 200,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                child: TextField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: "Kitap Türü",
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.add_box),
+                      onPressed: () {
+                        Get.to(() => KitapTurSayfasi(
+                              kullanici: kullanici,
+                              secim: 1,
+                              kitapID: gelenkitap?.id,
+                            ));
                       },
-                    ).toList(),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1, color: Color.fromARGB(255, 164, 164, 164)),
+                    ),
                   ),
                 ),
               ),
@@ -282,8 +307,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     k.barkod = int.parse(sayfasayisicontroller.text);
                     k.yayinEviId = selectedYayineviListe.value?.id ??
                         selectedyeyineviilk?.id;
-                    k.yazarId =
-                        selectedYazarListe.value?.id ?? selectedyazarilk?.id;
+                    // k.yazarId =
+                    //     selectedYazarListe.value?.id ?? selectedyazarilk?.id;
                     k.kitapTurId = selectedKitapTurListe.value?.id ??
                         selectedkitapturuilk?.id;
                     k.resim = gelenresim.value;

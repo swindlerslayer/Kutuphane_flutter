@@ -9,9 +9,13 @@ import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import '../Model/Kullanici/kullanici.dart';
 
 class KitapTurSayfasi extends StatelessWidget {
-  KitapTurSayfasi({Key? key, required this.kullanici}) : super(key: key);
+  KitapTurSayfasi(
+      {Key? key, required this.kullanici, required this.secim, this.kitapID})
+      : super(key: key);
   final cont = Get.put(KitapTurController());
   final KullaniciGiris kullanici;
+  final int secim;
+  final int? kitapID;
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
   @override
@@ -85,7 +89,11 @@ class KitapTurSayfasi extends StatelessWidget {
                       },
                     )
                   ],
-                  onPressed: () {},
+                  onPressed: () {
+                    if (secim == 1) {
+                      //kitap türü seçme işlemleri burada olacak
+                    }
+                  },
                   child: Card(
                     child: ListTile(
                       leading: const Icon(
