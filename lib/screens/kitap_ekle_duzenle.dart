@@ -9,6 +9,7 @@ import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
+import 'package:kutuphane_mobil_d/screens/resimekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
@@ -69,15 +70,34 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Color.fromARGB(255, 255, 252, 252)),
-          onPressed: () async {
-            Get.back();
-          },
-        ),
-        title: Text("Kitap $giristuru Sayfası"),
         centerTitle: true,
+        title: Text("Kitap $giristuru "),
+        leading: GestureDetector(
+          onTap: () {},
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back,
+                color: Color.fromARGB(255, 255, 252, 252)),
+            onPressed: () async {
+              Get.back();
+            },
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: IconButton(
+                  icon: const Icon(Icons.filter),
+                  onPressed: () {
+                    Get.to(ResimSayfasi(
+                      kullanici: kullanici,
+                    ));
+// Çoklu Kitap Ekleme
+                  },
+                ),
+              )),
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(

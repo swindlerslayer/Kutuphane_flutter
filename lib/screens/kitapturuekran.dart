@@ -242,11 +242,12 @@ class KitapTurSayfasi extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () async {
-                  var result = Get.to(KitapTurEkleDuzenleSayfasi(
+                  var result = Get.to<String>(KitapTurEkleDuzenleSayfasi(
                     kullanici: kullanici,
                     giristuru: "Ekle",
                   ));
 
+                  // ignore: unrelated_type_equality_checks
                   if (result == "eklendi") {
                     Get.defaultDialog(
                         title: "Tür Eklendi",

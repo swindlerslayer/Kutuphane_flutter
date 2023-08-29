@@ -51,13 +51,14 @@ class KitapSayfasi extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-            hintText: " Ara...",
+            hintText: " Kitapta Ara...",
             border: const OutlineInputBorder(
                 borderSide: BorderSide(
                     width: 3, color: Color.fromARGB(255, 103, 103, 103))),
             suffixIcon: Obx(
               () => IconButton(
                 icon: Icon(degisken.value ? Icons.search : Icons.close),
+                //filter_alt huni şekilli ikon
                 onPressed: degisken.value
                     ? () {}
                     : () async {
@@ -175,7 +176,7 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString(),
                                         data.value.id);
-                             
+
                                 await Get.put(YazarController()).getTekYazar(
                                     kullanici.kullaniciAdi.toString(),
                                     kullanici.parola.toString(),
@@ -190,14 +191,13 @@ class BodyWidget extends StatelessWidget {
                                         kullanici.kullaniciAdi.toString(),
                                         kullanici.parola.toString(),
                                         data.value.kitapTurId);
-                           
 
                                 var result = await Get.to<Kitap>(
                                     () => KitapEkleDuzenleSayfasi(
                                           kullanici: kullanici,
                                           giristuru: "Düzenle",
                                           gelenkitap: tekkitap,
-                                        ));                
+                                        ));
                                 if (result != null) {
                                   data.value.adi = result.adi;
                                   data.value.sayfaSayisi = result.sayfaSayisi;

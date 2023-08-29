@@ -108,16 +108,6 @@ class NavDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Deneme Sayfası '),
-            onTap: () async {
-              Get.back();
-              Get.delete<KitapController>();
-
-              //   Get.to(() => DenemeDizayn(kullanici: kullanici));
-            },
-          ),
         ],
       ),
     );
