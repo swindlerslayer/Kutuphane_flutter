@@ -7,6 +7,9 @@ import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 
 class Statikler {
+  
+
+
   static listetemizle() {
     final cont = Get.put(KitapController());
     final contyazar = Get.put(YazarController());

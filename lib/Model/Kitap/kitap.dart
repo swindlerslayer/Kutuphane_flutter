@@ -19,21 +19,26 @@ class Kitap {
   String? degisiklikYapan;
   String? degisiklikTarihi;
   String? resim;
+  String? adisoyadi;
+  String? adi1;
+  String? adi2;
 
-  Kitap({
-    this.id,
-    this.adi,
-    this.sayfaSayisi,
-    this.kitapTurId,
-    this.yayinEviId,
-    this.yazarId,
-    this.barkod,
-    this.kayitYapan,
-    this.kayitTarihi,
-    this.degisiklikYapan,
-    this.degisiklikTarihi,
-    this.resim,
-  });
+  Kitap(
+      {this.id,
+      this.adi,
+      this.sayfaSayisi,
+      this.kitapTurId,
+      this.yayinEviId,
+      this.yazarId,
+      this.barkod,
+      this.kayitYapan,
+      this.kayitTarihi,
+      this.degisiklikYapan,
+      this.degisiklikTarihi,
+      this.resim,
+      this.adisoyadi,
+      this.adi1,
+      this.adi2});
 
   factory Kitap.fromJson(Map<String, dynamic> json) => Kitap(
         id: json["ID"],
@@ -48,6 +53,9 @@ class Kitap {
         degisiklikYapan: json["DegisiklikYapan"],
         degisiklikTarihi: json["DegisiklikTarihi"],
         resim: json["Resim"],
+        adisoyadi: json["AdiSoyadi"],
+        adi1: json["Adi1"],
+        adi2: json["Adi2"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +71,8 @@ class Kitap {
         "DegisiklikYapan": degisiklikYapan,
         "DegisiklikTarihi": degisiklikTarihi,
         "Resim": resim,
+        "AdiSoyadi": adisoyadi,
+        "Adi1": adi1,
+        "Adi2": adi2,
       };
 }

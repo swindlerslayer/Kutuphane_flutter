@@ -34,10 +34,6 @@ class KitapController extends GetxController {
   int get simdikisayfa => _simdikisayfa.value;
   set simdikisayfa(int value) => _simdikisayfa.value = value;
 
-  final _kitapList = <ListeKitap>[].obs;
-  List<ListeKitap> get kitapList => _kitapList;
-  set kitapList(List<ListeKitap> value) => _kitapList.value = value;
-
   final _sayfakitapList = <ListeKitap>[].obs;
   List<ListeKitap>? get sayfakitapList => _sayfakitapList;
   set sayfakitapList(List<ListeKitap>? value) => _sayfakitapList;
@@ -47,7 +43,6 @@ class KitapController extends GetxController {
   set filtrearama(String? value) => _filtrearama.value = value ?? '';
 
   void get refResh {
-    _kitapList.refresh();
     _sayfakitapList.refresh();
   }
 

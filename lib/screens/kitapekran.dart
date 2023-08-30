@@ -24,6 +24,7 @@ class KitapSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         title: TextField(
+          autofocus: false,
           onChanged: (value) {
             if (value.isEmpty) {
               degisken.value = true;
@@ -43,8 +44,6 @@ class KitapSayfasi extends StatelessWidget {
               z.lkSayfa = true;
               z.querry = value;
               Get.put(KitapController()).getSayfaFiltreKitap(z);
-              // cont.getByFilter(kullanici.kullaniciAdi!.obs,
-              //     kullanici.parola!.obs, value, cont.simdikisayfa, true);
             }
           },
           controller: textEditingController.value,

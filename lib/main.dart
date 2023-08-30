@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
         title: 'Login Dars',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark(),
-        home: const Login(
-          title: ('Giriş'),
-        ));
+        home: const Login());
   }
 }
