@@ -160,6 +160,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                   onPressed: () async {
                                     final ImagePicker picker = ImagePicker();
                                     final XFile? photo = await picker.pickImage(
+                                        imageQuality: 50,
+                                        maxHeight: 1000,
+                                        maxWidth: 1000,
                                         source: ImageSource.camera);
                                     Image.file(photo as File);
                                     // ignore: use_build_context_synchronously

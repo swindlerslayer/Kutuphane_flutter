@@ -4,6 +4,7 @@ import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/screens/anaekran.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/screens/register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,10 +21,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Giriş"),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -79,6 +76,12 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
                   child: Center(
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        backgroundColor: const Color.fromARGB(255, 132, 132,
+                            132), // Text Color (Foreground color)
+                      ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           String kullaniciAdi = kullaniciadicontroller.text;
@@ -92,10 +95,25 @@ class _LoginState extends State<Login> {
                           );
                         }
                       },
-                      child: const Text('Giriş'),
+                      child: const Text('Giriş Yap'),
                     ),
                   ),
                 ),
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        backgroundColor: const Color.fromARGB(255, 132, 132,
+                            132), // Text Color (Foreground color)
+                      ),
+                      onPressed: () {
+                        Get.to(const Register());
+                      },
+                      child: const Text("Hesabın Yoksa Kayıt Ol"),
+                    )),
               ],
             ),
           ),

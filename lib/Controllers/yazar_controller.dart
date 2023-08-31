@@ -89,7 +89,6 @@ class YazarController extends GetxController {
 
       gelenpagecount = totalpage[0].sayfaSayisi;
       totalPageCount = (gelenpagecount! / 15).ceil();
-
       _yazarliste.addAll(kitapListesi);
       isloading = false;
       return kitapListesi;

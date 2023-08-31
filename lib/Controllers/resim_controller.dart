@@ -26,8 +26,6 @@ class ResimController extends GetxController {
       if (response.statusCode == 200) {
         List<ListeResim> resimler = listeResimFromJson(response.body);
         sayfaresimList?.addAll(resimler);
-
-        print("sayfaresimlist uzunlugu = ${sayfaresimList?.length}");
         return resimler;
       } else {
         return null;

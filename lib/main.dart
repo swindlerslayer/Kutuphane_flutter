@@ -17,7 +17,19 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         title: 'Login Dars',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.grey,
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 23,
+            ),
+            toolbarTextStyle: TextStyle(),
+            iconTheme: IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
+            foregroundColor: Colors.black, //<-- SEE HERE
+          ),
+        ),
         home: const Login());
   }
 }
