@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Model/Resim/resimliste.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
@@ -34,4 +36,30 @@ class ResimController extends GetxController {
       rethrow;
     }
   }
+
+  
+  Future<String> topluResimEkle(
+      String kullaniciAdi, String parola, List<ListeResim> k) async {
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+    var client = http.Client();
+    var url = Uri.parse('${ApiEndPoints.baseUrl}api/topluresimekle');
+
+    try {
+      var headers = <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${token.accessToken}"
+      };
+      var badi = json.encode(k);
+      final response = await client.post(url, headers: headers, body: badi);
+      if (response.body == "true") {
+        return "Eklendi";
+      } else {
+        return "Güncellendi";
+      }
+    } catch (e) {
+      return "?";
+    }
+  }
+
 }

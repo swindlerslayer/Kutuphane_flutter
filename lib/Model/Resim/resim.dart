@@ -1,15 +1,12 @@
-// To parse this JSON data, do
-//
-//     final listeResim = listeResimFromJson(jsonString);
 
 import 'dart:convert';
 
-ListeResim listeResimFromJson(String str) =>
-    ListeResim.fromJson(json.decode(str));
+Resim resimFromJson(String str) =>
+    Resim.fromJson(json.decode(str));
 
-String listeResimToJson(ListeResim data) => json.encode(data.toJson());
+String resimToJson(Resim data) => json.encode(data.toJson());
 
-class ListeResim {
+class Resim {
   int? id;
   dynamic resim1;
   int? kitapId;
@@ -20,7 +17,7 @@ class ListeResim {
   String? ebat;
   String? boyut;
 
-  ListeResim({
+  Resim({
     this.id,
     this.resim1,
     this.kitapId,
@@ -32,7 +29,7 @@ class ListeResim {
     this.boyut,
   });
 
-  factory ListeResim.fromJson(Map<String, dynamic> json) => ListeResim(
+  factory Resim.fromJson(Map<String, dynamic> json) => Resim(
         id: json["ID"],
         resim1: json["Resim1"],
         kitapId: json["KitapID"],

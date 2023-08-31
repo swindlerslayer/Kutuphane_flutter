@@ -11,8 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/Model/Resim/resimliste.dart';
 
-class ResimSayfasi extends StatelessWidget {
-  const ResimSayfasi(
+class ResimKaydetmeSayfasi extends StatelessWidget {
+  const ResimKaydetmeSayfasi(
       {super.key, required this.kullanici, required this.gelenkitapid});
   final KullaniciGiris kullanici;
   final int gelenkitapid;
@@ -43,7 +43,10 @@ class ResimSayfasi extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
-            onPressed: () {},
+            onPressed: () {
+              //bulk image save here 
+              
+            },
           ),
           IconButton(
             icon: const Icon(Icons.add_photo_alternate),
@@ -106,49 +109,45 @@ class ResimSayfasi extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Obx(() => GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                    itemCount: cont.sayfaresimList!.length,
-                    itemBuilder: (context, index) {
-                      var data = cont.sayfaresimList?[index];
-                      return GestureDetector(
-                        onTap: () {},
-                        child: FocusedMenuHolder(
-                          menuItems: [
-                            FocusedMenuItem(
-                                title: const Text(
-                                  "Sil",
-                                  style: TextStyle(color: Colors.redAccent),
-                                ),
-                                trailingIcon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.redAccent,
-                                ),
-                                onPressed: () async {
-                                  cont.sayfaresimList?.removeAt(index);
-                                }),
-                          ],
-                          onPressed: () {},
-                          child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 20.0),
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                color: Color.fromARGB(255, 155, 155, 155),
-                              ),
-                              child: Image.memory(base64Decode(data?.resim1))),
-                        ),
-                      );
-                    },
-                  )),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: cont.sayfaresimList!.length,
+                itemBuilder: (context, index) {
+                  var data = cont.sayfaresimList?[index];
+                  return GestureDetector(
+                    onTap: () {},
+                    child: FocusedMenuHolder(
+                      menuItems: [
+                        FocusedMenuItem(
+                            backgroundColor:
+                                const Color.fromARGB(255, 110, 77, 77),
+                            title: const Text(
+                              "Sil",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                            trailingIcon: const Icon(
+                              Icons.delete,
+                            ),
+                            onPressed: () {
+                              cont.sayfaresimList?.removeAt(index);
+                            }),
+                      ],
+                      onPressed: () {},
+                      child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromARGB(255, 155, 155, 155),
+                          ),
+                          child: Image.memory(base64Decode(data?.resim1))),
+                    ),
+                  );
+                },
+              ),
             ),
     );
   }

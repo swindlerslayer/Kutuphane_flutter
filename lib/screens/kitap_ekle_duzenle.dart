@@ -10,7 +10,7 @@ import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
-import 'package:kutuphane_mobil_d/screens/resimekran.dart';
+import 'package:kutuphane_mobil_d/screens/resimkaydetekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
@@ -91,7 +91,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.filter),
                   onPressed: () {
-                    Get.to(ResimSayfasi(
+                    Get.to(ResimKaydetmeSayfasi(
                       kullanici: kullanici,
                       gelenkitapid: gelenkitap!.id ?? 0,
                     ));
@@ -183,8 +183,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                     File? file = File(image!.path);
                                     gelenresim.value =
                                         base64.encode(await file.readAsBytes());
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop(true);
+                                    Get.back();
                                   },
                                   child: const Text("Galeri "),
                                 ),
