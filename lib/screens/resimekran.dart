@@ -106,49 +106,46 @@ class ResimSayfasi extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Obx(() => GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                    itemCount: cont.sayfaresimList!.length,
-                    itemBuilder: (context, index) {
-                      var data = cont.sayfaresimList?[index];
-                      return GestureDetector(
-                        onTap: () {},
-                        child: FocusedMenuHolder(
-                          menuItems: [
-                            FocusedMenuItem(
-                                title: const Text(
-                                  "Sil",
-                                  style: TextStyle(color: Colors.redAccent),
-                                ),
-                                trailingIcon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.redAccent,
-                                ),
-                                onPressed: () async {
-                                  cont.sayfaresimList?.removeAt(index);
-                                }),
-                          ],
-                          onPressed: () {},
-                          child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 20.0),
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                color: Color.fromARGB(255, 155, 155, 155),
+              child: Obx(
+                () => GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20),
+                  itemCount: cont.sayfaresimList!.length,
+                  itemBuilder: (context, index) {
+                    var data = cont.sayfaresimList?[index];
+                    return GestureDetector(
+                      onTap: () {},
+                      child: FocusedMenuHolder(
+                        menuItems: [
+                          FocusedMenuItem(
+                              title: const Text(
+                                "Sil",
                               ),
-                              child: Image.memory(base64Decode(data?.resim1))),
-                        ),
-                      );
-                    },
-                  )),
+                              trailingIcon: const Icon(
+                                Icons.delete,
+                              ),
+                              onPressed: () async {
+                                cont.sayfaresimList?.removeAt(index);
+                              }),
+                        ],
+                        onPressed: () {},
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            margin: const EdgeInsets.symmetric(vertical: 10.0),
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: Color.fromARGB(255, 155, 155, 155),
+                            ),
+                            child: Image.memory(base64Decode(data?.resim1))),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
     );
   }

@@ -17,6 +17,7 @@ dependencies:
   bottom_picker: ^2.0.4
   flutter_datetime_picker_plus: ^2.0.1
   intl: ^0.18.1
+  circular_menu: ^2.0.1
   
 dev_dependencies:
   flutter_test:

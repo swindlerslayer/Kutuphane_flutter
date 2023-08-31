@@ -37,9 +37,8 @@ class ResimController extends GetxController {
     }
   }
 
-  
   Future<String> topluResimEkle(
-      String kullaniciAdi, String parola, List<ListeResim> k) async {
+      String kullaniciAdi, String parola, List<ListeResim>? k) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
@@ -61,5 +60,4 @@ class ResimController extends GetxController {
       return "?";
     }
   }
-
 }

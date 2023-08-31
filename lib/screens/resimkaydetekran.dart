@@ -44,24 +44,15 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
-              //bulk image save here 
-              
+              //bulk image save here
+              cont.topluResimEkle(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString(), cont.sayfaresimList);
             },
           ),
           IconButton(
             icon: const Icon(Icons.add_photo_alternate),
             onPressed: () async {
-              //  final ImagePicker picker = ImagePicker();
-
-              //                 final XFile? image = await picker.pickImage(
-              //                     source: ImageSource.gallery);
-
-              //                 File? file = File(image!.path);
-              //                 gelenresim.value =
-              //                     base64.encode(await file.readAsBytes(
-              //                     ));
-              //                 Get.back();
-
+              
               List<File> selectedImages = [];
               final picker = ImagePicker();
               final pickedFile = await picker.pickMultiImage(
@@ -109,45 +100,50 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                   ],
                 ),
               ),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20),
-                itemCount: cont.sayfaresimList!.length,
-                itemBuilder: (context, index) {
-                  var data = cont.sayfaresimList?[index];
-                  return GestureDetector(
-                    onTap: () {},
-                    child: FocusedMenuHolder(
-                      menuItems: [
-                        FocusedMenuItem(
-                            backgroundColor:
-                                const Color.fromARGB(255, 110, 77, 77),
-                            title: const Text(
-                              "Sil",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                            ),
-                            trailingIcon: const Icon(
-                              Icons.delete,
-                            ),
-                            onPressed: () {
-                              cont.sayfaresimList?.removeAt(index);
-                            }),
-                      ],
-                      onPressed: () {},
-                      child: Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Color.fromARGB(255, 155, 155, 155),
-                          ),
-                          child: Image.memory(base64Decode(data?.resim1))),
-                    ),
-                  );
-                },
-              ),
+              child: Obx(() => GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 200,
+                            childAspectRatio: 3 / 2,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20),
+                    itemCount: cont.sayfaresimList!.length,
+                    itemBuilder: (context, index) {
+                      var data = cont.sayfaresimList?[index];
+                      return GestureDetector(
+                        onTap: () {},
+                        child: FocusedMenuHolder(
+                          openWithTap: true,
+                          menuWidth: MediaQuery.of(context).size.width * 0.50,
+                          menuItems: [
+                            FocusedMenuItem(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 110, 77, 77),
+                                title: const Text(
+                                  "Sil",
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
+                                trailingIcon: const Icon(
+                                  Icons.delete,
+                                ),
+                                onPressed: () {
+                                  cont.sayfaresimList?.removeAt(index);
+                                }),
+                          ],
+                          onPressed: () {},
+                          child: Container(
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: Color.fromARGB(255, 155, 155, 155),
+                              ),
+                              child: Image.memory(base64Decode(data?.resim1))),
+                        ),
+                      );
+                    },
+                  )),
             ),
     );
   }

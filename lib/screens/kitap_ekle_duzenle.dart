@@ -164,9 +164,10 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                         maxHeight: 1000,
                                         maxWidth: 1000,
                                         source: ImageSource.camera);
-                                    Image.file(photo as File);
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.of(context).pop(true);
+                                    File? file = File(photo!.path);
+                                    gelenresim.value =
+                                        base64.encode(await file.readAsBytes());
+                                    Get.back();
                                   },
                                   child: const Text("Kamera"),
                                 ),
@@ -178,6 +179,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                     final ImagePicker picker = ImagePicker();
 
                                     final XFile? image = await picker.pickImage(
+                                        imageQuality: 50,
+                                        maxHeight: 1000,
+                                        maxWidth: 1000,
                                         source: ImageSource.gallery);
 
                                     File? file = File(image!.path);
