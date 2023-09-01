@@ -15,7 +15,7 @@ import 'kitap_ekle_duzenle.dart';
 class KitapSayfasi extends StatelessWidget {
   KitapSayfasi({Key? key, required this.kullanici}) : super(key: key);
   final KullaniciGiris kullanici;
-  final degisken = false.obs;
+  final degisken = true.obs;
   @override
   Widget build(BuildContext context) {
     final textEditingController = TextEditingController().obs;
@@ -80,6 +80,14 @@ class KitapSayfasi extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
         iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.filter_alt),
+            onPressed: () async {
+              //Toplu resim silme
+            },
+          ),
+        ],
         //  backgroundColor: Colors.white,
       ),
       body: BodyWidget(kullanici: kullanici),

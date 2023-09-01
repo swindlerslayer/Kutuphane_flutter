@@ -4,6 +4,7 @@ import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   static const String baseUrl = "http://192.168.1.199/api";
@@ -19,6 +20,14 @@ class LoginController extends GetxController {
   final _kullanicigiris = KullaniciGiris().obs;
   KullaniciGiris get kullanicigiris => _kullanicigiris.value;
   set kullanicigiris(KullaniciGiris value) => _kullanicigiris.value = value;
+
+  Future<String> getUserCredentials() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? kullaniciadi = prefs.getString('kullaniciAdi');
+    final String? kullaniciparola = prefs.getString('kullaniciAdi');
+    return "$kullaniciadi + $kullaniciparola";
+  }
 
   Future<KullaniciGiris?> loginUser(
       BuildContext context, String kullaniciAdi, String parola) async {
@@ -36,27 +45,25 @@ class LoginController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        // API'den dönen cevabı JSON olarak çözüyoruz.
+        var gelenkullaniciadlari = await getUserCredentials();
+        print(gelenkullaniciadlari);
+
         final Map<String, dynamic> responseData = json.decode(response.body);
-        //RxString rxpass = parola.obs;
-
         KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
-
         kullanici.parola = parola;
-
         KullaniciController controller = KullaniciController();
-
         controller.value = kullanici.toString();
         Get.put(LoginController()).kullanicigiris = kullanici;
 
-        // Kullanıcıyı dönüyoruz.
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('kullaniciAdi', kullanici.kullaniciAdi!);
+        await prefs.setString('parola', kullanici.parola!);
+
         return kullanici;
       } else {
-        // Giriş başarısız oldu, null değeri dönüyoruz.
         return null;
       }
     } catch (e) {
-      // Hata oluştuğunda veya API'ye ulaşılamadığında null dönüyoruz.
       return null;
     }
   }

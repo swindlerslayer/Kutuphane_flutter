@@ -14,24 +14,25 @@ class ListeResim {
   int? id;
   dynamic resim1;
   int? kitapId;
- String? kayitYapan;
+  String? kayitYapan;
   DateTime? kayitTarihi;
   String? degisiklikYapan;
   DateTime? degisiklikTarihi;
   String? ebat;
   String? boyut;
+  bool? secim = false;
 
-  ListeResim({
-    this.id,
-    this.resim1,
-    this.kitapId,
-    this.kayitYapan,
-    this.kayitTarihi,
-    this.degisiklikYapan,
-    this.degisiklikTarihi,
-    this.ebat,
-    this.boyut,
-  });
+  ListeResim(
+      {this.id,
+      this.resim1,
+      this.kitapId,
+      this.kayitYapan,
+      this.kayitTarihi,
+      this.degisiklikYapan,
+      this.degisiklikTarihi,
+      this.ebat,
+      this.boyut,
+      this.secim});
 
   factory ListeResim.fromJson(Map<String, dynamic> json) => ListeResim(
         id: json["ID"],
@@ -43,6 +44,7 @@ class ListeResim {
         degisiklikTarihi: json["DegisiklikTarihi"],
         ebat: json["Ebat"],
         boyut: json["Boyut"],
+        secim: json["Secim"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,5 +57,6 @@ class ListeResim {
         "DegisiklikTarihi": degisiklikTarihi,
         "Ebat": ebat,
         "Boyut": boyut,
+        "Secim": secim,
       };
 }

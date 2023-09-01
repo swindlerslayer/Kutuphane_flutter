@@ -14,6 +14,14 @@ class ResimController extends GetxController {
   List<ListeResim>? get ekleresimList => _ekleresimList;
   set ekleresimList(List<ListeResim>? value) => _ekleresimList;
 
+  final _silresimList = <ListeResim>[].obs;
+  List<ListeResim> get silresimList => _silresimList;
+  set silresimList(List<ListeResim> value) => _silresimList;
+
+  void refResh() {
+    _sayfaresimList.refresh();
+  }
+
   Future<List<ListeResim>?> getResim(
       String kullaniciAdi, String parola, int id) async {
     var apilink = ApiEndPoints.baseUrl;
@@ -38,6 +46,37 @@ class ResimController extends GetxController {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  //topluresimsil
+  Future<String> topluResimSil(String kullaniciAdi, String parola,
+      List<ListeResim>? silinecekliste) async {
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+    var client = http.Client();
+    var url = Uri.parse('${ApiEndPoints.baseUrl}api/topluresimsil');
+
+    try {
+      var headers = <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${token.accessToken}"
+      };
+      //var badi = k.toString();
+      var badi = json.encode(silinecekliste);
+      final response = await client.post(url, headers: headers, body: badi);
+      if (response.statusCode == 200) {
+        for (var element in silresimList) {
+          sayfaresimList?.remove(element);
+        }
+        silresimList.clear();
+        _sayfaresimList.refresh();
+        return "Silindi";
+      } else {
+        return "Eklenemedi";
+      }
+    } catch (e) {
+      return "?";
     }
   }
 

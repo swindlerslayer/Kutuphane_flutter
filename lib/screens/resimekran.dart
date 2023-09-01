@@ -10,10 +10,11 @@ import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/resimkaydetekran.dart';
 
 class ResimSayfasi extends StatelessWidget {
-  const ResimSayfasi(
+  ResimSayfasi(
       {super.key, required this.kullanici, required this.gelenkitapid});
   final KullaniciGiris kullanici;
   final int gelenkitapid;
+  final resimsil = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,16 @@ class ResimSayfasi extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () async {
+              cont.silresimList.clear();
+              if (resimsil.value) {
+                resimsil.value = false;
+                for (var i = 0; i < cont.sayfaresimList!.length; i++) {
+                  cont.sayfaresimList?[i].secim = false;
+                }
+              } else {
+                resimsil.value = true;
+              }
+
               //Toplu resim silme
             },
           ),
@@ -70,10 +81,11 @@ class ResimSayfasi extends StatelessWidget {
                     () => GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 3 / 2,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20),
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 3 / 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 20,
+                      ),
                       itemCount: cont.sayfaresimList!.length,
                       itemBuilder: (context, index) {
                         var data = cont.sayfaresimList?[index];
@@ -111,19 +123,87 @@ class ResimSayfasi extends StatelessWidget {
                             ],
                             onPressed: () {},
                             child: Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  color: Color.fromARGB(255, 155, 155, 155),
+                              height: 150,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 8,
+                                    blurRadius: 10,
+                                    offset: const Offset(
+                                        30, 30), // changes position of shadow
+                                  ),
+                                ],
+                                border: Border.all(
+                                  width: 4,
                                 ),
-                                child:
-                                    Image.memory(base64Decode(data?.resim1))),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                color: const Color.fromARGB(255, 155, 155, 155),
+                              ),
+                              child: Obx(
+                                () => Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Image.memory(base64Decode(data?.resim1)),
+                                    if (resimsil.value)
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Checkbox(
+                                          onChanged: (value) {
+                                            data!.secim = value;
+                                            cont.refResh();
+                                          },
+                                          checkColor: Colors.white,
+                                          activeColor: Colors.blue,
+                                          value: data?.secim ?? false,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         );
                       },
                     ),
                   ),
                 ),
+                Positioned(
+                    left: 10,
+                    bottom: 50,
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: GestureDetector(
+                        child: Obx(() => resimsil.value == true
+                            ? IconButton(
+                                alignment: Alignment.bottomLeft,
+                                onPressed: () async {
+                                  for (var i = 0;
+                                      i < cont.sayfaresimList!.length;
+                                      i++) {
+                                    if (cont.sayfaresimList?[i].secim == true) {
+                                      cont.silresimList
+                                          .add(cont.sayfaresimList![i]);
+                                    }
+                                  }
+                                  var silindi = await cont.topluResimSil(
+                                      kullanici.kullaniciAdi.toString(),
+                                      kullanici.parola.toString(),
+                                      cont.silresimList);
+                                  if (silindi == "Silindi") {
+                                    cont.refResh();
+                                  }
+
+                                  resimsil.value = false;
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 50,
+                                ))
+                            : const SizedBox()),
+                      ),
+                    )),
                 Positioned(
                   right: 10,
                   bottom: 10,
@@ -159,6 +239,15 @@ class ResimSayfasi extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Obx(() => resimsil.value == true
+                //     ? IconButton(
+                //         alignment: Alignment.bottomLeft,
+                //         onPressed: () {},
+                //         icon: const Icon(
+                //           Icons.delete,
+                //           size: 50,
+                //         ))
+                //     : const SizedBox()),
               ],
             ),
     );
