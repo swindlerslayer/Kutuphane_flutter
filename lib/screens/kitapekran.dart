@@ -57,7 +57,6 @@ class KitapSayfasi extends StatelessWidget {
             suffixIcon: Obx(
               () => IconButton(
                 icon: Icon(degisken.value ? Icons.search : Icons.close),
-                //filter_alt huni şekilli ikon
                 onPressed: degisken.value
                     ? () {}
                     : () async {
@@ -84,7 +83,8 @@ class KitapSayfasi extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.filter_alt),
             onPressed: () async {
-              //Toplu resim silme
+              //arama filtre kısmı\\
+              
             },
           ),
         ],

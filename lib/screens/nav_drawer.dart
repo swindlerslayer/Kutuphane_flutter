@@ -108,16 +108,28 @@ class NavDrawer extends StatelessWidget {
                   ));
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.settings),
-          //   title: const Text('Yayınevi'),
-          //   onTap: () async {
-          //     Get.back();
-          //     Get.delete<KitapController>();
+          ExpansionTile(
+            title: const Text("Parent Category 1"),
+            leading: const Icon(Icons.person), //add icon
+            childrenPadding: const EdgeInsets.only(left: 60), //children padding
+            children: [
+              ListTile(
+                title: const Text("Child Category 1"),
+                onTap: () {
+                  //action on press
+                },
+              ),
 
-          //     Get.to(() => DenemeSayfasi());
-          //   },
-          // ),
+              ListTile(
+                title: const Text("Child Category 2"),
+                onTap: () {
+                  //action on press
+                },
+              ),
+
+              //more child menu
+            ],
+          ),
         ],
       ),
     );

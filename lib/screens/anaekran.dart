@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
@@ -36,7 +35,6 @@ class BodyWidget extends StatelessWidget {
           kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
       Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
     });
-
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -81,6 +79,8 @@ class BodyWidget extends StatelessWidget {
                           ok.kitapId = ogrencikitap?.kitapId;
                           ok.kullancId = ogrencikitap?.kullancId;
                           ok.kayitTarihi = ogrencikitap?.kayitTarihi;
+                          ok.degisiklikYapan =
+                              kullanici.kullaniciAdi.toString();
                           ok.alisTarihi = ogrencikitap?.alisTarihi;
                           ok.id = data.id;
                           data.teslimDurumu = true;
@@ -119,6 +119,8 @@ class BodyWidget extends StatelessWidget {
                           ok.kullancId = ogrencikitap?.kullancId;
                           ok.kayitTarihi = ogrencikitap?.kayitTarihi;
                           ok.alisTarihi = ogrencikitap?.alisTarihi;
+                          ok.degisiklikYapan =
+                              kullanici.kullaniciAdi.toString();
                           ok.degisiklikTarihi = DateTime.now().toString();
                           ok.id = data.id;
                           data.teslimDurumu = false;
@@ -140,7 +142,7 @@ class BodyWidget extends StatelessWidget {
                       )
                     ],
                     child: SizedBox(
-                      height: 90,
+                      height: 75,
                       child: Card(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,11 +152,44 @@ class BodyWidget extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Column(
                                   children: [
-                                    Text(data.adiSoyadi.toString()),
-                                    Text('${data.adi}'),
-                                    //  Text('${data.alisTarihi}'),
+                                    RichText(
+                                      text: TextSpan(
+                                        // Note: Styles for TextSpans must be explicitly defined.
+                                        // Child text spans will inherit styles from parent
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                        ),
+                                        children: <TextSpan>[
+                                          const TextSpan(
+                                              text: 'Öğrenci Adı: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          TextSpan(text: '${data.adiSoyadi} '),
+                                        ],
+                                      ),
+                                    ),
+                                     RichText(
+                                      text: TextSpan(
+                                        // Note: Styles for TextSpans must be explicitly defined.
+                                        // Child text spans will inherit styles from parent
+                                        style: const TextStyle(
+                                          fontSize: 14.0,
+                                        ),
+                                        children: <TextSpan>[
+                                          const TextSpan(
+                                              text: 'Kitap Adı :',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          TextSpan(text: '${data.adi}'),
+                                        ],
+                                      ),
+                                    ),
+                                   
                                     Text(
-                                        '${DateFormat('yyyy-MM-dd').parse(data.alisTarihi!, false)}')
+                                        'Okul Numarası: ${data.okulNo.toString()}'),
+                                    //  Text('${data.alisTarihi}'),
+                                    // Text(
+                                    //     '${DateFormat.yMd().parse(data.alisTarihi!, false)}      ')
                                   ],
                                 )),
                             Checkbox(

@@ -15,9 +15,9 @@ class ListeResim {
   dynamic resim1;
   int? kitapId;
   String? kayitYapan;
-  DateTime? kayitTarihi;
+  String? kayitTarihi;
   String? degisiklikYapan;
-  DateTime? degisiklikTarihi;
+  String? degisiklikTarihi;
   String? ebat;
   String? boyut;
   bool? secim = false;

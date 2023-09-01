@@ -113,17 +113,17 @@ class ResimSayfasi extends StatelessWidget {
 
                                     if (silindi == "silindi") {
                                       cont.sayfaresimList?.removeAt(index);
+                                     
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text('Resim Silinemedi!')));
+                                              content: Text(
+                                                  'Resimler Silinemedi!')));
                                     }
                                   }),
                             ],
                             onPressed: () {},
                             child: Container(
-                              height: 150,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -193,6 +193,11 @@ class ResimSayfasi extends StatelessWidget {
                                       cont.silresimList);
                                   if (silindi == "Silindi") {
                                     cont.refResh();
+                                    Get.defaultDialog(
+                                        title: "Resimler Sİlindi",
+                                        middleText: "",
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 141, 141, 141));
                                   }
 
                                   resimsil.value = false;
