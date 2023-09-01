@@ -1,8 +1,6 @@
-
 import 'dart:convert';
 
-Resim resimFromJson(String str) =>
-    Resim.fromJson(json.decode(str));
+Resim resimFromJson(String str) => Resim.fromJson(json.decode(str));
 
 String resimToJson(Resim data) => json.encode(data.toJson());
 
@@ -10,10 +8,10 @@ class Resim {
   int? id;
   dynamic resim1;
   int? kitapId;
-  dynamic kayitYapan;
-  dynamic kayitTarihi;
-  dynamic degisiklikYapan;
-  dynamic degisiklikTarihi;
+  String? kayitYapan;
+  String? kayitTarihi;
+  String? degisiklikYapan;
+  String? degisiklikTarihi;
   String? ebat;
   String? boyut;
 

@@ -210,6 +210,7 @@ class BodyWidget extends StatelessWidget {
                                   data.value.kitapTurId = result.kitapTurId;
                                   data.value.yayinEviId = result.yayinEviId;
                                   data.value.yazarId = result.yazarId;
+                                  data.value.adiSoyadi = result.adisoyadi;
                                   data.value.resim = result.resim;
                                   cont.refResh;
                                   Get.defaultDialog(

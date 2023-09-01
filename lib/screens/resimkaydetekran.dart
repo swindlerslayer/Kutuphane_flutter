@@ -21,11 +21,11 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
   Widget build(BuildContext context) {
     final cont = Get.put(ResimController());
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var dd = await cont.getResim(kullanici.kullaniciAdi.toString(),
-          kullanici.parola.toString(), gelenkitapid);
-      cont.sayfaresimList = dd;
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   var dd = await cont.getResim(kullanici.kullaniciAdi.toString(),
+    //       kullanici.parola.toString(), gelenkitapid);
+    //   cont.sayfaresimList = dd;
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -43,20 +43,24 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
-            onPressed: () {
+            onPressed: () async {
               //bulk image save here
-              cont.topluResimEkle(kullanici.kullaniciAdi.toString(),
-                  kullanici.parola.toString(), cont.sayfaresimList);
+              var eklendi = await cont.topluResimEkle(
+                  kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString(),
+                  cont.ekleresimList);
+              if (eklendi == "Eklendi") {
+                Get.back(result: "kaydedildi");
+              }
             },
           ),
           IconButton(
             icon: const Icon(Icons.add_photo_alternate),
             onPressed: () async {
-              
               List<File> selectedImages = [];
               final picker = ImagePicker();
               final pickedFile = await picker.pickMultiImage(
-                  imageQuality: 50, maxHeight: 1000, maxWidth: 1000);
+                  imageQuality: 1, maxHeight: 100, maxWidth: 100);
               List<XFile> xfilePick = pickedFile;
 
               if (xfilePick.isNotEmpty) {
@@ -72,8 +76,8 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                   z.resim1 = tanim;
                   z.kitapId = gelenkitapid;
                   z.kayitYapan = kullanici.kullaniciAdi;
-                  z.kayitTarihi = DateTime.now();
-                  cont.sayfaresimList?.add(z);
+                  //   z.kayitTarihi = DateTime.now();
+                  cont.ekleresimList?.add(z);
                 }
               } else {
                 // ignore: use_build_context_synchronously
@@ -107,13 +111,14 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                             childAspectRatio: 3 / 2,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
-                    itemCount: cont.sayfaresimList!.length,
+                    itemCount: cont.ekleresimList!.length,
                     itemBuilder: (context, index) {
-                      var data = cont.sayfaresimList?[index];
+                      var data = cont.ekleresimList?[index];
                       return GestureDetector(
                         onTap: () {},
                         child: FocusedMenuHolder(
                           openWithTap: true,
+                          animateMenuItems: true,
                           menuWidth: MediaQuery.of(context).size.width * 0.50,
                           menuItems: [
                             FocusedMenuItem(
@@ -128,8 +133,20 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                                 trailingIcon: const Icon(
                                   Icons.delete,
                                 ),
-                                onPressed: () {
-                                  cont.sayfaresimList?.removeAt(index);
+                                onPressed: () async {
+                                  // var silindi = await cont.getResimsil(
+                                  //     kullanici.kullaniciAdi.toString(),
+                                  //     kullanici.parola.toString(),
+                                  //     data?.id ?? 0);
+
+                                  // if (silindi == "silindi") {
+                                  cont.ekleresimList?.removeAt(index);
+                                  // } else {
+                                  //   ScaffoldMessenger.of(context).showSnackBar(
+                                  //       const SnackBar(
+                                  //           content:
+                                  //               Text('Resim Silinemedi!')));
+                                  // }
                                 }),
                           ],
                           onPressed: () {},

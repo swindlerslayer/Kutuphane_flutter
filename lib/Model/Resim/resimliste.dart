@@ -14,10 +14,10 @@ class ListeResim {
   int? id;
   dynamic resim1;
   int? kitapId;
-  dynamic kayitYapan;
-  dynamic kayitTarihi;
-  dynamic degisiklikYapan;
-  dynamic degisiklikTarihi;
+ String? kayitYapan;
+  DateTime? kayitTarihi;
+  String? degisiklikYapan;
+  DateTime? degisiklikTarihi;
   String? ebat;
   String? boyut;
 

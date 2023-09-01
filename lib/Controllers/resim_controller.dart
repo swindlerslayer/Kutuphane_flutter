@@ -10,6 +10,10 @@ class ResimController extends GetxController {
   List<ListeResim>? get sayfaresimList => _sayfaresimList;
   set sayfaresimList(List<ListeResim>? value) => _sayfaresimList;
 
+  final _ekleresimList = <ListeResim>[].obs;
+  List<ListeResim>? get ekleresimList => _ekleresimList;
+  set ekleresimList(List<ListeResim>? value) => _ekleresimList;
+
   Future<List<ListeResim>?> getResim(
       String kullaniciAdi, String parola, int id) async {
     var apilink = ApiEndPoints.baseUrl;
@@ -37,6 +41,31 @@ class ResimController extends GetxController {
     }
   }
 
+  Future<String?> getResimsil(
+      String kullaniciAdi, String parola, int id) async {
+    var apilink = ApiEndPoints.baseUrl;
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
+
+    try {
+      final response = await http.get(
+        Uri.parse('$apilink/api/resimsil?id=$id'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer ${token.accessToken}"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return "silindi";
+      } else {
+        return null;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<String> topluResimEkle(
       String kullaniciAdi, String parola, List<ListeResim>? k) async {
     var token = await TokenService.getToken(
@@ -49,12 +78,14 @@ class ResimController extends GetxController {
         "Content-Type": "application/json",
         "Authorization": "Bearer ${token.accessToken}"
       };
+      //var badi = k.toString();
       var badi = json.encode(k);
       final response = await client.post(url, headers: headers, body: badi);
-      if (response.body == "true") {
+      if (response.statusCode == 200) {
+        sayfaresimList?.clear();
         return "Eklendi";
       } else {
-        return "Güncellendi";
+        return "Eklenemedi";
       }
     } catch (e) {
       return "?";

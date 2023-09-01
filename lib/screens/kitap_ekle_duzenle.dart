@@ -10,7 +10,7 @@ import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
-import 'package:kutuphane_mobil_d/screens/resimkaydetekran.dart';
+import 'package:kutuphane_mobil_d/screens/resimekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
 
@@ -91,7 +91,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.filter),
                   onPressed: () {
-                    Get.to(ResimKaydetmeSayfasi(
+                    Get.to(ResimSayfasi(
                       kullanici: kullanici,
                       gelenkitapid: gelenkitap!.id ?? 0,
                     ));
@@ -179,9 +179,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                     final ImagePicker picker = ImagePicker();
 
                                     final XFile? image = await picker.pickImage(
-                                        imageQuality: 50,
-                                        maxHeight: 1000,
-                                        maxWidth: 1000,
+                                        imageQuality: 1,
+                                        maxHeight: 100,
+                                        maxWidth: 100,
                                         source: ImageSource.gallery);
 
                                     File? file = File(image!.path);
