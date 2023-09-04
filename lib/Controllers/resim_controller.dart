@@ -119,9 +119,11 @@ class ResimController extends GetxController {
       };
       //var badi = k.toString();
       var badi = json.encode(k);
+      print(badi);
       final response = await client.post(url, headers: headers, body: badi);
       if (response.statusCode == 200) {
         sayfaresimList?.clear();
+        ekleresimList?.clear();
         return "Eklendi";
       } else {
         return "Eklenemedi";

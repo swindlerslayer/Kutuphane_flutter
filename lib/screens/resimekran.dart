@@ -113,8 +113,8 @@ class ResimSayfasi extends StatelessWidget {
 
                                     if (silindi == "silindi") {
                                       cont.sayfaresimList?.removeAt(index);
-                                     
                                     } else {
+                                      // ignore: use_build_context_synchronously
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                               content: Text(
@@ -145,7 +145,10 @@ class ResimSayfasi extends StatelessWidget {
                                 () => Stack(
                                   fit: StackFit.expand,
                                   children: [
-                                    Image.memory(base64Decode(data?.resim1)),
+                                    data != null
+                                        ? Image.memory(
+                                            base64Decode(data.resim1))
+                                        : const SizedBox(),
                                     if (resimsil.value)
                                       Align(
                                         alignment: Alignment.bottomRight,

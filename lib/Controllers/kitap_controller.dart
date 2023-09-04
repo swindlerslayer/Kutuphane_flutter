@@ -93,7 +93,7 @@ class KitapController extends GetxController {
     }
     final response = await http.get(
       Uri.parse(
-          '$apilink/api/kitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa'),
+          '$apilink/api/kitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa&yazar='),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Bearer ${token.accessToken}"

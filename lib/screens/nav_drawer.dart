@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/main.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -108,27 +109,15 @@ class NavDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ExpansionTile(
-            title: const Text("Parent Category 1"),
-            leading: const Icon(Icons.person), //add icon
-            childrenPadding: const EdgeInsets.only(left: 60), //children padding
-            children: [
-              ListTile(
-                title: const Text("Child Category 1"),
-                onTap: () {
-                  //action on press
-                },
-              ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('settings'),
+            onTap: () async {
+              Get.back();
+              Get.delete<KitapController>();
 
-              ListTile(
-                title: const Text("Child Category 2"),
-                onTap: () {
-                  //action on press
-                },
-              ),
-
-              //more child menu
-            ],
+              Get.to(() => const MyApp());
+            },
           ),
         ],
       ),

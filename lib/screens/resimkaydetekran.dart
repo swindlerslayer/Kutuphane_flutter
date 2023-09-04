@@ -49,7 +49,6 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                   kullanici.kullaniciAdi.toString(),
                   kullanici.parola.toString(),
                   cont.ekleresimList);
-              print(eklendi);
               if (eklendi == "Eklendi") {
                 Get.back(result: "kaydedildi");
               }
@@ -167,7 +166,6 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                               // z.kayitTarihi = DateTime.now();
 
                               cont.ekleresimList?.add(z);
-                              print(z.kayitTarihi);
                             }
                           } else {
                             // ignore: use_build_context_synchronously

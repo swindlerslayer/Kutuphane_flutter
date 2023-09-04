@@ -2,14 +2,17 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   static const String baseUrl = "http://192.168.1.199/api";
 
-// getfinal_   aşşağıdaki 3 satırlık get-set propertie'yi oluşturur.
+  final _checkedstatus = true.obs;
+  bool? get checkedstatus => _checkedstatus.value;
+  set checkedstatus(bool? value) => _checkedstatus.value = value!;
+
+  //how to set getter and setter for empty bool value
 
   final _id = 0.obs;
   get id => _id.value;
@@ -21,16 +24,27 @@ class LoginController extends GetxController {
   KullaniciGiris get kullanicigiris => _kullanicigiris.value;
   set kullanicigiris(KullaniciGiris value) => _kullanicigiris.value = value;
 
+  Future<bool> isCheckedBefore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final bool? ischecked = prefs.getBool('ischecked');
+
+    if (ischecked == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<String> getUserCredentials() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? kullaniciadi = prefs.getString('kullaniciAdi');
-    final String? kullaniciparola = prefs.getString('kullaniciAdi');
+    final String? kullaniciparola = prefs.getString('parola');
     return "$kullaniciadi + $kullaniciparola";
   }
 
-  Future<KullaniciGiris?> loginUser(
-      BuildContext context, String kullaniciAdi, String parola) async {
+  Future<KullaniciGiris?> loginUser(String kullaniciAdi, String parola) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
@@ -45,9 +59,6 @@ class LoginController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        var gelenkullaniciadlari = await getUserCredentials();
-        print(gelenkullaniciadlari);
-
         final Map<String, dynamic> responseData = json.decode(response.body);
         KullaniciGiris? kullanici = KullaniciGiris?.fromJson(responseData);
         kullanici.parola = parola;
