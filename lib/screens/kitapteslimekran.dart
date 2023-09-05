@@ -1,9 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_teslim_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
+import 'package:kutuphane_mobil_d/screens/kitapekran.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
+import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 
 class KitapTeslimSayfasi extends StatelessWidget {
   KitapTeslimSayfasi({Key? key, required this.kullanici}) : super(key: key);
@@ -18,6 +23,7 @@ class KitapTeslimSayfasi extends StatelessWidget {
     final teslimtarih = TextEditingController(text: teslimdate).obs;
 
     final alistarih = TextEditingController(text: alisdate.value).obs;
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -29,6 +35,32 @@ class KitapTeslimSayfasi extends StatelessWidget {
           () {
             return Column(
               children: [
+                TextField(
+                  controller: alistarih.value,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: "Alış Tarihi",
+                  ),
+                  readOnly: true,
+                  onTap: () async {
+                    DatePicker.showDatePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(2018, 3, 5),
+                        maxTime: DateTime.now(), onChanged: (date) {
+                      alisdate.value = date.toString();
+                    }, onConfirm: (date) {
+                      alisdate.value = date.toString();
+
+                      alistarih.value.text = DateFormat('dd-MM-yyy')
+                          .format(date)
+                          .toString()
+                          .toString();
+                    }, currentTime: DateTime.now(), locale: LocaleType.tr);
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
                 TextField(
                   controller: teslimtarih.value,
                   decoration: const InputDecoration(
@@ -48,36 +80,28 @@ class KitapTeslimSayfasi extends StatelessWidget {
                     }, currentTime: DateTime.now(), locale: LocaleType.tr);
                   },
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  child: TextField(
-                    controller: alistarih.value,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today),
-                      labelText: "Alış Tarihi",
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 25),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Tarihleri Sıfırla",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 209, 209, 209)),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            teslimtarih.value.text = "";
+                            alistarih.value.text = "";
+                          },
+                      ),
                     ),
-                    readOnly: true,
-                    onTap: () async {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2018, 3, 5),
-                          maxTime: DateTime.now(), onChanged: (date) {
-                        alisdate.value = date.toString();
-                      }, onConfirm: (date) {
-                        alisdate.value = date.toString();
-
-                        alistarih.value.text = DateFormat('dd-MM-yyy')
-                            .format(date)
-                            .toString()
-                            .toString();
-                      }, currentTime: DateTime.now(), locale: LocaleType.tr);
-                    },
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 SizedBox(
                   width: 200,
@@ -92,7 +116,18 @@ class KitapTeslimSayfasi extends StatelessWidget {
                             labelText: "Öğrenci",
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.add_box),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                final cont = Get.put(KitapTeslimController());
+
+                                var x = await Get.to(() => OgrenciSayfasi(
+                                      kullanici: kullanici,
+                                      secim: 1,
+                                    ));
+                                if (x != null) {
+                                  ogrencicontroller.value.text = x.adiSoyadi;
+                                  cont.secilenogrenciid = x.id;
+                                }
+                              },
                             ),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
@@ -116,7 +151,18 @@ class KitapTeslimSayfasi extends StatelessWidget {
                             labelText: "Kitap",
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.add_box),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                final cont = Get.put(KitapTeslimController());
+
+                                var x = await Get.to(() => KitapSayfasi(
+                                      kullanici: kullanici,
+                                      secim: 1,
+                                    ));
+                                if (x != null) {
+                                  kitapcontroller.value.text = x.adi;
+                                  cont.secilenkitapid = x.id;
+                                }
+                              },
                             ),
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
@@ -131,7 +177,23 @@ class KitapTeslimSayfasi extends StatelessWidget {
                   height: 10,
                 ),
                 ElevatedButton(
-                    onPressed: () {}, child: const Text("Teslim Onayla!"))
+                    onPressed: () {
+                      final cont = Get.put(KitapTeslimController());
+
+                      OgrenciKitap x = OgrenciKitap();
+                      x.alisTarihi = alistarih.value.text;
+                      x.kitapId = cont.secilenkitapid;
+                      x.teslimTarihi = teslimtarih.value.text;
+                      bool td;
+                      if (teslimtarih.value.text.isEmpty) {
+                        td = false;
+                      } else {
+                        td = true;
+                      }
+                      x.ogrenciId = cont.secilenogrenciid;
+                      x.teslimDurumu = td;
+                    },
+                    child: const Text("Teslim Onayla!"))
               ],
             );
           },

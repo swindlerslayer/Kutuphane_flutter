@@ -18,6 +18,10 @@ class KitapController extends GetxController {
   int? get gelenpagecount => _gelenpagecount.value;
   set gelenpagecount(int? value) => _gelenpagecount.value = value!;
 
+    final _secilenkitap = 0.obs;
+  int? get secilenkitap => _secilenkitap.value;
+  set secilenkitap(int? value) => _secilenkitap.value = value!;
+
   final _totalPageCount = 0.obs;
   int? get totalPageCount => _totalPageCount.value;
   set totalPageCount(int? value) => _totalPageCount.value = value!;

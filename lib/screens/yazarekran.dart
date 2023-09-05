@@ -73,6 +73,18 @@ class YazarSayfasi extends StatelessWidget {
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
+        leading: Builder(
+            builder: (context) => secim == 1
+                ? IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.line_weight),
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  )),
         title: TextField(
           onChanged: (value) {
             if (value.isEmpty) {

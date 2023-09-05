@@ -265,7 +265,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                       secim: 1,
                                       kitapID: gelenkitap?.id,
                                     ));
-                                yayinevicontroller.value.text = x;
+                                x != null
+                                    ? yayinevicontroller.value.text = x
+                                    : null;
                               },
                             ),
                             enabledBorder: const OutlineInputBorder(
@@ -296,7 +298,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                       secim: 1,
                                       kitapID: gelenkitap?.id,
                                     ));
-                                yazarcontroller.value.text = x;
+                                x != null
+                                    ? yazarcontroller.value.text = x
+                                    : null;
                               },
                             ),
                             enabledBorder: const OutlineInputBorder(
@@ -327,7 +331,9 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                       secim: 1,
                                       kitapID: gelenkitap?.id,
                                     ));
-                                kitapturcontroller.value.text = x;
+                                x != null
+                                    ? kitapturcontroller.value.text = x
+                                    : null;
                               },
                             ),
                             enabledBorder: const OutlineInputBorder(
