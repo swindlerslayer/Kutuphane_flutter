@@ -192,6 +192,11 @@ class KitapTeslimSayfasi extends StatelessWidget {
                       }
                       x.ogrenciId = cont.secilenogrenciid;
                       x.teslimDurumu = td;
+                      //ekleguncelleKitapTeslim
+                      cont.ekleguncelleKitapTeslim(
+                          kullanici.kullaniciAdi.toString(),
+                          kullanici.parola.toString(),
+                          x);
                     },
                     child: const Text("Teslim Onayla!"))
               ],

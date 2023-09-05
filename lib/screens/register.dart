@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/register_controller.dart';
+import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/screens/login.dart';
 
 class Register extends StatelessWidget {
-  const Register({super.key});
+  Register({super.key});
+  final kadi = TextEditingController();
+  final ksifre = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class Register extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
+                    controller: kadi,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Kullanıcı Adı"),
@@ -37,6 +44,8 @@ class Register extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: TextFormField(
+                    controller: ksifre,
+                    obscureText: true,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), labelText: "Şifre"),
                     validator: (value) {
@@ -58,8 +67,22 @@ class Register extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 132, 132,
                             132), // Text Color (Foreground color)
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        var cont = Get.put(RegisterController());
                         
+                        KullaniciGiris x = KullaniciGiris();
+                        x.kullaniciAdi = kadi.text;
+                        x.parola = ksifre.text;
+
+                        var kayit = await cont.register(x);
+                        if (kayit == "Eklendi") {
+                          Get.defaultDialog(
+                              title: "Kayıt Başarılı",
+                              middleText: "",
+                              backgroundColor:
+                                  const Color.fromARGB(255, 141, 141, 141));
+                        }
+                        Get.to(const Login());
                       },
                       child: const Text("Kayıt Ol"),
                     )))

@@ -15,11 +15,11 @@ class KitapTeslimController extends GetxController {
   set secilenogrenciid(int? value) => _secilenogrenciid.value = value!;
 
   Future<String> ekleguncelleKitapTeslim(
-      RxString kullaniciAdi, RxString parola, OgrenciKitap k) async {
+      String kullaniciAdi, String parola, OgrenciKitap k) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
-    var url = Uri.parse('${ApiEndPoints.baseUrl}api/ekleduzenle');
+    var url = Uri.parse('${ApiEndPoints.baseUrl}api/kitapogrenciekleduzenle');
 
     try {
       var headers = <String, String>{

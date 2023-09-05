@@ -116,7 +116,7 @@ class Login extends StatelessWidget {
                               132), // Text Color (Foreground color)
                         ),
                         onPressed: () {
-                          Get.to(const Register());
+                          Get.to( Register());
                         },
                         child: const Text("Hesabın Yoksa Kayıt Ol"),
                       )),
