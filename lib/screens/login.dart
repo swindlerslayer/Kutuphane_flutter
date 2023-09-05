@@ -22,109 +22,127 @@ class Login extends StatelessWidget {
     ischecked == false ? cont.checkedstatus = false : cont.checkedstatus = true;
 
     return Scaffold(
-      body: ListView(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color.fromARGB(255, 121, 121, 121),
-                  Color.fromARGB(255, 44, 44, 44),
-                ],
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: TextField(
-                      controller: kullaniciadicontroller,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Kullanıcı Adı"),
-                    ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 121, 121, 121),
+              Color.fromARGB(255, 44, 44, 44),
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RichText(
+                  text: const TextSpan(
+                      text: "Giriş Ekranı",
+                      style: TextStyle(
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.3)),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    controller: kullaniciadicontroller,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Kullanıcı Adı"),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: TextField(
-                      controller: sifrecontroller,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(), labelText: "Şifre"),
-                    ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextField(
+                    controller: sifrecontroller,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Şifre"),
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16.0),
-                      child: Obx(
-                        () => Checkbox(
-                          value: cont.checkedstatus,
-                          onChanged: (value) async {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            cont.checkedstatus = value!;
-                            if (cont.checkedstatus == true) {
-                              await prefs.setBool(
-                                  'ischecked', cont.checkedstatus!);
-                            } else {
-                              await prefs.setBool(
-                                  'ischecked', cont.checkedstatus!);
-                            }
-                          },
+                ),
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 16.0),
+                        child: Obx(
+                          () => Checkbox(
+                            value: cont.checkedstatus,
+                            onChanged: (value) async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              cont.checkedstatus = value!;
+                              if (cont.checkedstatus == true) {
+                                await prefs.setBool(
+                                    'ischecked', cont.checkedstatus!);
+                              } else {
+                                await prefs.setBool(
+                                    'ischecked', cont.checkedstatus!);
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 16.0),
-                    child: Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor:
-                              const Color.fromARGB(255, 255, 255, 255),
-                          backgroundColor: const Color.fromARGB(255, 132, 132,
-                              132), // Text Color (Foreground color)
-                        ),
-                        onPressed: () {
-                          String kullaniciAdi = kullaniciadicontroller.text;
-                          String parola = sifrecontroller.text;
-                          cont.loginUser(kullaniciAdi, parola);
-                          cont0._loginUser(kullaniciAdi, parola);
-                        },
-                        child: const Text('Giriş Yap'),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        top: 24,
+                        left: 40,
                       ),
+                      child: Text("Beni Hatırla"),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        backgroundColor: const Color.fromARGB(255, 132, 132,
+                            132), // Text Color (Foreground color)
+                      ),
+                      onPressed: () {
+                        String kullaniciAdi = kullaniciadicontroller.text;
+                        String parola = sifrecontroller.text;
+                        cont.loginUser(kullaniciAdi, parola);
+                        cont0._loginUser(kullaniciAdi, parola);
+                      },
+                      child: const Text('Giriş Yap'),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor:
-                              const Color.fromARGB(255, 255, 255, 255),
-                          backgroundColor: const Color.fromARGB(255, 132, 132,
-                              132), // Text Color (Foreground color)
-                        ),
-                        onPressed: () {
-                          Get.to( Register());
-                        },
-                        child: const Text("Hesabın Yoksa Kayıt Ol"),
-                      )),
-                ],
-              ),
+                ),
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        backgroundColor: const Color.fromARGB(255, 132, 132,
+                            132), // Text Color (Foreground color)
+                      ),
+                      onPressed: () {
+                        Get.to(Register());
+                      },
+                      child: const Text("Hesabın Yoksa Kayıt Ol"),
+                    )),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

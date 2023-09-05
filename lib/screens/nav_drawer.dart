@@ -54,7 +54,6 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Öğrenci'),
             onTap: () async {
-
               Get.to(() => OgrenciSayfasi(
                     kullanici: kullanici,
                     secim: 0,
@@ -67,7 +66,10 @@ class NavDrawer extends StatelessWidget {
             onTap: () async {
               Get.back();
 
-              Get.to(() => KitapSayfasi(kullanici: kullanici,secim: 0,));
+              Get.to(() => KitapSayfasi(
+                    kullanici: kullanici,
+                    secim: 0,
+                  ));
             },
           ),
           ListTile(
@@ -116,7 +118,7 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              //  Get.to(() => const MyApp());
+              //     Get.to(() =>  MyApp(kullanici: kullanici,));
             },
           ),
         ],

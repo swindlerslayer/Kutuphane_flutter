@@ -8,6 +8,14 @@ import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitapliste.dart';
 import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
+// git init
+// git add -A
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin https://github.com/kharitonovAL/bot_medium.git
+// git push -u origin main
+
+
 class AnasayfaController extends GetxController {
   final _gelenpagecount = 0.obs;
   int? get gelenpagecount => _gelenpagecount.value;

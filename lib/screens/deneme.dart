@@ -1,18 +1,19 @@
 // import 'package:flutter/material.dart';
+// import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+// import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 
 // class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+//   const MyApp({super.key, required this.kullanici});
+//   final KullaniciGiris kullanici;
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Scaffold(
-//         appBar: AppBar(),
-//         endDrawer: const MyDrawer(),
-//         body: const Center(
-//           child: Center(child: Text('Text')),
-//         ),
+//     return Scaffold(
+//       drawer: NavDrawer(kullanici: kullanici),
+//       appBar: AppBar(),
+//       endDrawer: const MyDrawer(),
+//       body: const Center(
+//         child: Center(child: Text('Text')),
 //       ),
 //     );
 //   }
@@ -43,10 +44,10 @@
 //   }
 
 //   @override
-//   // void dispose() {
-//   //   _controller.dispose();
-//   //   super.dispose();
-//   // }
+//   void dispose() {
+//     _controller?.dispose();
+//     super.dispose();
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
