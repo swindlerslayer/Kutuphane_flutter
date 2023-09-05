@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/screens/anaekran.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
@@ -68,24 +67,17 @@ class Login extends StatelessWidget {
                           horizontal: 8, vertical: 16.0),
                       child: Obx(
                         () => Checkbox(
-                          
                           value: cont.checkedstatus,
                           onChanged: (value) async {
                             final SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             cont.checkedstatus = value!;
-                            print(" CheckBox Değeri ${cont.checkedstatus}");
                             if (cont.checkedstatus == true) {
                               await prefs.setBool(
                                   'ischecked', cont.checkedstatus!);
-
-                              print(
-                                  "SetBOOL: ${cont.checkedstatus.toString()}");
                             } else {
                               await prefs.setBool(
                                   'ischecked', cont.checkedstatus!);
-                              print(
-                                  "SetBOOL: ${cont.checkedstatus.toString()}");
                             }
                           },
                         ),
@@ -151,11 +143,6 @@ class _LoginController {
         await loginController.loginUser(kullaniciAdi, parola);
 
     if (loggedInUser?.kullaniciAdi != null) {
-      var dd = await Get.put(AnasayfaController())
-          .getOgrenciKitap(kullaniciAdi.toString(), parola.toString());
-      Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
-      Get.back();
-
       Get.to(NewScreen(kullanici: loggedInUser!));
     } else {
       Get.defaultDialog(

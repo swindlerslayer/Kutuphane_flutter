@@ -3,38 +3,146 @@ import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
+import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 
 class NewScreen extends StatelessWidget {
-  const NewScreen({Key? key, required this.kullanici}) : super(key: key);
+  NewScreen({Key? key, required this.kullanici}) : super(key: key);
   final KullaniciGiris kullanici;
+  final degisken = true.obs;
 
   @override
   Widget build(BuildContext context) {
+    final textEditingController = TextEditingController().obs;
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
-        title: const Text('Anasayfa'),
+        title: TextField(
+          autofocus: false,
+          onChanged: (value) {
+            if (value.isEmpty) {
+              degisken.value = true;
+            } else {
+              degisken.value = false;
+            }
+          },
+          onSubmitted: (value) async {
+            if (value != "") {
+              final cont = Get.put(AnasayfaController());
+              cont.filtrearama = value;
+
+              MetodModel z = MetodModel();
+              z.kalinanSayfa = cont.simdikisayfa;
+              z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+              z.parola = kullanici.parola.toString();
+              z.lkSayfa = true;
+              z.querry = value;
+              Get.put(AnasayfaController()).getSayfaFiltreOgrenciKitap(z);
+            }
+          },
+          controller: textEditingController.value,
+          decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
+            hintText: " Kitapta Ara...",
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                    width: 3, color: Color.fromARGB(255, 103, 103, 103))),
+            suffixIcon: Obx(
+              () => IconButton(
+                icon: Icon(degisken.value ? Icons.search : Icons.close),
+                onPressed: degisken.value
+                    ? () {}
+                    : () async {
+                        textEditingController.value.text = "";
+                        final cont = Get.put(AnasayfaController());
+                        MetodModel z = MetodModel();
+                        z.kalinanSayfa = cont.simdikisayfa;
+                        z.islem = "sayfa";
+                        z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                        z.parola = kullanici.parola.toString();
+                        z.lkSayfa = true;
+                        Get.put(AnasayfaController())
+                            .getSayfaFiltreOgrenciKitap(z);
+
+                        degisken.value = true;
+                        cont.filtresayfa = false;
+                      },
+              ),
+            ),
+          ),
+          style: const TextStyle(color: Colors.white, fontSize: 14.0),
+        ),
       ),
       body: BodyWidget(kullanici: kullanici),
     );
   }
 }
+//sayfaogrencikitapList
 
 class BodyWidget extends StatelessWidget {
   BodyWidget({super.key, required this.kullanici});
   final cont = Get.put(AnasayfaController());
   final KullaniciGiris kullanici;
+  final contR = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      var dd = await Get.put(AnasayfaController()).getOgrenciKitap(
-          kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
-      Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        //    var dd = await Get.put(AnasayfaController()).getOgrenciKitap(
+        //       kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
+        //  Get.put(AnasayfaController()).kitapogrenci = dd ?? [];
+        MetodModel z = MetodModel();
+        z.kalinanSayfa = cont.simdikisayfa;
+        z.islem = "sayfa";
+        z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+        z.parola = kullanici.parola.toString();
+        z.lkSayfa = true;
+        z.artanazalan = false;
+        var dd =
+            await Get.put(AnasayfaController()).getSayfaFiltreOgrenciKitap(z);
+
+        //print(cont.totalPageCount);
+        cont.sayfaogrencikitapList = dd;
+        contR.addListener(
+          () async {
+            if (contR.position.atEdge) {
+              if (contR.position.pixels != 0.0) {
+                if (cont.totalPageCount! >= cont.simdikisayfa) {
+                  cont.isloading = true;
+                  MetodModel x = MetodModel();
+                  x.kalinanSayfa = cont.simdikisayfa;
+                  x.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                  x.parola = kullanici.parola.toString();
+                  x.lkSayfa = false;
+                  z.artanazalan = false;
+
+                  MetodModel y = MetodModel();
+                  x.islem = "filtre";
+
+                  y.kalinanSayfa = cont.simdikisayfa;
+                  y.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                  y.parola = kullanici.parola.toString();
+                  y.lkSayfa = false;
+                  y.querry = cont.filtrearama;
+                  y.artanazalan = false;
+                  cont.filtresayfa
+                      ? await Get.put(AnasayfaController())
+                          .getSayfaFiltreOgrenciKitap(y)
+                      : await Get.put(AnasayfaController())
+                          .getSayfaFiltreOgrenciKitap(x);
+                  cont.isloading = false;
+                }
+              }
+            }
+          },
+        );
+      },
+    );
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -50,13 +158,9 @@ class BodyWidget extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Obx(
-            () => ListView.builder(
-                shrinkWrap: true,
-                itemCount: cont.kitapogrenci.length,
-                itemBuilder: (context, index) {
-                  var data = cont.kitapogrenci[index];
-
-                  return FocusedMenuHolder(
+            () => ListView(controller: contR, shrinkWrap: true, children: [
+              ...cont.sayfaogrencikitapList!.asMap().entries.map((data) =>
+                  FocusedMenuHolder(
                     onPressed: () {},
                     menuItems: [
                       FocusedMenuItem(
@@ -68,7 +172,7 @@ class BodyWidget extends StatelessWidget {
                           var gelenok = cont.getTekOgrenciKitap(
                               kullanici.kullaniciAdi!,
                               kullanici.parola!,
-                              data.id); // data.id
+                              data.value.id); // data.id
                           var ogrencikitap = await gelenok;
 
                           OgrenciKitap ok = OgrenciKitap();
@@ -82,8 +186,8 @@ class BodyWidget extends StatelessWidget {
                           ok.degisiklikYapan =
                               kullanici.kullaniciAdi.toString();
                           ok.alisTarihi = ogrencikitap?.alisTarihi;
-                          ok.id = data.id;
-                          data.teslimDurumu = true;
+                          ok.id = data.value.id;
+                          data.value.teslimDurumu = true;
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
@@ -108,7 +212,7 @@ class BodyWidget extends StatelessWidget {
                           var gelenok = cont.getTekOgrenciKitap(
                               kullanici.kullaniciAdi!,
                               kullanici.parola!,
-                              data.id); // data.id
+                              data.value.id); // data.id
                           var ogrencikitap = await gelenok;
 
                           OgrenciKitap ok = OgrenciKitap();
@@ -122,8 +226,8 @@ class BodyWidget extends StatelessWidget {
                           ok.degisiklikYapan =
                               kullanici.kullaniciAdi.toString();
                           ok.degisiklikTarihi = DateTime.now().toString();
-                          ok.id = data.id;
-                          data.teslimDurumu = false;
+                          ok.id = data.value.id;
+                          data.value.teslimDurumu = false;
 
                           var kaydetGuncelleKontrol = await AnasayfaController()
                               .ekleguncelleOgrenciKitap(
@@ -164,11 +268,12 @@ class BodyWidget extends StatelessWidget {
                                               text: 'Öğrenci Adı: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          TextSpan(text: '${data.adiSoyadi} '),
+                                          TextSpan(
+                                              text: '${data.value.adiSoyadi} '),
                                         ],
                                       ),
                                     ),
-                                     RichText(
+                                    RichText(
                                       text: TextSpan(
                                         // Note: Styles for TextSpans must be explicitly defined.
                                         // Child text spans will inherit styles from parent
@@ -180,20 +285,20 @@ class BodyWidget extends StatelessWidget {
                                               text: 'Kitap Adı :',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
-                                          TextSpan(text: '${data.adi}'),
+                                          TextSpan(text: '${data.value.adi}'),
                                         ],
                                       ),
                                     ),
-                                   
+
                                     Text(
-                                        'Okul Numarası: ${data.okulNo.toString()}'),
+                                        'Okul Numarası: ${data.value.okulNo.toString()}'),
                                     //  Text('${data.alisTarihi}'),
                                     // Text(
                                     //     '${DateFormat.yMd().parse(data.alisTarihi!, false)}      ')
                                   ],
                                 )),
                             Checkbox(
-                              value: data.teslimDurumu,
+                              value: data.value.teslimDurumu,
                               onChanged: (value) {},
                               checkColor: Colors.white,
                               activeColor: Colors.blue,
@@ -213,8 +318,8 @@ class BodyWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  );
-                }),
+                  ))
+            ]),
           )
         ],
       ),

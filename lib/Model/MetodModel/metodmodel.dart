@@ -16,24 +16,25 @@ class MetodModel {
   bool? lkSayfa;
   int? kalinanSayfa;
   String? querry;
+  bool? artanazalan;
 
-  MetodModel({
-    this.kullaniciAdi,
-    this.parola,
-    this.islem,
-    this.lkSayfa,
-    this.kalinanSayfa,
-    this.querry
-  });
+  MetodModel(
+      {this.kullaniciAdi,
+      this.parola,
+      this.islem,
+      this.lkSayfa,
+      this.kalinanSayfa,
+      this.querry,
+      this.artanazalan});
 
   factory MetodModel.fromJson(Map<String, dynamic> json) => MetodModel(
-        kullaniciAdi: json["KullaniciAdi"],
-        parola: json["Parola"],
-        islem: json["Islem"],
-        lkSayfa: json["İlkSayfa"],
-        kalinanSayfa: json["KalinanSayfa"],
-        querry: json["Querry"]
-      );
+      kullaniciAdi: json["KullaniciAdi"],
+      parola: json["Parola"],
+      islem: json["Islem"],
+      lkSayfa: json["İlkSayfa"],
+      kalinanSayfa: json["KalinanSayfa"],
+      querry: json["Querry"],
+      artanazalan: json["ArtanAzalan"]);
 
   Map<String, dynamic> toJson() => {
         "KullaniciAdi": kullaniciAdi,
@@ -41,6 +42,7 @@ class MetodModel {
         "Islem": islem,
         "İlkSayfa": lkSayfa,
         "KalinanSayfa": kalinanSayfa,
-        "Querry":querry
+        "Querry": querry,
+        "ArtanAzalan": artanazalan
       };
 }

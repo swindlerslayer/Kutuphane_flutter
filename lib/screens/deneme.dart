@@ -9,7 +9,7 @@
 //       debugShowCheckedModeBanner: false,
 //       home: Scaffold(
 //         appBar: AppBar(),
-//         drawer: const MyDrawer(),
+//         endDrawer: const MyDrawer(),
 //         body: const Center(
 //           child: Center(child: Text('Text')),
 //         ),
@@ -37,19 +37,16 @@
 
 //   //The Logic where you change the pages
 //   _onChangePage(int index) {
-//     if (index != 0) {
-//       setState(() => myIndex =
-//           index); //change myIndex if you're Selecting between Settings and Explore
-//     }
+//     if (index != 0) myIndex = index;
 //     _controller?.animateToPage(index.clamp(0, 1),
 //         duration: const Duration(milliseconds: 500), curve: Curves.linear);
 //   }
 
 //   @override
-//   void dispose() {
-//     _controller?.dispose();
-//     super.dispose();
-//   }
+//   // void dispose() {
+//   //   _controller.dispose();
+//   //   super.dispose();
+//   // }
 
 //   @override
 //   Widget build(BuildContext context) {

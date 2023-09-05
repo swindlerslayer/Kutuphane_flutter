@@ -2,18 +2,102 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitapliste.dart';
+import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 class AnasayfaController extends GetxController {
-  final _kitapogrenci = <OgrenciKitapListe>[].obs;
-  List<OgrenciKitapListe> get kitapogrenci => _kitapogrenci;
-  set kitapogrenci(List<OgrenciKitapListe> value) =>
-      _kitapogrenci.value = value;
+  final _gelenpagecount = 0.obs;
+  int? get gelenpagecount => _gelenpagecount.value;
+  set gelenpagecount(int? value) => _gelenpagecount.value = value!;
+
+  final _totalPageCount = 0.obs;
+  int? get totalPageCount => _totalPageCount.value;
+  set totalPageCount(int? value) => _totalPageCount.value = value!;
+
+  final _isloading = true.obs;
+  bool get isloading => _isloading.value;
+  set isloading(bool value) => _isloading.value = value;
+
+  final _filtresayfa = false.obs;
+  bool get filtresayfa => _filtresayfa.value;
+  set filtresayfa(bool value) => _filtresayfa.value = value;
+
+  final _simdikisayfa = 0.obs;
+  int get simdikisayfa => _simdikisayfa.value;
+  set simdikisayfa(int value) => _simdikisayfa.value = value;
+
+  final _sayfaogrencikitapList = <OgrenciKitapListe>[].obs;
+  List<OgrenciKitapListe>? get sayfaogrencikitapList => _sayfaogrencikitapList;
+  set sayfaogrencikitapList(List<OgrenciKitapListe>? value) =>
+      _sayfaogrencikitapList;
+
+  final _filtrearama = "".obs;
+  String? get filtrearama => _filtrearama.value;
+  set filtrearama(String? value) => _filtrearama.value = value ?? '';
+
+  // final _kitapogrenci = <OgrenciKitapListe>[].obs;
+  // List<OgrenciKitapListe> get kitapogrenci => _kitapogrenci;
+  // set kitapogrenci(List<OgrenciKitapListe> value) =>
+  //     _kitapogrenci.value = value;
 
   void refResh() {
-    _kitapogrenci.refresh();
+    _sayfaogrencikitapList.refresh();
+  }
+
+  //False eskiden yeniye(id artan) // True yeniden eskiye(id azalan)
+  //
+  Future<List<OgrenciKitapListe>?> getSayfaFiltreOgrenciKitap(
+      MetodModel x) async {
+    metodModelFromJson(jsonEncode(x));
+    var ka = x.kullaniciAdi;
+    var kp = x.parola;
+    simdikisayfa = x.kalinanSayfa!;
+    var ilk = x.lkSayfa;
+    var apilink = ApiEndPoints.baseUrl;
+
+    filtrearama = x.querry;
+
+    x.querry != null ? filtresayfa = true : filtresayfa = false;
+
+    var token = await TokenService.getToken(
+        kullaniciAdi: ka, parola: kp, loginMi: false);
+
+    ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
+
+    if (ilk == true) {
+      sayfaogrencikitapList?.clear();
+    }
+    final response = await http.get(
+      Uri.parse(
+          '$apilink/api/ogrencikitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa&yazar=&artanazalan=false'),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer ${token.accessToken}"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var dd = jsonDecode(response.body);
+      List<OgrenciKitapListe> kitapListesi =
+          ogrenciKitapListeFromJson(jsonEncode(dd["Data"]));
+
+      List<Toplamsayfa> totalpage =
+          toplamSayfaaFromJson(jsonEncode(dd["toplamsayfa"]));
+      simdikisayfa = int.parse(jsonEncode(dd["PageCount"]));
+
+      gelenpagecount = totalpage[0].sayfaSayisi;
+      totalPageCount = (gelenpagecount! / 15).ceil();
+
+      _sayfaogrencikitapList.addAll(kitapListesi);
+
+      isloading = false;
+    } else {
+      return null;
+    }
+    return null;
   }
 
   Future<OgrenciKitap?> getTekOgrenciKitap(
@@ -42,32 +126,32 @@ class AnasayfaController extends GetxController {
     }
   }
 
-  Future<List<OgrenciKitapListe>?> getOgrenciKitap(
-      String kullaniciAdi, String parOla) async {
-    var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
-        kullaniciAdi: kullaniciAdi, parola: parOla, loginMi: false);
+  // Future<List<OgrenciKitapListe>?> getOgrenciKitap(
+  //     String kullaniciAdi, String parOla) async {
+  //   var apilink = ApiEndPoints.baseUrl;
+  //   var token = await TokenService.getToken(
+  //       kullaniciAdi: kullaniciAdi, parola: parOla, loginMi: false);
 
-    try {
-      final response = await http.get(
-        Uri.parse('$apilink/api/ogrkitaplisteyeekle'),
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer ${token.accessToken}"
-        },
-      );
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('$apilink/api/ogrkitaplisteyeekle'),
+  //       headers: {
+  //         "Content-Type": "application/x-www-form-urlencoded",
+  //         "Authorization": "Bearer ${token.accessToken}"
+  //       },
+  //     );
 
-      if (response.statusCode == 200) {
-        List<OgrenciKitapListe> ogrenci =
-            ogrenciKitapListeFromJson(response.body);
-        return ogrenci;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       List<OgrenciKitapListe> ogrenci =
+  //           ogrenciKitapListeFromJson(response.body);
+  //       return ogrenci;
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
 
   Future<String> ekleguncelleOgrenciKitap(
       RxString kullaniciAdi, RxString parola, OgrenciKitap k) async {

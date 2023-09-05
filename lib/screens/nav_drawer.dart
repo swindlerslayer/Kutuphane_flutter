@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/main.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -116,7 +115,7 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              Get.to(() => const MyApp());
+              //  Get.to(() => const MyApp());
             },
           ),
         ],

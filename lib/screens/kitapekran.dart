@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
+import 'package:kutuphane_mobil_d/screens/kitap_filtre_drawer.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
@@ -22,7 +23,25 @@ class KitapSayfasi extends StatelessWidget {
 
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
+      endDrawer: KitapDrawer(
+        kullanici: kullanici,
+      ),
       appBar: AppBar(
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.filter_alt),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            ),
+          ),
+        ],
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.line_weight),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         title: TextField(
           autofocus: false,
           onChanged: (value) {
@@ -79,16 +98,13 @@ class KitapSayfasi extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
         iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.filter_alt),
-            onPressed: () async {
-              //arama filtre kısmı\\
-              
-            },
-          ),
-        ],
-        //  backgroundColor: Colors.white,
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(Icons.filter_alt),
+        //     onPressed: () => Scaffold.of(context).openEndDrawer(),
+        //   ),
+        // ],
+        // //  backgroundColor: Colors.white,
       ),
       body: BodyWidget(kullanici: kullanici),
     );

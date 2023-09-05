@@ -23,6 +23,6 @@ class Statikler {
     contyayinevi.yayineviliste.clear();
     contogrenci.ogrenciliste.clear();
     contkitaptur.kitapturList.clear();
-    contanasayfa.kitapogrenci.clear();
+    contanasayfa.sayfaogrencikitapList?.clear();
   }
 }

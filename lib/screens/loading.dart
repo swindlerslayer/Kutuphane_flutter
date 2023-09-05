@@ -15,10 +15,8 @@ class LoadingScreen extends StatelessWidget {
       var checked = await cont.isCheckedBefore();
       if (checked == true) {
         var dd = await cont.getUserCredentials();
-        print(dd);
         var ddd = dd.toString().split(" ");
         //  cont0._loginUser(ddd[0], ddd[1]);
-        print("Kullanıcı :  ${ddd[0]}  ${ddd[2]} ");
         //wait 2 seconds before next page
         Future.delayed(const Duration(seconds: 3), () {
           Get.to(() => Login(
