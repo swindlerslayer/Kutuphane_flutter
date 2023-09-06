@@ -75,7 +75,7 @@ class YayineviSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         leading: Builder(
-            builder: (context) => secim == 1
+            builder: (context) => secim == 1 || secim == 2
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
@@ -230,6 +230,17 @@ class YayineviSayfasi extends StatelessWidget {
                                         data.value.id);
 
                                 Get.back(result: x?.adi);
+                              }
+                            } else if (secim == 2) {
+                              cont.secilenyayinevi = data.value.id;
+                              if (cont.secilenyayinevi == data.value.id) {
+                                var x = await Get.put(YayineviController())
+                                    .getTekYayinevi(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString(),
+                                        data.value.id);
+
+                                Get.back(result: x);
                               }
                             }
                           },

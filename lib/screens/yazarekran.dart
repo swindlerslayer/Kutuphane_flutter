@@ -74,7 +74,7 @@ class YazarSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         leading: Builder(
-            builder: (context) => secim == 1
+            builder: (context) => secim == 1 || secim == 2
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
@@ -228,6 +228,17 @@ class YazarSayfasi extends StatelessWidget {
                                         data.value.id);
 
                                 Get.back(result: x?.adiSoyadi);
+                              }
+                            } else if (secim == 2) {
+                              cont.secilenyazar = data.value.id;
+                              if (cont.secilenyazar == data.value.id) {
+                                var x = await Get.put(YazarController())
+                                    .getTekYazar(
+                                        kullanici.kullaniciAdi.toString(),
+                                        kullanici.parola.toString(),
+                                        data.value.id);
+
+                                Get.back(result: x);
                               }
                             }
                           },

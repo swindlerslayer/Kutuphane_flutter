@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
-import 'package:kutuphane_mobil_d/screens/anaekran.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/screens/loading.dart';
 import 'package:kutuphane_mobil_d/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,11 +114,13 @@ class Login extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 132, 132,
                             132), // Text Color (Foreground color)
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         String kullaniciAdi = kullaniciadicontroller.text;
                         String parola = sifrecontroller.text;
-                        cont.loginUser(kullaniciAdi, parola);
+
+                        await cont.loginUser(kullaniciAdi, parola);
                         cont0._loginUser(kullaniciAdi, parola);
+                        cont.loginstatus = true;
                       },
                       child: const Text('Giriş Yap'),
                     ),
@@ -161,7 +163,7 @@ class _LoginController {
         await loginController.loginUser(kullaniciAdi, parola);
 
     if (loggedInUser?.kullaniciAdi != null) {
-      Get.to(NewScreen(kullanici: loggedInUser!));
+      Get.to(LoadingScreen(kullanici: loggedInUser!));
     } else {
       Get.defaultDialog(
           title: "Giriş Başarısız",

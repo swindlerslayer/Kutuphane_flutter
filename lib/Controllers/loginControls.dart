@@ -12,6 +12,10 @@ class LoginController extends GetxController {
   bool? get checkedstatus => _checkedstatus.value;
   set checkedstatus(bool? value) => _checkedstatus.value = value!;
 
+    final _loginstatus = false.obs;
+  bool? get loginstatus => _loginstatus.value;
+  set loginstatus(bool? value) => _loginstatus.value = value!;
+
   //how to set getter and setter for empty bool value
 
   final _id = 0.obs;
