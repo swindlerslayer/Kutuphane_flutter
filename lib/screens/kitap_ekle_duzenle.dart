@@ -297,6 +297,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                       kullanici: kullanici,
                                       secim: 1,
                                       kitapID: gelenkitap?.id,
+                                      toplusec: false,
                                     ));
                                 x != null
                                     ? yazarcontroller.value.text = x

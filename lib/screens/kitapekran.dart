@@ -89,18 +89,19 @@ class KitapSayfasi extends StatelessWidget {
                 onPressed: degisken.value
                     ? () {}
                     : () async {
-                        textEditingController.value.text = "";
-                        final cont = Get.put(KitapController());
-                        MetodModel z = MetodModel();
-                        z.kalinanSayfa = cont.simdikisayfa;
-                        z.islem = "sayfa";
-                        z.kullaniciAdi = kullanici.kullaniciAdi.toString();
-                        z.parola = kullanici.parola.toString();
-                        z.lkSayfa = true;
-                        Get.put(KitapController()).getSayfaFiltreKitap(z);
+                        // textEditingController.value.text = "";
+                        // final cont = Get.put(KitapController());
+                        // MetodModel z = MetodModel();
+                        // z.kalinanSayfa = cont.simdikisayfa;
+                        // z.islem = "sayfa";
+                        // z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                        // z.parola = kullanici.parola.toString();
+                        // z.lkSayfa = true;
+                        // Get.put(KitapController()).getSayfaFiltreKitap(z);
 
-                        degisken.value = true;
-                        cont.filtresayfa = false;
+                        // degisken.value = true;
+                        // cont.filtresayfa = false;
+                        
                       },
               ),
             ),

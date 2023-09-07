@@ -40,7 +40,7 @@ class LoadingScreen extends StatelessWidget {
         });
       }
     });
-        //|-_-|\\
+    //|-_-|\\
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),

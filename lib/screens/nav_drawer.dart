@@ -82,6 +82,7 @@ class NavDrawer extends StatelessWidget {
               Get.to(() => YazarSayfasi(
                     kullanici: kullanici,
                     secim: 0,
+                    toplusec: false,
                   ));
             },
           ),

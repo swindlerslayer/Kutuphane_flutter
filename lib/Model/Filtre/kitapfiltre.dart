@@ -14,30 +14,30 @@ class KitapFiltre {
     List<int>? yazarid;
     List<int>? yayineviid;
     List<int>? kitapturid;
-    int? minSayfa;
-    int? maxSayfa;
+    int? minsayfasayisi;
+    int? maxsayfasayisi;
 
     KitapFiltre({
         this.yazarid,
         this.yayineviid,
         this.kitapturid,
-        this.minSayfa,
-        this.maxSayfa,
+        this.minsayfasayisi,
+        this.maxsayfasayisi,
     });
 
     factory KitapFiltre.fromJson(Map<String, dynamic> json) => KitapFiltre(
         yazarid: json["Yazarid"] == null ? [] : List<int>.from(json["Yazarid"]!.map((x) => x)),
         yayineviid: json["Yayineviid"] == null ? [] : List<int>.from(json["Yayineviid"]!.map((x) => x)),
         kitapturid: json["Kitapturid"] == null ? [] : List<int>.from(json["Kitapturid"]!.map((x) => x)),
-        minSayfa: json["MinSayfa"],
-        maxSayfa: json["MaxSayfa"],
+        minsayfasayisi: json["Minsayfasayisi"],
+        maxsayfasayisi: json["Maxsayfasayisi"],
     );
 
     Map<String, dynamic> toJson() => {
         "Yazarid": yazarid == null ? [] : List<dynamic>.from(yazarid!.map((x) => x)),
         "Yayineviid": yayineviid == null ? [] : List<dynamic>.from(yayineviid!.map((x) => x)),
         "Kitapturid": kitapturid == null ? [] : List<dynamic>.from(kitapturid!.map((x) => x)),
-        "MinSayfa": minSayfa,
-        "MaxSayfa": maxSayfa,
+        "Minsayfasayisi": minsayfasayisi,
+        "Maxsayfasayisi": maxsayfasayisi,
     };
 }

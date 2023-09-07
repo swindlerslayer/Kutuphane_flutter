@@ -28,6 +28,7 @@ class Yazar {
         kayitTarihi: json["KayitTarihi"],
         degisiklikYapan: json["DegisiklikYapan"],
         degisiklikTarihi: json["DegisiklikTarihi"],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +38,6 @@ class Yazar {
         "KayitTarihi": kayitTarihi,
         "DegisiklikYapan": degisiklikYapan,
         "DegisiklikTarihi": degisiklikTarihi,
+
       };
 }

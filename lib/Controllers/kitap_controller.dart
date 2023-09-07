@@ -27,6 +27,14 @@ class KitapController extends GetxController {
   int? get secilenkitap => _secilenkitap.value;
   set secilenkitap(int? value) => _secilenkitap.value = value!;
 
+  final _filtreminsayfa = 0.obs;
+  int? get filtreminsayfa => _filtreminsayfa.value;
+  set filtreminsayfa(int? value) => _filtreminsayfa.value = value!;
+
+  final _filtremaxsayfa = 0.obs;
+  int? get filtremaxsayfa => _filtremaxsayfa.value;
+  set filtremaxsayfa(int? value) => _filtremaxsayfa.value = value!;
+
   final _totalPageCount = 0.obs;
   int? get totalPageCount => _totalPageCount.value;
   set totalPageCount(int? value) => _totalPageCount.value = value!;
@@ -73,6 +81,10 @@ class KitapController extends GetxController {
 
   void get refResh {
     _sayfakitapList.refresh();
+  }
+
+  void get clear {
+
   }
 
   Future<List<ListeKitap>?> getKitap(String kullaniciAdi, String parola) async {
@@ -152,10 +164,7 @@ class KitapController extends GetxController {
       gelenpagecount = totalpage[0].sayfaSayisi;
       totalPageCount = (gelenpagecount! / 15).ceil();
 
-      print("$gelenpagecount");
-
       _sayfakitapList.addAll(kitapListesi);
-      print("${sayfakitapList?.length}");
       isloading = false;
       return kitapListesi;
     } else {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/Yazar/yazar.dart';
@@ -12,13 +13,20 @@ import '../Model/Kullanici/kullanici.dart';
 
 class YazarSayfasi extends StatelessWidget {
   YazarSayfasi(
-      {Key? key, required this.kullanici, required this.secim, this.kitapID})
+      {Key? key,
+      required this.kullanici,
+      required this.secim,
+      this.kitapID,
+      required this.toplusec})
       : super(key: key);
   final cont = Get.put(YazarController());
+  final kitcont = Get.put(KitapController());
+
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
   final degisken = false.obs;
+  final bool toplusec;
 
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());
@@ -227,7 +235,7 @@ class YazarSayfasi extends StatelessWidget {
                                         kullanici.parola.toString(),
                                         data.value.id);
 
-                                Get.back(result: x?.adiSoyadi);
+                                Get.back(result: x);
                               }
                             } else if (secim == 2) {
                               cont.secilenyazar = data.value.id;
@@ -243,11 +251,46 @@ class YazarSayfasi extends StatelessWidget {
                             }
                           },
                           child: Card(
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.type_specimen,
-                              ),
-                              title: Text(data.value.adiSoyadi ?? ""),
+                            child: Stack(
+                              children: [
+                                ListTile(
+                                  leading: const Icon(
+                                    Icons.type_specimen,
+                                  ),
+                                  title: Text(data.value.adiSoyadi ?? ""),
+                                ),
+                                if (toplusec)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 5,
+                                      right: 15.0,
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Checkbox(
+                                        onChanged: (value) async {
+                                          var tekyazar = await cont.getTekYazar(
+                                              kullanici.kullaniciAdi.toString(),
+                                              kullanici.parola.toString(),
+                                              data.value.id);
+                                          if (tekyazar != null) {
+                                            kitcont.yazarlar?.add(tekyazar);
+                                            kitcont.kitapfiltre.yazarid ??= [];
+                                            kitcont
+                                                .kitapfiltre.obs.value.yazarid
+                                                ?.add(tekyazar.id!);
+                                          }
+                                          data.value.secimliste = value;
+
+                                          cont.refResh;
+                                        },
+                                        checkColor: Colors.white,
+                                        activeColor: Colors.blue,
+                                        value: data.value.secimliste ?? false,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                         ),
