@@ -210,7 +210,7 @@ class YazarSayfasi extends StatelessWidget {
                                 } else {
                                   Get.defaultDialog(
                                       title: "Yazar Silinemedi",
-                                      middleText: "Yazar Bir Öğrencide kayıtlı",
+                                      middleText: "Yazar Bir Kitapta kayıtlı",
                                       backgroundColor: const Color.fromARGB(
                                           255, 110, 57, 57));
                                 }

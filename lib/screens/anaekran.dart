@@ -47,7 +47,7 @@ class NewScreen extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
-            hintText: " Kitapta Ara...",
+            hintText: " Anasayfada Ara...",
             border: const OutlineInputBorder(
                 borderSide: BorderSide(
                     width: 3, color: Color.fromARGB(255, 103, 103, 103))),

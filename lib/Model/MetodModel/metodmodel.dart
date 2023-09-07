@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:kutuphane_mobil_d/Model/Filtre/kitapfiltre.dart';
+
 MetodModel metodModelFromJson(String str) =>
     MetodModel.fromJson(json.decode(str));
 
@@ -17,6 +19,7 @@ class MetodModel {
   int? kalinanSayfa;
   String? querry;
   bool? artanazalan;
+  KitapFiltre? filtre;
 
   MetodModel(
       {this.kullaniciAdi,
@@ -25,7 +28,8 @@ class MetodModel {
       this.lkSayfa,
       this.kalinanSayfa,
       this.querry,
-      this.artanazalan});
+      this.artanazalan,
+      this.filtre});
 
   factory MetodModel.fromJson(Map<String, dynamic> json) => MetodModel(
       kullaniciAdi: json["KullaniciAdi"],
@@ -34,7 +38,10 @@ class MetodModel {
       lkSayfa: json["İlkSayfa"],
       kalinanSayfa: json["KalinanSayfa"],
       querry: json["Querry"],
-      artanazalan: json["ArtanAzalan"]);
+      artanazalan: json["ArtanAzalan"],
+            filtre: json["KitapFiltre"] == null ? null : KitapFiltre.fromJson(json["KitapFiltre"]),
+);
+      
 
   Map<String, dynamic> toJson() => {
         "KullaniciAdi": kullaniciAdi,
@@ -43,6 +50,7 @@ class MetodModel {
         "İlkSayfa": lkSayfa,
         "KalinanSayfa": kalinanSayfa,
         "Querry": querry,
-        "ArtanAzalan": artanazalan
+        "ArtanAzalan": artanazalan,
+        "KitapFiltre": filtre?.toJson(),
       };
 }

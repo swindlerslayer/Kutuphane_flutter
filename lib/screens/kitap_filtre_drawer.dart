@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutuphane_mobil_d/Model/Filtre/kitapfiltre.dart';
+import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
 import 'package:kutuphane_mobil_d/Model/Yazar/yazar.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
@@ -21,7 +22,7 @@ class KitapDrawer extends StatelessWidget {
     // Container(
     //     height: double.maxFinite,                // DRAWER İÇERİSİNDE LİSTVİEW BUİLDER OLUŞTURABİİLMEK İÇİN BU ŞEKİLDE SABİT YÜKSEKLİK VERMELİYİZ
     //     child: ListView.builder(itemBuilder: itemBuilder));
-    var cont = Get.put(Kitapfiltrecontroller());
+    var cont = Get.put(KitapController());
     return Drawer(
       width: 250,
       child: ListView(
@@ -38,11 +39,16 @@ class KitapDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () async {
-                  var x = await Get.to(() => YazarSayfasi(
+                  var x = await Get.to<Yazar>(() => YazarSayfasi(
                         kullanici: kullanici,
                         secim: 2,
                       ));
-                  x != null ? cont.yazarlar?.add(x) : 0;
+                  if (x != null) {
+                    cont.yazarlar?.add(x);
+                    cont.kitapfiltre.yazarid ??= [];
+                    cont.kitapfiltre.obs.value.yazarid?.add(x.id!);
+                  }
+                  print("yazarid: ${cont.kitapfiltre.obs.value.yazarid}");
                 },
               ),
               Obx(() => SizedBox(
@@ -56,6 +62,9 @@ class KitapDrawer extends StatelessWidget {
                           trailing: IconButton(
                               onPressed: () {
                                 cont.yazarlar?.removeAt(i);
+                                cont.kitapfiltre.obs.value.yazarid?.removeAt(i);
+                                print(
+                                    "yazarid: ${cont.kitapfiltre.obs.value.yazarid}");
                               },
                               icon: const Icon(
                                 Icons.close,
@@ -77,12 +86,16 @@ class KitapDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () async {
-                  var x = await Get.to(() => YayineviSayfasi(
+                  var x = await Get.to<Yayinevi>(() => YayineviSayfasi(
                         kullanici: kullanici,
                         secim: 2,
                       ));
-                  x != null ? cont.yayinevleri?.add(x) : 0;
-
+                  if (x != null) {
+                    cont.yayinevleri?.add(x);
+                    cont.kitapfiltre.yayineviid ??= [];
+                    cont.kitapfiltre.obs.value.yayineviid?.add(x.id!);
+                  }
+                  print("yayineviid: ${cont.kitapfiltre.obs.value.yayineviid}");
                 },
               ),
               Obx(
@@ -97,6 +110,10 @@ class KitapDrawer extends StatelessWidget {
                         trailing: IconButton(
                             onPressed: () {
                               cont.yayinevleri?.removeAt(i);
+                              cont.kitapfiltre.obs.value.yayineviid
+                                  ?.removeAt(i);
+                              print(
+                                  "yayineviid: ${cont.kitapfiltre.obs.value.yayineviid}");
                             },
                             icon: const Icon(
                               Icons.close,
@@ -121,11 +138,21 @@ class KitapDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () async {
-                  var x = await Get.to(() => KitapTurSayfasi(
-                        kullanici: kullanici,
-                        secim: 2,
-                      ));
-                  x != null ? cont.kitapturleri?.add(x) : 0;
+                  var x = await Get.to<KitapTur>(
+                    () => KitapTurSayfasi(
+                      kullanici: kullanici,
+                      secim: 2,
+                    ),
+                  );
+
+                  if (x != null) {
+                    cont.kitapfiltre.kitapturid ??=
+                        []; // kitapturid null ise boş bir liste oluştur
+                    cont.kitapturleri?.add(x);
+                    cont.kitapfiltre.kitapturid!.add(x.id!);
+                  }
+
+                  print("kitapturid: ${cont.kitapfiltre.obs.value.kitapturid}");
                 },
               ),
               Obx(
@@ -140,6 +167,10 @@ class KitapDrawer extends StatelessWidget {
                         trailing: IconButton(
                             onPressed: () {
                               cont.kitapturleri?.removeAt(i);
+                              cont.kitapfiltre.obs.value.kitapturid
+                                  ?.removeAt(i);
+                              print(
+                                  "kitapturid: ${cont.kitapfiltre.obs.value.kitapturid}");
                             },
                             icon: const Icon(
                               Icons.close,
@@ -179,6 +210,9 @@ class KitapDrawer extends StatelessWidget {
             ],
           ),
           ListTile(
+            onLongPress: () {
+             
+            },
             trailing: const Icon(
               Icons.check_circle,
             ),
@@ -192,7 +226,16 @@ class KitapDrawer extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
               ),
             ),
-            onTap: () {},
+            onTap: () { final cont = Get.put(KitapController());
+
+              MetodModel z = MetodModel();
+              z.kalinanSayfa = cont.simdikisayfa;
+              z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+              z.parola = kullanici.parola.toString();
+              z.lkSayfa = true;
+              z.filtre = cont.kitapfiltre;
+              Get.put(KitapController()).getSayfaFiltreKitap(z);
+              print("butonçalıştı");},
           ),
         ],
       ),
@@ -201,21 +244,6 @@ class KitapDrawer extends StatelessWidget {
 }
 
 class Kitapfiltrecontroller extends GetxController {
-  final _yazarlar = <Yazar>[].obs;
-  List<Yazar>? get yazarlar => _yazarlar;
-  set yazarlar(List<Yazar>? value) => _yazarlar;
-
-  final _yayinevleri = <Yayinevi>[].obs;
-  List<Yayinevi>? get yayinevleri => _yayinevleri;
-  set yayinevleri(List<Yayinevi>? value) => _yayinevleri;
-
-  final _kitapturleri = <KitapTur>[].obs;
-  List<KitapTur>? get kitapturleri => _kitapturleri;
-  set kitapturleri(List<KitapTur>? value) => _kitapturleri;
-
-  final _kitapfiltre = <KitapFiltre>[].obs;
-  List<KitapFiltre>? get kitapfiltre => _kitapfiltre;
-  set kitapfiltre(List<KitapFiltre>? value) => _kitapfiltre;
   // Filtre Model == Yazarid = list int
   //                 Yayineviid = list int
   //                  Kitapturid = list  int

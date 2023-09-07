@@ -2,11 +2,16 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:kutuphane_mobil_d/Model/Filtre/filtre.dart';
+import 'package:kutuphane_mobil_d/Model/Filtre/kitapfiltre.dart';
 import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 
 import 'package:kutuphane_mobil_d/Model/Kitap/kitapliste.dart';
+import 'package:kutuphane_mobil_d/Model/KitapTur/kitapturu.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
+import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
+import 'package:kutuphane_mobil_d/Model/Yazar/yazar.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 Future sleep2() {
@@ -18,7 +23,7 @@ class KitapController extends GetxController {
   int? get gelenpagecount => _gelenpagecount.value;
   set gelenpagecount(int? value) => _gelenpagecount.value = value!;
 
-    final _secilenkitap = 0.obs;
+  final _secilenkitap = 0.obs;
   int? get secilenkitap => _secilenkitap.value;
   set secilenkitap(int? value) => _secilenkitap.value = value!;
 
@@ -41,6 +46,26 @@ class KitapController extends GetxController {
   final _sayfakitapList = <ListeKitap>[].obs;
   List<ListeKitap>? get sayfakitapList => _sayfakitapList;
   set sayfakitapList(List<ListeKitap>? value) => _sayfakitapList;
+
+  final _yazarlar = <Yazar>[].obs;
+  List<Yazar>? get yazarlar => _yazarlar;
+  set yazarlar(List<Yazar>? value) => _yazarlar;
+
+  final _yayinevleri = <Yayinevi>[].obs;
+  List<Yayinevi>? get yayinevleri => _yayinevleri;
+  set yayinevleri(List<Yayinevi>? value) => _yayinevleri;
+
+  final _kitapturleri = <KitapTur>[].obs;
+  List<KitapTur>? get kitapturleri => _kitapturleri;
+  set kitapturleri(List<KitapTur>? value) => _kitapturleri;
+
+  final _kitapfiltre = KitapFiltre().obs;
+  KitapFiltre get kitapfiltre => _kitapfiltre.value;
+  set kitapfiltre(KitapFiltre value) => _kitapfiltre.value = value;
+
+  final _filtre = GenelFiltre().obs;
+  GenelFiltre get filtre => _filtre.value;
+  set filtre(GenelFiltre value) => _filtre.value = value;
 
   final _filtrearama = "".obs;
   String? get filtrearama => _filtrearama.value;
@@ -82,10 +107,17 @@ class KitapController extends GetxController {
     simdikisayfa = x.kalinanSayfa!;
     var ilk = x.lkSayfa;
     var apilink = ApiEndPoints.baseUrl;
+    var filtre = x.filtre;
 
     filtrearama = x.querry;
+    GenelFiltre xg = GenelFiltre();
+    xg.kitapFiltre = filtre;
+    xg.querry = filtrearama;
+    xg.sayfa = simdikisayfa;
 
-    x.querry != null ? filtresayfa = true : filtresayfa = false;
+    xg.querry != null ? filtresayfa = true : filtresayfa = false;
+
+    xg.kitapFiltre != null ? filtresayfa = true : filtresayfa = false;
 
     var token = await TokenService.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
@@ -94,15 +126,19 @@ class KitapController extends GetxController {
 
     if (ilk == true) {
       sayfakitapList?.clear();
+      xg.sayfa = 0;
     }
-    final response = await http.get(
-      Uri.parse(
-          '$apilink/api/kitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa&yazar='),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Bearer ${token.accessToken}"
-      },
-    );
+
+    var client = http.Client();
+    var url = Uri.parse('$apilink/api/kitapgetirfiltre');
+
+    var headers = <String, String>{
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${token.accessToken}"
+    };
+
+    var badi = json.encode(xg);
+    final response = await client.post(url, headers: headers, body: badi);
 
     if (response.statusCode == 200) {
       var dd = jsonDecode(response.body);
@@ -116,7 +152,10 @@ class KitapController extends GetxController {
       gelenpagecount = totalpage[0].sayfaSayisi;
       totalPageCount = (gelenpagecount! / 15).ceil();
 
+      print("$gelenpagecount");
+
       _sayfakitapList.addAll(kitapListesi);
+      print("${sayfakitapList?.length}");
       isloading = false;
       return kitapListesi;
     } else {

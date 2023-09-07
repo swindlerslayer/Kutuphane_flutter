@@ -8,7 +8,9 @@ KitapFiltre kitapFiltreFromJson(String str) => KitapFiltre.fromJson(json.decode(
 
 String kitapFiltreToJson(KitapFiltre data) => json.encode(data.toJson());
 
+
 class KitapFiltre {
+
     List<int>? yazarid;
     List<int>? yayineviid;
     List<int>? kitapturid;

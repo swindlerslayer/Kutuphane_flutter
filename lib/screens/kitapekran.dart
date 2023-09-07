@@ -71,6 +71,7 @@ class KitapSayfasi extends StatelessWidget {
               z.parola = kullanici.parola.toString();
               z.lkSayfa = true;
               z.querry = value;
+              z.filtre = cont.kitapfiltre;
               Get.put(KitapController()).getSayfaFiltreKitap(z);
             }
           },
@@ -159,6 +160,8 @@ class BodyWidget extends StatelessWidget {
               x.kullaniciAdi = kullanici.kullaniciAdi.toString();
               x.parola = kullanici.parola.toString();
               x.lkSayfa = false;
+              x.filtre = cont.kitapfiltre;
+
 
               MetodModel y = MetodModel();
               x.islem = "filtre";
@@ -168,6 +171,9 @@ class BodyWidget extends StatelessWidget {
               y.parola = kullanici.parola.toString();
               y.lkSayfa = false;
               y.querry = kitcont.filtrearama;
+              y.filtre = cont.kitapfiltre;
+
+              
               kitcont.filtresayfa
                   ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
                   : await Get.put(KitapController()).getSayfaFiltreKitap(x);
