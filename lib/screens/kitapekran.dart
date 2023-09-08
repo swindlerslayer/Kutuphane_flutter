@@ -18,6 +18,7 @@ class KitapSayfasi extends StatelessWidget {
       : super(key: key);
   final KullaniciGiris kullanici;
   final int secim;
+  final cont = Get.put(KitapController());
 
   final degisken = true.obs;
   @override
@@ -40,17 +41,18 @@ class KitapSayfasi extends StatelessWidget {
           ),
         ],
         leading: Builder(
-            builder: (context) => secim == 1
-                ? IconButton(
-                    icon: const Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  )
-                : IconButton(
-                    icon: const Icon(Icons.line_weight),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                  )),
+          builder: (context) => secim == 1
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Get.back();
+                  },
+                )
+              : IconButton(
+                  icon: const Icon(Icons.line_weight),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
+        ),
         title: TextField(
           autofocus: false,
           onChanged: (value) {
@@ -90,6 +92,16 @@ class KitapSayfasi extends StatelessWidget {
                     ? () {}
                     : () async {
                       
+                        // MetodModel z = MetodModel();
+                        // z.kalinanSayfa = cont.simdikisayfa;
+                        // z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                        // z.parola = kullanici.parola.toString();
+                        // z.lkSayfa = true;
+                        // cont.kitapfiltre.maxsayfasayisi = cont.filtremaxsayfa;
+                        // cont.kitapfiltre.minsayfasayisi = cont.filtreminsayfa;
+                        // z.filtre = cont.kitapfiltre;
+                        // Get.put(KitapController()).getSayfaFiltreKitap(z);
+
                         textEditingController.value.text = "";
                         final cont = Get.put(KitapController());
                         MetodModel z = MetodModel();
@@ -102,7 +114,6 @@ class KitapSayfasi extends StatelessWidget {
 
                         degisken.value = true;
                         cont.filtresayfa = false;
-                              
                       },
               ),
             ),
@@ -164,7 +175,6 @@ class BodyWidget extends StatelessWidget {
               x.lkSayfa = false;
               x.filtre = cont.kitapfiltre;
 
-
               MetodModel y = MetodModel();
               x.islem = "filtre";
 
@@ -175,7 +185,6 @@ class BodyWidget extends StatelessWidget {
               y.querry = kitcont.filtrearama;
               y.filtre = cont.kitapfiltre;
 
-              
               kitcont.filtresayfa
                   ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
                   : await Get.put(KitapController()).getSayfaFiltreKitap(x);

@@ -77,8 +77,6 @@ class KitapTurSayfasi extends StatelessWidget {
       appBar: AppBar(
         leading: Builder(
             builder: (context) => secim == 1 || secim == 2
-
-
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
@@ -233,8 +231,8 @@ class KitapTurSayfasi extends StatelessWidget {
 
                                 Get.back(result: x?.adi);
                               }
-                            }else if (secim == 2){
-                                  cont.secilenkitaptur = data.value.id;
+                            } else if (secim == 2) {
+                              cont.secilenkitaptur = data.value.id;
                               if (cont.secilenkitaptur == data.value.id) {
                                 var x = await Get.put(KitapTurController())
                                     .getTekKitapTur(

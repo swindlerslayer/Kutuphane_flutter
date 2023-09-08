@@ -223,6 +223,20 @@ class KitapDrawer extends StatelessWidget {
             ),
             onTap: () {
               final cont = Get.put(KitapController());
+              sayfasayimaxtextcontroller.text.isEmpty
+                  ? null
+                  : cont.filtremaxsayfa =
+                      int.tryParse(sayfasayimaxtextcontroller.text)!;
+                      
+              sayfasayimintextcontroller.text.isEmpty
+                  ? null
+                  : cont.filtreminsayfa =
+                      int.tryParse(sayfasayimintextcontroller.text)!;
+
+              // cont.filtremaxsayfa =
+              //     int.tryParse(sayfasayimaxtextcontroller.text);
+              // cont.filtreminsayfa =
+              //     int.tryParse(sayfasayimintextcontroller.text);
 
               MetodModel z = MetodModel();
               z.kalinanSayfa = cont.simdikisayfa;
@@ -277,26 +291,6 @@ class KitapDrawer extends StatelessWidget {
               tileColor: const Color.fromARGB(246, 107, 67, 67),
             ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     SizedBox(
-          //         child: ListTile(
-          //       onTap: () {},
-          //       title: const Text("Filtre Yok"),
-          //       trailing: const Icon(Icons.close),
-          //       tileColor: const Color.fromARGB(246, 107, 67, 67),
-          //     )),
-          //     SizedBox(
-          //       child: ListTile(
-          //         onTap: () {},
-          //         title: const Text("Filtre Yok"),
-          //         trailing: const Icon(Icons.close),
-          //         tileColor: const Color.fromARGB(246, 107, 67, 67),
-          //       ),
-          //     ),
-          //   ],
-          // )
         ],
       ),
     );

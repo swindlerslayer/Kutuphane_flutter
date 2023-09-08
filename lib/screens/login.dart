@@ -127,20 +127,20 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor:
-                            const Color.fromARGB(255, 255, 255, 255),
-                        backgroundColor: const Color.fromARGB(255, 132, 132,
-                            132), // Text Color (Foreground color)
-                      ),
-                      onPressed: () {
-                        Get.to(Register());
-                      },
-                      child: const Text("Hesabın Yoksa Kayıt Ol"),
-                    )),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: const Color.fromARGB(
+                          255, 132, 132, 132), // Text Color (Foreground color)
+                    ),
+                    onPressed: () {
+                      Get.to(Register());
+                    },
+                    child: const Text("Hesabın Yoksa Kayıt Ol"),
+                  ),
+                ),
               ],
             ),
           ),

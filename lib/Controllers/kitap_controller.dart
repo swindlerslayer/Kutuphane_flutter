@@ -23,17 +23,18 @@ class KitapController extends GetxController {
   int? get gelenpagecount => _gelenpagecount.value;
   set gelenpagecount(int? value) => _gelenpagecount.value = value!;
 
+
   final _secilenkitap = 0.obs;
   int? get secilenkitap => _secilenkitap.value;
   set secilenkitap(int? value) => _secilenkitap.value = value!;
 
   final _filtreminsayfa = 0.obs;
-  int? get filtreminsayfa => _filtreminsayfa.value;
-  set filtreminsayfa(int? value) => _filtreminsayfa.value = value!;
+  int get filtreminsayfa => _filtreminsayfa.value;
+  set filtreminsayfa(int value) => _filtreminsayfa.value = value;
 
   final _filtremaxsayfa = 0.obs;
-  int? get filtremaxsayfa => _filtremaxsayfa.value;
-  set filtremaxsayfa(int? value) => _filtremaxsayfa.value = value!;
+  int get filtremaxsayfa => _filtremaxsayfa.value;
+  set filtremaxsayfa(int value) => _filtremaxsayfa.value = value;
 
   final _totalPageCount = 0.obs;
   int? get totalPageCount => _totalPageCount.value;
@@ -50,11 +51,6 @@ class KitapController extends GetxController {
   final _simdikisayfa = 0.obs;
   int get simdikisayfa => _simdikisayfa.value;
   set simdikisayfa(int value) => _simdikisayfa.value = value;
-
-  
-  
-
-
 
   final _sayfakitapList = <ListeKitap>[].obs;
   List<ListeKitap>? get sayfakitapList => _sayfakitapList;

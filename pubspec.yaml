@@ -18,6 +18,8 @@ dependencies:
   flutter_datetime_picker_plus: ^2.0.1
   intl: ^0.18.1
   circular_menu: ^2.0.1
+  google_mlkit_text_recognition: ^0.10.0
+
   
 dev_dependencies:
   flutter_test:

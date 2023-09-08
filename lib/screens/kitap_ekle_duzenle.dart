@@ -46,8 +46,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     kitcont.getTekKitap(kullanici.kullaniciAdi.toString(),
         kullanici.parola.toString(), gelenkitap?.id);
 
-    final kullaniciadicontroller =
-        TextEditingController(text: gelenkitap?.adi ?? "");
+    final barkodcontroller = TextEditingController(text: gelenkitap?.adi ?? "");
 
     final kitapadicontroller =
         TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
@@ -115,37 +114,51 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Obx(() => gelenresim.value != null
-                    ? Container(
-                        height: 250,
-                        width: 200,
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color.fromARGB(255, 155, 155, 155),
+                Obx(
+                  () => gelenresim.value != null
+                      ? Container(
+                          height: 250,
+                          width: 200,
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromARGB(255, 155, 155, 155),
+                          ),
+                          child: Image.memory(
+                            base64Decode(gelenresim.value ?? ""),
+                          ),
+                        )
+                      : Container(
+                          height: 250,
+                          width: 200,
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromARGB(255, 155, 155, 155),
+                          ),
+                          child: Center(
+                              child: RichText(
+                            text: const TextSpan(
+                              text: 'Resim Yok',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
                         ),
-                        child:
-                            Image.memory(base64Decode(gelenresim.value ?? "")))
-                    : Container(
-                        height: 250,
-                        width: 200,
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color.fromARGB(255, 155, 155, 155),
-                        ),
-                        child: const Text("RESİM YOK"),
-                      )),
+                ),
                 Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                    child: Center(
-                        child: ElevatedButton(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  child: Center(
+                    child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                        foregroundColor: const Color.fromARGB(255, 1, 153, 255),
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
                         backgroundColor: const Color.fromARGB(
                             255, 32, 32, 32), // Background color
                       ),
@@ -199,20 +212,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         if (isCamera == null) return;
                       },
                       child: Text("Resim ${giristuru.toString()}"),
-                    ))),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                  child: TextFormField(
-                    controller: kullaniciadicontroller,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: "kitap adı"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Lütfen Kitap Adini Giriniz';
-                      }
-                      return null;
-                    },
+                    ),
                   ),
                 ),
                 Padding(
@@ -220,15 +220,13 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   child: TextFormField(
                     controller: kitapadicontroller,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Sayfa Sayisi"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Lütfen Sayfa Sayisini Giriniz';
-                      }
-                      return null;
-                    },
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.camera_alt_rounded),
+                          onPressed: () {},
+                        ),
+                        border: const OutlineInputBorder(),
+                        labelText: "kitap adı"),
                   ),
                 ),
                 Padding(
@@ -237,13 +235,22 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   child: TextFormField(
                     controller: sayfasayisicontroller,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: "Barkod"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Lütfen Sayfa Sayisini Giriniz';
-                      }
-                      return null;
-                    },
+                        border: OutlineInputBorder(),
+                        labelText: "Sayfa Sayisi"),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  child: TextFormField(
+                    controller: barkodcontroller,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.camera_alt_rounded),
+                          onPressed: () {},
+                        ),
+                        border: const OutlineInputBorder(),
+                        labelText: "Barkod"),
                   ),
                 ),
                 SizedBox(
@@ -301,7 +308,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                       toplusec: false,
                                     ));
                                 x != null
-                                    ? yazarcontroller.value.text = x
+                                    ? yazarcontroller.value.text =
+                                        x.adiSoyadi.toString()
                                     : null;
                               },
                             ),
@@ -319,32 +327,34 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-                    child: Obx(() => TextField(
-                          controller: kitapturcontroller.value,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            labelText: "Kitap Türü",
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.add_box),
-                              onPressed: () async {
-                                var x = await Get.to(() => KitapTurSayfasi(
-                                      kullanici: kullanici,
-                                      secim: 1,
-                                      kitapID: gelenkitap?.id,
-                                    ));
-                                x != null
-                                    ? kitapturcontroller.value.text = x
-                                    : null;
-                              },
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color.fromARGB(255, 164, 164, 164)),
-                            ),
+                    child: Obx(
+                      () => TextField(
+                        controller: kitapturcontroller.value,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: "Kitap Türü",
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.add_box),
+                            onPressed: () async {
+                              var x = await Get.to(() => KitapTurSayfasi(
+                                    kullanici: kullanici,
+                                    secim: 1,
+                                    kitapID: gelenkitap?.id,
+                                  ));
+                              x != null
+                                  ? kitapturcontroller.value.text = x
+                                  : null;
+                            },
                           ),
-                        )),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: Color.fromARGB(255, 164, 164, 164)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -354,43 +364,64 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shadowColor: const Color.fromARGB(255, 0, 0, 0),
-                        foregroundColor: const Color.fromARGB(255, 1, 153, 255),
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
                         backgroundColor: const Color.fromARGB(
                             255, 32, 32, 32), // Background color
                       ),
                       onPressed: () async {
-                        Kitap k = Kitap();
-                        k.id = kitapid;
-                        k.adi = kullaniciadicontroller.text;
-                        k.sayfaSayisi = int.parse(kitapadicontroller.text);
-                        k.barkod = int.parse(sayfasayisicontroller.text);
-                        k.yayinEviId = yayinevicont.gelenyayinevi.id;
-                        k.yazarId = yazarcont.gelenyazar.id;
-                        k.kitapTurId = kitapturcont.gelenkitaptur.id;
-                        k.resim = gelenresim.value;
-
-                        var kaydetGuncelleKontrol = await KitapController()
-                            .ekleguncelleKitap(kullanici.kullaniciAdi!.obs,
-                                kullanici.parola!.obs, k);
-
-                        if (kaydetGuncelleKontrol == "Eklendi") {
-                          Get.defaultDialog(
-                              title: "Kitap Eklendi",
-                              middleText: "",
-                              backgroundColor:
-                                  const Color.fromARGB(255, 141, 141, 141));
-                        } else if (kaydetGuncelleKontrol == k.id.toString()) {
-                          var tekkitap = await KitapController().getTekKitap(
-                              kullanici.kullaniciAdi.toString(),
-                              kullanici.parola.toString(),
-                              k.id);
-                          Get.back<Kitap>(result: tekkitap);
+                        if (kitapadicontroller.text.isEmpty) {
+                          Get.snackbar("Hata", "Kitap Adı Adı Boş Olamaz");
+                          return;
+                        } else if (barkodcontroller.text.isEmpty) {
+                          Get.snackbar("Hata", "Barkod Boş Olamaz");
+                          return;
+                        } else if (sayfasayisicontroller.text.isEmpty) {
+                          Get.snackbar("Hata", "Sayfa Sayısı Boş Olamaz");
+                          return;
+                        } else if (yayinevicontroller.value.text.isEmpty) {
+                          Get.snackbar("Hata", "Yayınevi Boş Olamaz");
+                          return;
+                        } else if (yazarcontroller.value.text.isEmpty) {
+                          Get.snackbar("Hata", "Yazar Boş Olamaz");
+                          return;
+                        } else if (kitapturcontroller.value.text.isEmpty) {
+                          Get.snackbar("Hata", "Kitap Türü Boş Olamaz");
+                          return;
                         } else {
-                          Get.defaultDialog(
-                              title: "?????????",
-                              middleText: "",
-                              backgroundColor:
-                                  const Color.fromARGB(255, 141, 141, 141));
+                          Kitap k = Kitap();
+                          k.id = kitapid;
+                          k.adi = kitapadicontroller.text;
+                          k.sayfaSayisi = int.parse(sayfasayisicontroller.text);
+                          k.barkod = int.parse(barkodcontroller.text);
+                          k.yayinEviId = yayinevicont.gelenyayinevi.id;
+                          k.yazarId = yazarcont.gelenyazar.id;
+                          k.kitapTurId = kitapturcont.gelenkitaptur.id;
+                          k.resim = gelenresim.value;
+
+                          var kaydetGuncelleKontrol = await KitapController()
+                              .ekleguncelleKitap(kullanici.kullaniciAdi!.obs,
+                                  kullanici.parola!.obs, k);
+
+                          if (kaydetGuncelleKontrol == "Eklendi") {
+                            Get.defaultDialog(
+                                title: "Kitap Eklendi",
+                                middleText: "",
+                                backgroundColor:
+                                    const Color.fromARGB(255, 141, 141, 141));
+                          } else if (kaydetGuncelleKontrol == k.id.toString()) {
+                            var tekkitap = await KitapController().getTekKitap(
+                                kullanici.kullaniciAdi.toString(),
+                                kullanici.parola.toString(),
+                                k.id);
+                            Get.back<Kitap>(result: tekkitap);
+                          } else {
+                            Get.defaultDialog(
+                                title: "?????????",
+                                middleText: "",
+                                backgroundColor:
+                                    const Color.fromARGB(255, 141, 141, 141));
+                          }
                         }
                       },
                       child: Text(giristuru.toString()),
