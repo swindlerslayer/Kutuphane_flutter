@@ -279,14 +279,16 @@ class YazarSayfasi extends StatelessWidget {
                                             kitcont
                                                 .kitapfiltre.obs.value.yazarid
                                                 ?.add(tekyazar.id!);
+                                                                                         
                                           }
+
                                           data.value.secimliste = value;
 
                                           cont.refResh;
                                         },
                                         checkColor: Colors.white,
                                         activeColor: Colors.blue,
-                                        value: data.value.secimliste ?? false,
+                                        value: data.value.secimliste,
                                       ),
                                     ),
                                   ),

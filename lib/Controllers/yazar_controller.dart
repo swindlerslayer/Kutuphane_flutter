@@ -151,7 +151,7 @@ class YazarController extends GetxController {
   }
 
   Future<String> ekleguncelleYazar(
-      RxString kullaniciAdi, RxString parola, Yazar k) async {
+      String kullaniciAdi, String parola, Yazar k) async {
     var token = await TokenService.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();

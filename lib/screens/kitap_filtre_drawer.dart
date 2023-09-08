@@ -25,40 +25,7 @@ class KitapDrawer extends StatelessWidget {
       width: 250,
       child: ListView(
         padding: EdgeInsets.zero,
-        children: <Widget>[
-          SizedBox(
-              child: ListTile(
-            onTap: () {
-              cont.kitapfiltre.kitapturid = null;
-              cont.kitapfiltre.yazarid = null;
-              cont.kitapfiltre.maxsayfasayisi = null;
-              cont.kitapfiltre.minsayfasayisi = null;
-              cont.yazarlar?.clear();
-              cont.yayinevleri?.clear();
-              cont.kitapturleri?.clear();
-
-              cont.kitapfiltre.yayineviid = null;
-              sayfasayimaxtextcontroller.text = "";
-              sayfasayimintextcontroller.text = "";
-
-              MetodModel z = MetodModel();
-              z.kalinanSayfa = cont.simdikisayfa;
-              z.kullaniciAdi = kullanici.kullaniciAdi.toString();
-              z.parola = kullanici.parola.toString();
-              z.lkSayfa = true;
-              cont.kitapfiltre.maxsayfasayisi =
-                  int.tryParse(sayfasayimaxtextcontroller.text);
-              cont.kitapfiltre.minsayfasayisi =
-                  int.tryParse(sayfasayimintextcontroller.text);
-
-              z.filtre = cont.kitapfiltre;
-
-              Get.put(KitapController()).getSayfaFiltreKitap(z);
-            },
-            title: const Text("Filtreyi Temizle"),
-            trailing: const Icon(Icons.close),
-            tileColor: const Color.fromARGB(246, 107, 67, 67),
-          )),
+        children: [
           ExpansionTile(
             title: const Text("Yazar"),
             children: [
@@ -122,6 +89,7 @@ class KitapDrawer extends StatelessWidget {
                   var x = await Get.to<Yayinevi>(() => YayineviSayfasi(
                         kullanici: kullanici,
                         secim: 2,
+                        toplusec: true,
                       ));
                   if (x != null) {
                     cont.yayinevleri?.add(x);
@@ -270,6 +238,62 @@ class KitapDrawer extends StatelessWidget {
               Get.put(KitapController()).getSayfaFiltreKitap(z);
             },
           ),
+          SizedBox(
+            width: 50,
+            child: ListTile(
+              onTap: () {
+                cont.kitapfiltre.kitapturid = null;
+                cont.kitapfiltre.yazarid = null;
+                cont.kitapfiltre.maxsayfasayisi = null;
+                cont.kitapfiltre.minsayfasayisi = null;
+                cont.yazarlar?.clear();
+                cont.yayinevleri?.clear();
+                cont.kitapturleri?.clear();
+
+                cont.kitapfiltre.yayineviid = null;
+                sayfasayimaxtextcontroller.text = "";
+                sayfasayimintextcontroller.text = "";
+
+                MetodModel z = MetodModel();
+                z.kalinanSayfa = cont.simdikisayfa;
+                z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                z.parola = kullanici.parola.toString();
+                z.lkSayfa = true;
+                cont.kitapfiltre.maxsayfasayisi =
+                    int.tryParse(sayfasayimaxtextcontroller.text);
+                cont.kitapfiltre.minsayfasayisi =
+                    int.tryParse(sayfasayimintextcontroller.text);
+
+                z.filtre = cont.kitapfiltre;
+
+                Get.put(KitapController()).getSayfaFiltreKitap(z);
+              },
+              title: const Text("Filtreyi Temizle"),
+              trailing: const Icon(Icons.close),
+              tileColor: const Color.fromARGB(246, 107, 67, 67),
+            ),
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     SizedBox(
+          //         child: ListTile(
+          //       onTap: () {},
+          //       title: const Text("Filtre Yok"),
+          //       trailing: const Icon(Icons.close),
+          //       tileColor: const Color.fromARGB(246, 107, 67, 67),
+          //     )),
+          //     SizedBox(
+          //       child: ListTile(
+          //         onTap: () {},
+          //         title: const Text("Filtre Yok"),
+          //         trailing: const Icon(Icons.close),
+          //         tileColor: const Color.fromARGB(246, 107, 67, 67),
+          //       ),
+          //     ),
+          //   ],
+          // )
+
         ],
       ),
     );

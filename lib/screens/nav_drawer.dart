@@ -109,6 +109,7 @@ class NavDrawer extends StatelessWidget {
               Get.to(() => YayineviSayfasi(
                     kullanici: kullanici,
                     secim: 0,
+                    toplusec: false,
                   ));
             },
           ),

@@ -59,8 +59,8 @@ class YazarEkleDuzenleSayfasi extends StatelessWidget {
                     y.adiSoyadi = yazartextcontrol.text;
 
                     var kaydetGuncelleKontrol = await YazarController()
-                        .ekleguncelleYazar(kullanici.kullaniciAdi!.obs,
-                            kullanici.parola!.obs, y);
+                        .ekleguncelleYazar(kullanici.kullaniciAdi.toString(),
+                            kullanici.parola.toString(), y);
 
                     if (kaydetGuncelleKontrol == "Eklendi") {
                       Get.defaultDialog(

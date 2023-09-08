@@ -258,8 +258,6 @@ class BodyWidget extends StatelessWidget {
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        // Note: Styles for TextSpans must be explicitly defined.
-                                        // Child text spans will inherit styles from parent
                                         style: const TextStyle(
                                           fontSize: 14.0,
                                         ),
@@ -305,16 +303,7 @@ class BodyWidget extends StatelessWidget {
                             )
                           ],
 
-                          // child: Obx(
-                          //   () => CheckboxListTile(
-                          //     title: Text(data.adiSoyadi.toString()),
-                          // subtitle: Text(
-                          //     '${data.adi}                                                       ${data.alisTarihi}'),
-                          //     isThreeLine: true,
-                          //     value: data.teslimDurumu.obs.value,
-                          //     onChanged: null,
-                          //   ),
-                          // ),
+                      
                         ),
                       ),
                     ),

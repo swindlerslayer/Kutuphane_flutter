@@ -11,13 +11,15 @@ import 'package:kutuphane_mobil_d/screens/yayinevi_ekle_duzenle.dart';
 
 class YayineviSayfasi extends StatelessWidget {
   YayineviSayfasi(
-      {Key? key, required this.kullanici, required this.secim, this.kitapID})
+      {Key? key, required this.kullanici, required this.secim, this.kitapID, required this.toplusec})
       : super(key: key);
   final cont = Get.put(YayineviController());
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
   final degisken = false.obs;
+    final bool toplusec;
+
 
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());

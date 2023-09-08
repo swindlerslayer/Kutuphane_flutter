@@ -51,6 +51,11 @@ class KitapController extends GetxController {
   int get simdikisayfa => _simdikisayfa.value;
   set simdikisayfa(int value) => _simdikisayfa.value = value;
 
+  
+  
+
+
+
   final _sayfakitapList = <ListeKitap>[].obs;
   List<ListeKitap>? get sayfakitapList => _sayfakitapList;
   set sayfakitapList(List<ListeKitap>? value) => _sayfakitapList;
@@ -111,6 +116,10 @@ class KitapController extends GetxController {
       return null;
     }
   }
+
+  
+
+
 
   Future<List<ListeKitap>?> getSayfaFiltreKitap(MetodModel x) async {
     metodModelFromJson(jsonEncode(x));

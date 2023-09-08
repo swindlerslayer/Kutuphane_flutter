@@ -131,7 +131,7 @@ class ResimSayfasi extends StatelessWidget {
                                     spreadRadius: 8,
                                     blurRadius: 10,
                                     offset: const Offset(
-                                        30, 30), // changes position of shadow
+                                        15, 15), // changes position of shadow
                                   ),
                                 ],
                                 border: Border.all(
