@@ -11,6 +11,7 @@ class Yazar {
   String? kayitTarihi;
   dynamic degisiklikYapan;
   dynamic degisiklikTarihi;
+  bool? secim;
 
   Yazar({
     this.id,
@@ -19,6 +20,7 @@ class Yazar {
     this.kayitTarihi,
     this.degisiklikYapan,
     this.degisiklikTarihi,
+    this.secim,
   });
 
   factory Yazar.fromJson(Map<String, dynamic> json) => Yazar(
@@ -28,6 +30,8 @@ class Yazar {
         kayitTarihi: json["KayitTarihi"],
         degisiklikYapan: json["DegisiklikYapan"],
         degisiklikTarihi: json["DegisiklikTarihi"],
+        secim: json["Secim"],
+
 
       );
 
@@ -38,6 +42,6 @@ class Yazar {
         "KayitTarihi": kayitTarihi,
         "DegisiklikYapan": degisiklikYapan,
         "DegisiklikTarihi": degisiklikTarihi,
-
+        "Secim": secim,
       };
 }

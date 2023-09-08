@@ -25,7 +25,7 @@ class YazarSayfasi extends StatelessWidget {
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
-  final degisken = false.obs;
+  final degisken = true.obs;
   final bool toplusec;
 
   // var kitaplar = kitapcontroller.GetKitap(
@@ -36,48 +36,52 @@ class YazarSayfasi extends StatelessWidget {
 
     final contR = ScrollController();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      MetodModel z = MetodModel();
-      z.kalinanSayfa = cont.simdikisayfa;
-      z.islem = "sayfa";
-      z.kullaniciAdi = kullanici.kullaniciAdi.toString();
-      z.parola = kullanici.parola.toString();
-      z.lkSayfa = true;
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        MetodModel z = MetodModel();
+        z.kalinanSayfa = cont.simdikisayfa;
+        z.islem = "sayfa";
+        z.kullaniciAdi = kullanici.kullaniciAdi.toString();
+        z.parola = kullanici.parola.toString();
+        z.lkSayfa = true;
 
-      var dd = await Get.put(YazarController()).getSayfaFiltreYazar(z);
-      //print(cont.totalPageCount);
-      cont.yazarliste = dd!;
+        var dd = await Get.put(YazarController()).getSayfaFiltreYazar(z);
+        //print(cont.totalPageCount);
+        cont.yazarliste = dd!;
 
-      var yazarcont = Get.put(YazarController());
+        var yazarcont = Get.put(YazarController());
 
-      contR.addListener(() async {
-        if (contR.position.atEdge) {
-          if (contR.position.pixels != 0.0) {
-            if (yazarcont.totalPageCount! >= yazarcont.simdikisayfa!) {
-              yazarcont.isloading = true;
-              MetodModel x = MetodModel();
-              x.kalinanSayfa = yazarcont.simdikisayfa;
-              x.kullaniciAdi = kullanici.kullaniciAdi.toString();
-              x.parola = kullanici.parola.toString();
-              x.lkSayfa = false;
+        contR.addListener(
+          () async {
+            if (contR.position.atEdge) {
+              if (contR.position.pixels != 0.0) {
+                if (yazarcont.totalPageCount! >= yazarcont.simdikisayfa!) {
+                  yazarcont.isloading = true;
+                  MetodModel x = MetodModel();
+                  x.kalinanSayfa = yazarcont.simdikisayfa;
+                  x.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                  x.parola = kullanici.parola.toString();
+                  x.lkSayfa = false;
 
-              MetodModel y = MetodModel();
-              x.islem = "filtre";
+                  MetodModel y = MetodModel();
+                  x.islem = "filtre";
 
-              y.kalinanSayfa = yazarcont.simdikisayfa;
-              y.kullaniciAdi = kullanici.kullaniciAdi.toString();
-              y.parola = kullanici.parola.toString();
-              y.lkSayfa = false;
-              y.querry = yazarcont.filtrearama;
-              yazarcont.filtresayfa
-                  ? await Get.put(YazarController()).getSayfaFiltreYazar(y)
-                  : await Get.put(YazarController()).getSayfaFiltreYazar(x);
-              yazarcont.isloading = false;
+                  y.kalinanSayfa = yazarcont.simdikisayfa;
+                  y.kullaniciAdi = kullanici.kullaniciAdi.toString();
+                  y.parola = kullanici.parola.toString();
+                  y.lkSayfa = false;
+                  y.querry = yazarcont.filtrearama;
+                  yazarcont.filtresayfa
+                      ? await Get.put(YazarController()).getSayfaFiltreYazar(y)
+                      : await Get.put(YazarController()).getSayfaFiltreYazar(x);
+                  yazarcont.isloading = false;
+                }
+              }
             }
-          }
-        }
+          },
+        );
       });
-    });
+
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
@@ -269,26 +273,61 @@ class YazarSayfasi extends StatelessWidget {
                                       alignment: Alignment.centerRight,
                                       child: Checkbox(
                                         onChanged: (value) async {
-                                          var tekyazar = await cont.getTekYazar(
-                                              kullanici.kullaniciAdi.toString(),
-                                              kullanici.parola.toString(),
-                                              data.value.id);
-                                          if (tekyazar != null) {
-                                            kitcont.yazarlar?.add(tekyazar);
-                                            kitcont.kitapfiltre.yazarid ??= [];
-                                            kitcont
-                                                .kitapfiltre.obs.value.yazarid
-                                                ?.add(tekyazar.id!);
-                                                                                         
+                                          if (data.value.secim == false) {
+                                            var tekyazar =
+                                                await cont.getTekYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    data.value.id);
+                                            if (tekyazar != null) {
+                                              kitcont.yazarlar?.add(tekyazar);
+                                              kitcont.kitapfiltre.yazarid ??=
+                                                  [];
+                                              kitcont
+                                                  .kitapfiltre.obs.value.yazarid
+                                                  ?.add(tekyazar.id!);
+                                              tekyazar.secim = value;
+
+                                              cont.ekleguncelleYazar(
+                                                  kullanici.kullaniciAdi
+                                                      .toString(),
+                                                  kullanici.parola.toString(),
+                                                  tekyazar);
+                                            }
+
+                                            data.value.secim = value;
+
+                                            cont.refResh;
+                                          } else {
+                                            kitcont.yazarlar?.removeWhere(
+                                                (element) =>
+                                                    element.id ==
+                                                    data.value.id);
+                                            kitcont.kitapfiltre.yazarid
+                                                ?.removeWhere((element) =>
+                                                    element == data.value.id);
+                                            data.value.secim = value;
+                                            var tekyazar =
+                                                await cont.getTekYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    data.value.id);
+                                            tekyazar?.secim = value;
+                                            tekyazar != null
+                                                ? cont.ekleguncelleYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    tekyazar)
+                                                : 0;
+                                            cont.refResh;
                                           }
-
-                                          data.value.secimliste = value;
-
-                                          cont.refResh;
                                         },
                                         checkColor: Colors.white,
                                         activeColor: Colors.blue,
-                                        value: data.value.secimliste,
+                                        value: data.value.secim,
                                       ),
                                     ),
                                   ),

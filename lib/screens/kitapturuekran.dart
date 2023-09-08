@@ -18,7 +18,7 @@ class KitapTurSayfasi extends StatelessWidget {
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
-  final degisken = false.obs;
+  final degisken = true.obs;
 
   // var kitaplar = kitapcontroller.GetKitap(
   //     kullanici.kullaniciAdi.toString(), kullanici.parola.toString());

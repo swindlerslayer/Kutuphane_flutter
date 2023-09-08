@@ -17,7 +17,7 @@ class OgrenciSayfasi extends StatelessWidget {
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
-  final degisken = false.obs;
+  final degisken = true.obs;
 
   @override
   Widget build(BuildContext context) {

@@ -122,7 +122,31 @@ class YazarController extends GetxController {
       return null;
     }
   }
+//yazarsecimsifirla
+ Future<bool> yazarSecimSifirla(String kullaniciAdi, String parola) async {
+    var apilink = ApiEndPoints.baseUrl;
+    var token = await TokenService.getToken(
+        kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
+    try {
+      final response = await http.get(
+        Uri.parse('$apilink/api/yazarsecimsifirla'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer ${token.accessToken}"
+        },
+      );
+
+      if (response.statusCode == 200) {
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
   Future<Yazar?> getTekYazar(
       String kullaniciAdi, String parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;

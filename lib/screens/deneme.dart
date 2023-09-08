@@ -36,7 +36,7 @@
 //     _controller = PageController(initialPage: 0);
 //   }
 
-//   //The Logic where you change the pages
+//   The Logic where you change the pages
 //   _onChangePage(int index) {
 //     if (index != 0) myIndex = index;
 //     _controller?.animateToPage(index.clamp(0, 1),
@@ -58,14 +58,14 @@
 //           const NeverScrollableScrollPhysics(), //so the user can not move between pages
 //       itemCount: 2,
 //       itemBuilder: (context, index) {
-//         // Original Drawer
+//         Original Drawer
 //         if (index == 0) {
 //           return MyWidget(
 //             explore: () => _onChangePage(1),
 //             settings: () => _onChangePage(2),
 //           );
 //         }
-//         //Second Drawer form the PageView
+//         Second Drawer form the PageView
 //         switch (myIndex) {
 //           case 1:
 //             return MyExploreAll(goBack: () => _onChangePage(0));
@@ -78,7 +78,7 @@
 //   }
 // }
 
-// //The Menu Drawer (Your first image)
+// The Menu Drawer (Your first image)
 // class MyWidget extends StatelessWidget {
 //   final VoidCallback? explore;
 //   final VoidCallback? settings;
@@ -124,7 +124,7 @@
 //             color: Colors.grey,
 //             thickness: 1,
 //           ),
-//           //More Stuff
+//           More Stuff
 //           ListTile(
 //             title: const Text('Settings'),
 //             trailing: const Icon(Icons.arrow_forward_ios),
@@ -136,7 +136,7 @@
 //   }
 // }
 
-// // The settings Drawer(second image)
+// The settings Drawer(second image)
 // class MySettings extends StatelessWidget {
 //   final VoidCallback? goBack;
 

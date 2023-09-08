@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/main.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -34,6 +36,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Anasayfa'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
               Get.delete<KitapController>();
 
@@ -44,6 +49,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.book),
             title: const Text('Kitap Teslim'),
             onTap: () {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
               Get.delete<KitapController>();
 
@@ -54,6 +62,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.supervised_user_circle),
             title: const Text('Öğrenci'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.to(() => OgrenciSayfasi(
                     kullanici: kullanici,
                     secim: 0,
@@ -64,6 +75,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.library_books),
             title: const Text('Kitap'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
 
               Get.to(() => KitapSayfasi(
@@ -76,6 +90,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.perm_contact_cal),
             title: const Text('Yazar'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
               Get.delete<KitapController>();
 
@@ -90,6 +107,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.type_specimen),
             title: const Text('Kitap Türü'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
               Get.delete<KitapController>();
 
@@ -103,6 +123,9 @@ class NavDrawer extends StatelessWidget {
             leading: const Icon(Icons.home_work),
             title: const Text('Yayınevi'),
             onTap: () async {
+              var yazarcont = Get.put(YazarController());
+              yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                  kullanici.parola.toString());
               Get.back();
               Get.delete<KitapController>();
 
@@ -120,7 +143,7 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              //     Get.to(() =>  MyApp(kullanici: kullanici,));
+              Get.to(() => const MyApp());
             },
           ),
         ],

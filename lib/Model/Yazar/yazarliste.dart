@@ -9,19 +9,19 @@ String listeYazarToJson(List<ListeYazar> data) =>
 class ListeYazar {
   int? id;
   String? adiSoyadi;
-  bool? secimliste = false;
+  bool? secim;
 
-  ListeYazar({this.id, this.adiSoyadi, this.secimliste});
+  ListeYazar({this.id, this.adiSoyadi, this.secim});
 
   factory ListeYazar.fromJson(Map<String, dynamic> json) => ListeYazar(
         id: json["ID"],
         adiSoyadi: json["AdiSoyadi"],
-        secimliste: json["Secimliste"],
+        secim: json["Secim"],
       );
 
   Map<String, dynamic> toJson() => {
         "ID": id,
         "AdiSoyadi": adiSoyadi,
-        "Secimliste": secimliste,
+        "Secim": secim,
       };
 }

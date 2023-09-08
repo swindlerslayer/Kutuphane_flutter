@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
+import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
@@ -267,6 +268,9 @@ class KitapDrawer extends StatelessWidget {
                 z.filtre = cont.kitapfiltre;
 
                 Get.put(KitapController()).getSayfaFiltreKitap(z);
+                var yazarcont = Get.put(YazarController());
+                yazarcont.yazarSecimSifirla(kullanici.kullaniciAdi.toString(),
+                    kullanici.parola.toString());
               },
               title: const Text("Filtreyi Temizle"),
               trailing: const Icon(Icons.close),
@@ -293,7 +297,6 @@ class KitapDrawer extends StatelessWidget {
           //     ),
           //   ],
           // )
-
         ],
       ),
     );
