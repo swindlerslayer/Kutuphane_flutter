@@ -20,7 +20,6 @@ class KitapDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // DRAWER İÇERİSİNDE LİSTVİEW BUİLDER OLUŞTURABİİLMEK İÇİN BU ŞEKİLDE SABİT YÜKSEKLİK VERMELİYİZ
     var cont = Get.put(KitapController());
     return Drawer(
       width: 250,
@@ -96,6 +95,8 @@ class KitapDrawer extends StatelessWidget {
                     cont.yayinevleri?.add(x);
                     cont.kitapfiltre.yayineviid ??= [];
                     cont.kitapfiltre.obs.value.yayineviid?.add(x.id!);
+                    print(
+                        "yayineviid: ${cont.kitapfiltre.obs.value.yayineviid}");
                   }
                 },
               ),
@@ -227,7 +228,7 @@ class KitapDrawer extends StatelessWidget {
                   ? null
                   : cont.filtremaxsayfa =
                       int.tryParse(sayfasayimaxtextcontroller.text)!;
-                      
+
               sayfasayimintextcontroller.text.isEmpty
                   ? null
                   : cont.filtreminsayfa =
@@ -248,7 +249,7 @@ class KitapDrawer extends StatelessWidget {
               cont.kitapfiltre.minsayfasayisi =
                   int.tryParse(sayfasayimintextcontroller.text);
 
-              z.filtre = cont.kitapfiltre;
+              z.filtrekitap = cont.kitapfiltre;
 
               Get.put(KitapController()).getSayfaFiltreKitap(z);
             },
@@ -279,7 +280,7 @@ class KitapDrawer extends StatelessWidget {
                 cont.kitapfiltre.minsayfasayisi =
                     int.tryParse(sayfasayimintextcontroller.text);
 
-                z.filtre = cont.kitapfiltre;
+                z.filtrekitap = cont.kitapfiltre;
 
                 Get.put(KitapController()).getSayfaFiltreKitap(z);
                 var yazarcont = Get.put(YazarController());

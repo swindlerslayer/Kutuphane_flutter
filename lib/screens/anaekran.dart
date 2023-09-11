@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/anasayfa_controller.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
+import 'package:kutuphane_mobil_d/screens/anaekran_filtre_drawer.dart';
 import 'package:kutuphane_mobil_d/screens/nav_drawer.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 
@@ -19,7 +20,17 @@ class NewScreen extends StatelessWidget {
 
     return Scaffold(
       drawer: NavDrawer(kullanici: kullanici),
+      endDrawer: AnaekranDrawer(kullanici: kullanici),
       appBar: AppBar(
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.filter_alt),
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            ),
+          ),
+        ],
         title: TextField(
           autofocus: false,
           onChanged: (value) {
@@ -81,6 +92,7 @@ class NewScreen extends StatelessWidget {
     );
   }
 }
+
 //sayfaogrencikitapList
 
 class BodyWidget extends StatelessWidget {
@@ -119,7 +131,8 @@ class BodyWidget extends StatelessWidget {
                   x.kullaniciAdi = kullanici.kullaniciAdi.toString();
                   x.parola = kullanici.parola.toString();
                   x.lkSayfa = false;
-                  z.artanazalan = false;
+                  x.artanazalan = false;
+                  x.filtreanasayfa = cont.anasayfafiltre;
 
                   MetodModel y = MetodModel();
                   x.islem = "filtre";
@@ -130,6 +143,8 @@ class BodyWidget extends StatelessWidget {
                   y.lkSayfa = false;
                   y.querry = cont.filtrearama;
                   y.artanazalan = false;
+                  y.filtreanasayfa = cont.anasayfafiltre;
+
                   cont.filtresayfa
                       ? await Get.put(AnasayfaController())
                           .getSayfaFiltreOgrenciKitap(y)
@@ -302,8 +317,6 @@ class BodyWidget extends StatelessWidget {
                               activeColor: Colors.blue,
                             )
                           ],
-
-                      
                         ),
                       ),
                     ),

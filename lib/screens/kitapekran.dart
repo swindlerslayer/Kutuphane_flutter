@@ -14,10 +14,15 @@ import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'kitap_ekle_duzenle.dart';
 
 class KitapSayfasi extends StatelessWidget {
-  KitapSayfasi({Key? key, required this.kullanici, required this.secim})
+  KitapSayfasi(
+      {Key? key,
+      required this.kullanici,
+      required this.secim,
+      required this.toplusec})
       : super(key: key);
   final KullaniciGiris kullanici;
   final int secim;
+  final bool toplusec;
   final cont = Get.put(KitapController());
 
   final degisken = true.obs;
@@ -41,7 +46,7 @@ class KitapSayfasi extends StatelessWidget {
           ),
         ],
         leading: Builder(
-          builder: (context) => secim == 1
+          builder: (context) => secim == 1 || secim == 2
               ? IconButton(
                   icon: const Icon(Icons.arrow_back_ios),
                   onPressed: () {
@@ -73,7 +78,7 @@ class KitapSayfasi extends StatelessWidget {
               z.parola = kullanici.parola.toString();
               z.lkSayfa = true;
               z.querry = value;
-              z.filtre = cont.kitapfiltre;
+              z.filtrekitap = cont.kitapfiltre;
               Get.put(KitapController()).getSayfaFiltreKitap(z);
             }
           },
@@ -91,17 +96,6 @@ class KitapSayfasi extends StatelessWidget {
                 onPressed: degisken.value
                     ? () {}
                     : () async {
-                      
-                        // MetodModel z = MetodModel();
-                        // z.kalinanSayfa = cont.simdikisayfa;
-                        // z.kullaniciAdi = kullanici.kullaniciAdi.toString();
-                        // z.parola = kullanici.parola.toString();
-                        // z.lkSayfa = true;
-                        // cont.kitapfiltre.maxsayfasayisi = cont.filtremaxsayfa;
-                        // cont.kitapfiltre.minsayfasayisi = cont.filtreminsayfa;
-                        // z.filtre = cont.kitapfiltre;
-                        // Get.put(KitapController()).getSayfaFiltreKitap(z);
-
                         textEditingController.value.text = "";
                         final cont = Get.put(KitapController());
                         MetodModel z = MetodModel();
@@ -111,7 +105,6 @@ class KitapSayfasi extends StatelessWidget {
                         z.parola = kullanici.parola.toString();
                         z.lkSayfa = true;
                         Get.put(KitapController()).getSayfaFiltreKitap(z);
-
                         degisken.value = true;
                         cont.filtresayfa = false;
                       },
@@ -121,13 +114,6 @@ class KitapSayfasi extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
         iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: const Icon(Icons.filter_alt),
-        //     onPressed: () => Scaffold.of(context).openEndDrawer(),
-        //   ),
-        // ],
-        // //  backgroundColor: Colors.white,
       ),
       body: BodyWidget(
         kullanici: kullanici,
@@ -173,7 +159,7 @@ class BodyWidget extends StatelessWidget {
               x.kullaniciAdi = kullanici.kullaniciAdi.toString();
               x.parola = kullanici.parola.toString();
               x.lkSayfa = false;
-              x.filtre = cont.kitapfiltre;
+              x.filtrekitap = cont.kitapfiltre;
 
               MetodModel y = MetodModel();
               x.islem = "filtre";
@@ -183,7 +169,7 @@ class BodyWidget extends StatelessWidget {
               y.parola = kullanici.parola.toString();
               y.lkSayfa = false;
               y.querry = kitcont.filtrearama;
-              y.filtre = cont.kitapfiltre;
+              y.filtrekitap = cont.kitapfiltre;
 
               kitcont.filtresayfa
                   ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
@@ -229,6 +215,14 @@ class BodyWidget extends StatelessWidget {
 
                                 Get.back(result: x);
                               }
+                            } else if (secim == 2) {
+                              var x = await Get.put(KitapController())
+                                  .getTekKitap(
+                                      kullanici.kullaniciAdi.toString(),
+                                      kullanici.parola.toString(),
+                                      data.value.id);
+
+                              Get.back(result: x);
                             }
                           },
                           menuItems: [

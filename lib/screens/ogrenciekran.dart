@@ -11,13 +11,18 @@ import 'package:kutuphane_mobil_d/screens/ogrenci_ekle_duzenle.dart';
 
 class OgrenciSayfasi extends StatelessWidget {
   OgrenciSayfasi(
-      {Key? key, required this.kullanici, required this.secim, this.kitapID})
+      {Key? key,
+      required this.kullanici,
+      required this.secim,
+      this.kitapID,
+      required this.toplusec})
       : super(key: key);
   final cont = Get.put(OgrenciController());
   final KullaniciGiris kullanici;
   final int secim;
   final int? kitapID;
   final degisken = true.obs;
+  final bool toplusec;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +76,7 @@ class OgrenciSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         leading: Builder(
-            builder: (context) => secim == 1
+            builder: (context) => secim == 1 || secim == 2
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
@@ -168,7 +173,17 @@ class OgrenciSayfasi extends StatelessWidget {
                                           kullanici.kullaniciAdi.toString(),
                                           kullanici.parola.toString(),
                                           data.value.id);
-                                        
+
+                                  Get.back(result: x);
+                                }
+                              } else if (secim == 2) {
+                                cont.secilenogrenci = data.value.id;
+                                if (cont.secilenogrenci == data.value.id) {
+                                  var x = await Get.put(OgrenciController())
+                                      .getTekOgrenci(
+                                          kullanici.kullaniciAdi.toString(),
+                                          kullanici.parola.toString(),
+                                          data.value.id);
 
                                   Get.back(result: x);
                                 }

@@ -244,13 +244,64 @@ class YazarSayfasi extends StatelessWidget {
                             } else if (secim == 2) {
                               cont.secilenyazar = data.value.id;
                               if (cont.secilenyazar == data.value.id) {
-                                var x = await Get.put(YazarController())
-                                    .getTekYazar(
-                                        kullanici.kullaniciAdi.toString(),
-                                        kullanici.parola.toString(),
-                                        data.value.id);
+                                // var x = await Get.put(YazarController())
+                                //     .getTekYazar(
+                                //         kullanici.kullaniciAdi.toString(),
+                                //         kullanici.parola.toString(),
+                                //         data.value.id);
 
-                                Get.back(result: x);
+                                // Get.back(result: x);
+                                  if (data.value.secim == false) {
+                                            var tekyazar =
+                                                await cont.getTekYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    data.value.id);
+                                            if (tekyazar != null) {
+                                              kitcont.yazarlar?.add(tekyazar);
+                                              kitcont.kitapfiltre.yazarid ??=
+                                                  [];
+                                              kitcont
+                                                  .kitapfiltre.obs.value.yazarid
+                                                  ?.add(tekyazar.id!);
+                                              tekyazar.secim = true;
+
+                                              cont.ekleguncelleYazar(
+                                                  kullanici.kullaniciAdi
+                                                      .toString(),
+                                                  kullanici.parola.toString(),
+                                                  tekyazar);
+                                            }
+
+                                            data.value.secim = true;
+
+                                            cont.refResh;
+                                          } else {
+                                            kitcont.yazarlar?.removeWhere(
+                                                (element) =>
+                                                    element.id ==
+                                                    data.value.id);
+                                            kitcont.kitapfiltre.yazarid
+                                                ?.removeWhere((element) =>
+                                                    element == data.value.id);
+                                            data.value.secim = false;
+                                            var tekyazar =
+                                                await cont.getTekYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    data.value.id);
+                                            tekyazar?.secim = false;
+                                            tekyazar != null
+                                                ? cont.ekleguncelleYazar(
+                                                    kullanici.kullaniciAdi
+                                                        .toString(),
+                                                    kullanici.parola.toString(),
+                                                    tekyazar)
+                                                : 0;
+                                            cont.refResh;
+                                          }
                               }
                             }
                           },

@@ -2,10 +2,15 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:kutuphane_mobil_d/Model/Filtre/anasayfafiltre.dart';
+import 'package:kutuphane_mobil_d/Model/Filtre/filtre.dart';
+import 'package:kutuphane_mobil_d/Model/Kitap/kitap.dart';
 import 'package:kutuphane_mobil_d/Model/MetodModel/metodmodel.dart';
+import 'package:kutuphane_mobil_d/Model/Ogrenci/ogrenci.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitap.dart';
 import 'package:kutuphane_mobil_d/Model/OgrenciKitap/ogrenci_kitapliste.dart';
 import 'package:kutuphane_mobil_d/Model/PageCount/toplamsayfa.dart';
+import 'package:kutuphane_mobil_d/Model/Yayinevi/yayinevi.dart';
 import 'package:kutuphane_mobil_d/URL/url.dart';
 
 // git init
@@ -14,7 +19,6 @@ import 'package:kutuphane_mobil_d/URL/url.dart';
 // git branch -M main
 // git remote add origin https://github.com/kharitonovAL/bot_medium.git
 // git push -u origin main
-
 
 class AnasayfaController extends GetxController {
   final _gelenpagecount = 0.obs;
@@ -46,6 +50,26 @@ class AnasayfaController extends GetxController {
   String? get filtrearama => _filtrearama.value;
   set filtrearama(String? value) => _filtrearama.value = value ?? '';
 
+  final _ogrenciler = <Ogrenci>[].obs;
+  List<Ogrenci>? get ogrenciler => _ogrenciler;
+  set ogrenciler(List<Ogrenci>? value) => _ogrenciler;
+
+  final _kitaplar = <Kitap>[].obs;
+  List<Kitap>? get kitaplar => _kitaplar;
+  set kitaplar(List<Kitap>? value) => _kitaplar;
+
+  final _yayinevleri = <Yayinevi>[].obs;
+  List<Yayinevi>? get yayinevleri => _yayinevleri;
+  set yayinevleri(List<Yayinevi>? value) => _yayinevleri;
+
+  final _anasayfafiltre = AnasayfaFiltre().obs;
+  AnasayfaFiltre get anasayfafiltre => _anasayfafiltre.value;
+  set anasayfafiltre(AnasayfaFiltre value) => _anasayfafiltre.value = value;
+
+  //   final _kitapfiltre = KitapFiltre().obs;
+  // KitapFiltre get kitapfiltre => _kitapfiltre.value;
+  // set kitapfiltre(KitapFiltre value) => _kitapfiltre.value = value;
+
   // final _kitapogrenci = <OgrenciKitapListe>[].obs;
   // List<OgrenciKitapListe> get kitapogrenci => _kitapogrenci;
   // set kitapogrenci(List<OgrenciKitapListe> value) =>
@@ -65,8 +89,13 @@ class AnasayfaController extends GetxController {
     simdikisayfa = x.kalinanSayfa!;
     var ilk = x.lkSayfa;
     var apilink = ApiEndPoints.baseUrl;
+    var filtre = x.filtreanasayfa;
 
     filtrearama = x.querry;
+    GenelFiltre xg = GenelFiltre();
+    xg.anasayfaFiltre = filtre;
+    xg.querry = filtrearama;
+    xg.sayfa = simdikisayfa;
 
     x.querry != null ? filtresayfa = true : filtresayfa = false;
 
@@ -74,19 +103,23 @@ class AnasayfaController extends GetxController {
         kullaniciAdi: ka, parola: kp, loginMi: false);
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
+    ilk == true ? xg.sayfa = 0 : xg.sayfa = simdikisayfa;
 
     if (ilk == true) {
       sayfaogrencikitapList?.clear();
     }
-    final response = await http.get(
-      Uri.parse(
-          '$apilink/api/ogrencikitapgetirfiltre?querry=$filtrearama&sayfa=$simdikisayfa&yazar=&artanazalan=false'),
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": "Bearer ${token.accessToken}"
-      },
-    );
+    var client = http.Client();
 
+    var url = Uri.parse('$apilink/api/ogrencikitapgetirfiltre');
+
+    var headers = <String, String>{
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${token.accessToken}"
+    };
+
+    var badi = json.encode(xg);
+    final response = await client.post(url, headers: headers, body: badi);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       var dd = jsonDecode(response.body);
       List<OgrenciKitapListe> kitapListesi =

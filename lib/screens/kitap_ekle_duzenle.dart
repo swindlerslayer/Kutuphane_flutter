@@ -46,13 +46,14 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
     kitcont.getTekKitap(kullanici.kullaniciAdi.toString(),
         kullanici.parola.toString(), gelenkitap?.id);
 
-    final barkodcontroller = TextEditingController(text: gelenkitap?.adi ?? "");
-
     final kitapadicontroller =
-        TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
+        TextEditingController(text: gelenkitap?.adi ?? "");
+
+    final barkodcontroller =
+        TextEditingController(text: gelenkitap?.barkod.toString());
 
     final sayfasayisicontroller =
-        TextEditingController(text: gelenkitap?.barkod.toString());
+        TextEditingController(text: gelenkitap?.sayfaSayisi.toString());
 
     final yayinevicontroller =
         TextEditingController(text: gelenkitap?.adi1 ?? "").obs;
@@ -87,15 +88,17 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {},
-                child: IconButton(
-                  icon: const Icon(Icons.filter),
-                  onPressed: () {
-                    Get.to(ResimSayfasi(
-                      kullanici: kullanici,
-                      gelenkitapid: gelenkitap!.id ?? 0,
-                    ));
-                  },
-                ),
+                child: gelenkitap?.id == null
+                    ? Container()
+                    : IconButton(
+                        icon: const Icon(Icons.filter),
+                        onPressed: () {
+                          Get.to(ResimSayfasi(
+                            kullanici: kullanici,
+                            gelenkitapid: gelenkitap!.id ?? 0,
+                          ));
+                        },
+                      ),
               )),
         ],
       ),

@@ -68,6 +68,7 @@ class NavDrawer extends StatelessWidget {
               Get.to(() => OgrenciSayfasi(
                     kullanici: kullanici,
                     secim: 0,
+                    toplusec: false,
                   ));
             },
           ),
@@ -83,6 +84,7 @@ class NavDrawer extends StatelessWidget {
               Get.to(() => KitapSayfasi(
                     kullanici: kullanici,
                     secim: 0,
+                    toplusec: false,
                   ));
             },
           ),

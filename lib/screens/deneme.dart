@@ -9,6 +9,7 @@ class Deneme extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        
         title: const Text("Deneme"),
       ),
       body: Center(

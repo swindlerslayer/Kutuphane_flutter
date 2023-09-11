@@ -124,7 +124,7 @@ class KitapController extends GetxController {
     simdikisayfa = x.kalinanSayfa!;
     var ilk = x.lkSayfa;
     var apilink = ApiEndPoints.baseUrl;
-    var filtre = x.filtre;
+    var filtre = x.filtrekitap;
 
     filtrearama = x.querry;
     GenelFiltre xg = GenelFiltre();

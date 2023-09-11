@@ -123,6 +123,8 @@ class KitapTeslimSayfasi extends StatelessWidget {
                                 var x = await Get.to(() => OgrenciSayfasi(
                                       kullanici: kullanici,
                                       secim: 1,
+                                      toplusec: 
+                                      false,
                                     ));
                                 if (x != null) {
                                   ogrencicontroller.value.text = x.adiSoyadi;
@@ -158,6 +160,7 @@ class KitapTeslimSayfasi extends StatelessWidget {
                                 var x = await Get.to(() => KitapSayfasi(
                                       kullanici: kullanici,
                                       secim: 1,
+                                      toplusec: false,
                                     ));
                                 if (x != null) {
                                   kitapcontroller.value.text = x.adi;

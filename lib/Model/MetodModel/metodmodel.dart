@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:kutuphane_mobil_d/Model/Filtre/anasayfafiltre.dart';
 import 'package:kutuphane_mobil_d/Model/Filtre/kitapfiltre.dart';
 
 MetodModel metodModelFromJson(String str) =>
@@ -19,7 +20,8 @@ class MetodModel {
   int? kalinanSayfa;
   String? querry;
   bool? artanazalan;
-  KitapFiltre? filtre;
+  KitapFiltre? filtrekitap;
+  AnasayfaFiltre? filtreanasayfa;
 
   MetodModel(
       {this.kullaniciAdi,
@@ -29,7 +31,8 @@ class MetodModel {
       this.kalinanSayfa,
       this.querry,
       this.artanazalan,
-      this.filtre});
+      this.filtrekitap,
+      this.filtreanasayfa});
 
   factory MetodModel.fromJson(Map<String, dynamic> json) => MetodModel(
       kullaniciAdi: json["KullaniciAdi"],
@@ -39,7 +42,8 @@ class MetodModel {
       kalinanSayfa: json["KalinanSayfa"],
       querry: json["Querry"],
       artanazalan: json["ArtanAzalan"],
-            filtre: json["KitapFiltre"] == null ? null : KitapFiltre.fromJson(json["KitapFiltre"]),
+            filtrekitap: json["KitapFiltre"] == null ? null : KitapFiltre.fromJson(json["KitapFiltre"]),
+      filtreanasayfa: json["AnasayfaFiltre"] == null ? null : AnasayfaFiltre.fromJson(json["AnasayfaFiltre"])
 );
       
 
@@ -51,6 +55,7 @@ class MetodModel {
         "KalinanSayfa": kalinanSayfa,
         "Querry": querry,
         "ArtanAzalan": artanazalan,
-        "KitapFiltre": filtre?.toJson(),
+        "KitapFiltre": filtrekitap?.toJson(),
+        "AnasayfaFiltre": filtreanasayfa?.toJson(),
       };
 }
