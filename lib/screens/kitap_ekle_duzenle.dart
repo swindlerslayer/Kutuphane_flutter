@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
@@ -250,7 +251,18 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                     decoration: InputDecoration(
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.camera_alt_rounded),
-                          onPressed: () {},
+                          onPressed: () async {
+                            var barcodeScanRes =
+                                FlutterBarcodeScanner.getBarcodeStreamReceiver(
+                                        "#ff6666",
+                                        "Cancel",
+                                        false,
+                                        ScanMode.DEFAULT)
+                                    ?.listen((barcode) {
+                              /// barcode to be used
+                            });
+                            print(barcodeScanRes);
+                          },
                         ),
                         border: const OutlineInputBorder(),
                         labelText: "Barkod"),

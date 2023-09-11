@@ -119,7 +119,6 @@ class AnasayfaController extends GetxController {
 
     var badi = json.encode(xg);
     final response = await client.post(url, headers: headers, body: badi);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       var dd = jsonDecode(response.body);
       List<OgrenciKitapListe> kitapListesi =

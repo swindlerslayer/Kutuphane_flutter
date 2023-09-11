@@ -44,7 +44,6 @@ class AnaekranDrawer extends StatelessWidget {
                     cont.kitaplar?.add(x);
                     cont.anasayfafiltre.kitapid ??= [];
                     cont.anasayfafiltre.obs.value.kitapid?.add(x.id!);
-                    print("kitapid: ${cont.anasayfafiltre.obs.value.kitapid}");
                   }
                 },
               ),
@@ -95,8 +94,6 @@ class AnaekranDrawer extends StatelessWidget {
                     cont.ogrenciler?.add(x);
                     cont.anasayfafiltre.ogrenciid ??= [];
                     cont.anasayfafiltre.ogrenciid?.add(x.id!);
-                    print(
-                        "kitapid: ${cont.anasayfafiltre.obs.value.ogrenciid}");
                   }
                 },
               ),
@@ -152,8 +149,6 @@ class AnaekranDrawer extends StatelessWidget {
                         []; // kitapturid null ise boş bir liste oluştur
                     cont.yayinevleri?.add(x);
                     cont.anasayfafiltre.obs.value.yayineviid!.add(x.id!);
-                    print(
-                        "kitapid: ${cont.anasayfafiltre.obs.value.yayineviid}");
                   }
                 },
               ),

@@ -87,6 +87,7 @@ class NewScreen extends StatelessWidget {
           ),
           style: const TextStyle(color: Colors.white, fontSize: 14.0),
         ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
       ),
       body: BodyWidget(kullanici: kullanici),
     );

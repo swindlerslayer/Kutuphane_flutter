@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -29,6 +28,7 @@ class KitapTeslimSayfasi extends StatelessWidget {
       drawer: NavDrawer(kullanici: kullanici),
       appBar: AppBar(
         title: const Text("Kitap Teslim Sayfası"),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(174, 166, 166, 1)),
       ),
       body: Container(
         padding: const EdgeInsets.all(15),
@@ -123,8 +123,7 @@ class KitapTeslimSayfasi extends StatelessWidget {
                                 var x = await Get.to(() => OgrenciSayfasi(
                                       kullanici: kullanici,
                                       secim: 1,
-                                      toplusec: 
-                                      false,
+                                      toplusec: false,
                                     ));
                                 if (x != null) {
                                   ogrencicontroller.value.text = x.adiSoyadi;
@@ -200,43 +199,44 @@ class KitapTeslimSayfasi extends StatelessWidget {
                             backgroundColor:
                                 const Color.fromARGB(255, 128, 104, 102));
                         return;
-                      } else{
-                      final cont = Get.put(KitapTeslimController());
+                      } else {
+                        final cont = Get.put(KitapTeslimController());
 
-                      OgrenciKitap x = OgrenciKitap();
-                      x.alisTarihi = alistarih.value.text;
-                      x.kitapId = cont.secilenkitapid;
-                      x.teslimTarihi = teslimtarih.value.text;
-                      bool td;
-                      if (teslimtarih.value.text.isEmpty) {
-                        td = false;
-                      } else {
-                        td = true;
+                        OgrenciKitap x = OgrenciKitap();
+                        x.alisTarihi = alistarih.value.text;
+                        x.kitapId = cont.secilenkitapid;
+                        x.teslimTarihi = teslimtarih.value.text;
+                        bool td;
+                        if (teslimtarih.value.text.isEmpty) {
+                          td = false;
+                        } else {
+                          td = true;
+                        }
+                        x.ogrenciId = cont.secilenogrenciid;
+                        x.teslimDurumu = td;
+                        //ekleguncelleKitapTeslim
+                        var eklendi = await cont.ekleguncelleKitapTeslim(
+                            kullanici.kullaniciAdi.toString(),
+                            kullanici.parola.toString(),
+                            x);
+                        if (eklendi == "Eklendi") {
+                          Get.snackbar("Başarılı", "Kitap Teslim Edildi",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 107, 123, 107));
+                        } else if (eklendi == "?") {
+                          Get.snackbar("Hata", "Hata Oluştu",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 128, 104, 102));
+                        } else {
+                          Get.snackbar("Hata", "Kitap Teslim Edilmedi",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 128, 104, 102));
+                        }
                       }
-                      x.ogrenciId = cont.secilenogrenciid;
-                      x.teslimDurumu = td;
-                      //ekleguncelleKitapTeslim
-                      var eklendi = await cont.ekleguncelleKitapTeslim(
-                          kullanici.kullaniciAdi.toString(),
-                          kullanici.parola.toString(),
-                          x);
-                      if (eklendi == "Eklendi") {
-                        Get.snackbar("Başarılı", "Kitap Teslim Edildi",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor:
-                                const Color.fromARGB(255, 107, 123, 107));
-                      } else if (eklendi == "?") {
-                        Get.snackbar("Hata", "Hata Oluştu",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor:
-                                const Color.fromARGB(255, 128, 104, 102));
-                      } else {
-                        Get.snackbar("Hata", "Kitap Teslim Edilmedi",
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor:
-                                const Color.fromARGB(255, 128, 104, 102));
-                      }
-                    }},
+                    },
                     child: const Text("Teslim Onayla!"))
               ],
             );

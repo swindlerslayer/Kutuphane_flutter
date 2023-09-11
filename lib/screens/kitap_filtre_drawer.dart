@@ -44,7 +44,8 @@ class KitapDrawer extends StatelessWidget {
                       ));
                   if (x != null) {
                     cont.yazarlar?.add(x);
-                    cont.kitapfiltre.yazarid ??= [];
+                    cont.kitapfiltre.yazarid ??=
+                        []; // yazarid null ise boş bir liste oluştur
                     cont.kitapfiltre.obs.value.yazarid?.add(x.id!);
                   }
                 },
@@ -59,14 +60,15 @@ class KitapDrawer extends StatelessWidget {
                     itemBuilder: (BuildContext context, i) {
                       return ListTile(
                         trailing: IconButton(
-                            onPressed: () {
-                              cont.yazarlar?.removeAt(i);
-                              cont.kitapfiltre.obs.value.yazarid?.removeAt(i);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Color.fromARGB(255, 122, 75, 72),
-                            )),
+                          onPressed: () {
+                            cont.yazarlar?.removeAt(i);
+                            cont.kitapfiltre.obs.value.yazarid?.removeAt(i);
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color.fromARGB(255, 122, 75, 72),
+                          ),
+                        ),
                         title: Text(cont.yazarlar?[i].adiSoyadi ?? ""),
                       );
                     },
@@ -93,10 +95,9 @@ class KitapDrawer extends StatelessWidget {
                       ));
                   if (x != null) {
                     cont.yayinevleri?.add(x);
-                    cont.kitapfiltre.yayineviid ??= [];
+                    cont.kitapfiltre.yayineviid ??=
+                        []; // yayineviid null ise boş bir liste oluştur
                     cont.kitapfiltre.obs.value.yayineviid?.add(x.id!);
-                    print(
-                        "yayineviid: ${cont.kitapfiltre.obs.value.yayineviid}");
                   }
                 },
               ),
@@ -110,15 +111,15 @@ class KitapDrawer extends StatelessWidget {
                     itemBuilder: (BuildContext context, i) {
                       return ListTile(
                         trailing: IconButton(
-                            onPressed: () {
-                              cont.yayinevleri?.removeAt(i);
-                              cont.kitapfiltre.obs.value.yayineviid
-                                  ?.removeAt(i);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Color.fromARGB(255, 122, 75, 72),
-                            )),
+                          onPressed: () {
+                            cont.yayinevleri?.removeAt(i);
+                            cont.kitapfiltre.obs.value.yayineviid?.removeAt(i);
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color.fromARGB(255, 122, 75, 72),
+                          ),
+                        ),
                         title: Text(cont.yayinevleri?[i].adi ?? ""),
                       );
                     },
@@ -163,15 +164,15 @@ class KitapDrawer extends StatelessWidget {
                     itemBuilder: (BuildContext context, i) {
                       return ListTile(
                         trailing: IconButton(
-                            onPressed: () {
-                              cont.kitapturleri?.removeAt(i);
-                              cont.kitapfiltre.obs.value.kitapturid
-                                  ?.removeAt(i);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Color.fromARGB(255, 122, 75, 72),
-                            )),
+                          onPressed: () {
+                            cont.kitapturleri?.removeAt(i);
+                            cont.kitapfiltre.obs.value.kitapturid?.removeAt(i);
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color.fromARGB(255, 122, 75, 72),
+                          ),
+                        ),
                         title: Text(cont.kitapturleri?[i].adi ?? ""),
                       );
                     },
@@ -233,11 +234,6 @@ class KitapDrawer extends StatelessWidget {
                   ? null
                   : cont.filtreminsayfa =
                       int.tryParse(sayfasayimintextcontroller.text)!;
-
-              // cont.filtremaxsayfa =
-              //     int.tryParse(sayfasayimaxtextcontroller.text);
-              // cont.filtreminsayfa =
-              //     int.tryParse(sayfasayimintextcontroller.text);
 
               MetodModel z = MetodModel();
               z.kalinanSayfa = cont.simdikisayfa;

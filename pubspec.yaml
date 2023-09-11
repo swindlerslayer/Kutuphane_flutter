@@ -18,8 +18,9 @@ dependencies:
   flutter_datetime_picker_plus: ^2.0.1
   intl: ^0.18.1
   circular_menu: ^2.0.1
+  flutter_barcode_scanner: ^2.0.0  
 
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
