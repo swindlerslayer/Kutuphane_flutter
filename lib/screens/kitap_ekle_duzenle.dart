@@ -252,16 +252,13 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.camera_alt_rounded),
                           onPressed: () async {
-                            var barcodeScanRes =
-                                FlutterBarcodeScanner.getBarcodeStreamReceiver(
-                                        "#ff6666",
-                                        "Cancel",
-                                        false,
-                                        ScanMode.DEFAULT)
-                                    ?.listen((barcode) {
-                              /// barcode to be used
-                            });
+                            String barcodeScanRes;
+
+                            barcodeScanRes =
+                                await FlutterBarcodeScanner.scanBarcode(
+                                    '#ff6666', 'Cancel', true, ScanMode.QR);
                             print(barcodeScanRes);
+                            barkodcontroller.text = barcodeScanRes;
                           },
                         ),
                         border: const OutlineInputBorder(),
@@ -408,7 +405,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                           k.id = kitapid;
                           k.adi = kitapadicontroller.text;
                           k.sayfaSayisi = int.parse(sayfasayisicontroller.text);
-                          k.barkod = int.parse(barkodcontroller.text);
+                          k.barkod = barkodcontroller.text;
                           k.yayinEviId = yayinevicont.gelenyayinevi.id;
                           k.yazarId = yazarcont.gelenyazar.id;
                           k.kitapTurId = kitapturcont.gelenkitaptur.id;

@@ -96,8 +96,8 @@ class Login extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(
-                        top: 24,
-                        left: 40,
+                        top: 30,
+                        left: 45,
                       ),
                       child: Text("Beni Hatırla"),
                     )

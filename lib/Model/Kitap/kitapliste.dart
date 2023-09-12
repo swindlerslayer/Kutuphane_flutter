@@ -17,7 +17,7 @@ class ListeKitap {
   int? kitapTurId;
   int? yayinEviId;
   int? yazarId;
-  int? barkod;
+  String? barkod;
   String? kayitYapan;
   String? kayitTarihi;
   dynamic degisiklikYapan;

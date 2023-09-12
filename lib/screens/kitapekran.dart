@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:get/get.dart';
@@ -92,9 +93,18 @@ class KitapSayfasi extends StatelessWidget {
                     width: 3, color: Color.fromARGB(255, 103, 103, 103))),
             suffixIcon: Obx(
               () => IconButton(
-                icon: Icon(degisken.value ? Icons.search : Icons.close),
+                icon: Icon(degisken.value ? Icons.camera_alt : Icons.close),
                 onPressed: degisken.value
-                    ? () {}
+                    ? () async {
+                        String barcodeScanRes;
+
+                        barcodeScanRes =
+                            await FlutterBarcodeScanner.scanBarcode(
+                                '#ff6666', 'Cancel', true, ScanMode.QR);
+                        print(barcodeScanRes);
+                        textEditingController.value.text = barcodeScanRes;
+                        degisken.value = false;
+                      }
                     : () async {
                         textEditingController.value.text = "";
                         final cont = Get.put(KitapController());
