@@ -3,7 +3,6 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */
-// ignore: camel_case_types
 import 'package:get/get.dart';
 
 class KullaniciController {

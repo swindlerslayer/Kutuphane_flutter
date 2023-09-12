@@ -12,9 +12,9 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-        Container(
+      body: Stack(
+        children: [
+          Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -35,14 +35,15 @@ class Register extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                          size: 30,
-                        )),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
                   ),
                 ),
                 Column(
@@ -94,10 +95,10 @@ class Register extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 16.0),
-                        child: Center(
-                            child: ElevatedButton(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 16.0),
+                      child: Center(
+                        child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor:
                                 const Color.fromARGB(255, 255, 255, 255),
@@ -122,12 +123,16 @@ class Register extends StatelessWidget {
                             Get.to(const Login());
                           },
                           child: const Text("Kayıt Ol"),
-                        )))
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ],
-            )),
-      ],
-    ));
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

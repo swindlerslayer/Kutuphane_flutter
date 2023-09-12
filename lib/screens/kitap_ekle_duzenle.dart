@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 
@@ -181,7 +182,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                         maxHeight: 1000,
                                         maxWidth: 1000,
                                         source: ImageSource.camera);
-                                    File? file = File(photo!.path);
+                                    if (photo == null) return;
+                                    File? file = File(photo.path);
                                     gelenresim.value =
                                         base64.encode(await file.readAsBytes());
                                     Get.back();
@@ -200,8 +202,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                         maxHeight: 100,
                                         maxWidth: 100,
                                         source: ImageSource.gallery);
-
-                                    File? file = File(image!.path);
+                                    if (image == null) return;
+                                    File? file = File(image.path);
                                     gelenresim.value =
                                         base64.encode(await file.readAsBytes());
                                     Get.back();
@@ -223,23 +225,126 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.amber[50],
                     controller: kitapadicontroller,
                     decoration: InputDecoration(
+                        labelStyle: const TextStyle(color: Colors.white),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.camera_alt_rounded),
-                          onPressed: () {},
+                          onPressed: () async {
+                            //Kameradan Ürün Adı Okuma işlemi bu buton içerisinde
+                            final ImagePicker picker = ImagePicker();
+                            final InputImage inputImage;
+
+                            //Kameradan Fotoğraf çekiyor fotoğraf çekilmedi ise geri döndürüyor
+                            //kameranın arka kamerasını kullanıyor
+                            final XFile? photo = await picker.pickImage(
+                                imageQuality: 50,
+                                maxHeight: 1000,
+                                maxWidth: 1000,
+                                source: ImageSource.camera);
+                            if (photo == null) return;
+
+                            //inputImage değişkenine üstte çekilen fotoğrafın path değeri veriliyor
+                            inputImage = InputImage.fromFilePath(photo.path);
+
+                            //tanımasını istediğimiz alfabe tipini seçiyoruz
+                            final textRecognizer = TextRecognizer(
+                                script: TextRecognitionScript.latin);
+
+                            //çektiğimiz fotoğrafın içerisindeki seçtiğimiz alfabedeki yazıları tanıyor
+                            final RecognizedText recognizedText =
+                                await textRecognizer.processImage(inputImage);
+
+                            // ignore: use_build_context_synchronously
+                            final selectedString = await showDialog(
+                              context: context,
+                              builder: (context) => ListView(
+                                children: [
+                                  AlertDialog(
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: recognizedText.blocks
+                                          .map(
+                                            (block) => Stack(
+                                              children: [
+                                                SizedBox(
+                                                  width: 310,
+                                                  child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shadowColor:
+                                                          const Color.fromARGB(
+                                                              255, 0, 0, 0),
+                                                      foregroundColor:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255),
+                                                      backgroundColor: const Color
+                                                              .fromARGB(
+                                                          255,
+                                                          32,
+                                                          32,
+                                                          32), // Background color
+                                                    ),
+                                                    //Elevated butonu sonuna checkbox ekleyebileceğim
+                                                    //bir widget ile değiştir
+                                                    onPressed: () =>
+                                                        Navigator.of(context)
+                                                            .pop(block.text),
+                                                    child: Text(block.text),
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Checkbox(
+                                                      value: block.text.isBlank,
+                                                      onChanged: (Value) {}),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                            if (selectedString == null) return;
+                            kitapadicontroller.text = selectedString;
+                          },
                         ),
-                        border: const OutlineInputBorder(),
-                        labelText: "kitap adı"),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
+                        labelText: "Kitap İsmi"),
                   ),
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   child: TextFormField(
+                    cursorColor: Colors.amber[50],
                     controller: sayfasayisicontroller,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        labelStyle: TextStyle(color: Colors.white),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 3, color: Colors.greenAccent),
+                        ),
                         labelText: "Sayfa Sayisi"),
                   ),
                 ),
@@ -247,8 +352,11 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    cursorColor: Colors.amber[50],
                     controller: barkodcontroller,
                     decoration: InputDecoration(
+                        labelStyle: const TextStyle(color: Colors.white),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.camera_alt_rounded),
                           onPressed: () async {
@@ -256,12 +364,21 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
 
                             barcodeScanRes =
                                 await FlutterBarcodeScanner.scanBarcode(
-                                    '#ff6666', 'Cancel', true, ScanMode.QR);
-                            print(barcodeScanRes);
-                            barkodcontroller.text = barcodeScanRes;
+                                    '#ff6666',
+                                    'Cancel',
+                                    true,
+                                    ScanMode.BARCODE);
+                            if (barcodeScanRes != "-1") {
+                              barkodcontroller.text = barcodeScanRes;
+                            }
                           },
                         ),
-                        border: const OutlineInputBorder(),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 3, color: Colors.white)),
                         labelText: "Barkod"),
                   ),
                 ),
@@ -274,6 +391,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                           controller: yayinevicontroller.value,
                           readOnly: true,
                           decoration: InputDecoration(
+                            labelStyle: const TextStyle(color: Colors.white),
                             border: const OutlineInputBorder(),
                             labelText: "Kitabın Yayınevi",
                             suffixIcon: IconButton(
@@ -291,9 +409,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                               },
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color.fromARGB(255, 164, 164, 164)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.white),
                             ),
                           ),
                         )),
@@ -308,6 +425,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                           controller: yazarcontroller.value,
                           readOnly: true,
                           decoration: InputDecoration(
+                            labelStyle: const TextStyle(color: Colors.white),
                             border: const OutlineInputBorder(),
                             labelText: "Kitabın Yazarı",
                             suffixIcon: IconButton(
@@ -326,9 +444,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                               },
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color.fromARGB(255, 164, 164, 164)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.white),
                             ),
                           ),
                         )),
@@ -344,6 +461,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                         controller: kitapturcontroller.value,
                         readOnly: true,
                         decoration: InputDecoration(
+                          labelStyle: const TextStyle(color: Colors.white),
                           border: const OutlineInputBorder(),
                           labelText: "Kitap Türü",
                           suffixIcon: IconButton(
@@ -360,9 +478,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                             },
                           ),
                           enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1,
-                                color: Color.fromARGB(255, 164, 164, 164)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.white),
                           ),
                         ),
                       ),

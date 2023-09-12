@@ -114,11 +114,8 @@ class ResimSayfasi extends StatelessWidget {
                                     if (silindi == "silindi") {
                                       cont.sayfaresimList?.removeAt(index);
                                     } else {
-                                      // ignore: use_build_context_synchronously
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  'Resimler Silinemedi!')));
+                                      Get.snackbar(
+                                          "Hata", "Resimler Silinemedi!");
                                     }
                                   }),
                             ],

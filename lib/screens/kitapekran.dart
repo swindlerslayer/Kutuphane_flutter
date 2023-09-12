@@ -89,8 +89,11 @@ class KitapSayfasi extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
             hintText: " Kitapta Ara...",
             border: const OutlineInputBorder(
-                borderSide: BorderSide(
-                    width: 3, color: Color.fromARGB(255, 103, 103, 103))),
+              borderSide: BorderSide(
+                width: 3,
+                color: Color.fromARGB(255, 103, 103, 103),
+              ),
+            ),
             suffixIcon: Obx(
               () => IconButton(
                 icon: Icon(degisken.value ? Icons.camera_alt : Icons.close),
@@ -100,10 +103,11 @@ class KitapSayfasi extends StatelessWidget {
 
                         barcodeScanRes =
                             await FlutterBarcodeScanner.scanBarcode(
-                                '#ff6666', 'Cancel', true, ScanMode.QR);
-                        print(barcodeScanRes);
-                        textEditingController.value.text = barcodeScanRes;
-                        degisken.value = false;
+                                '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+                        if (barcodeScanRes != "-1") {
+                          textEditingController.value.text = barcodeScanRes;
+                          degisken.value = false;
+                        }
                       }
                     : () async {
                         textEditingController.value.text = "";
@@ -184,7 +188,12 @@ class BodyWidget extends StatelessWidget {
               kitcont.filtresayfa
                   ? await Get.put(KitapController()).getSayfaFiltreKitap(y)
                   : await Get.put(KitapController()).getSayfaFiltreKitap(x);
-              kitcont.isloading = false;
+
+              if (kitcont.totalPageCount! > kitcont.simdikisayfa) {
+                kitcont.isloading = true;
+              } else {
+                kitcont.isloading = false;
+              }
             }
           }
         }

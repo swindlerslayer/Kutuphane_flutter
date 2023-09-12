@@ -149,7 +149,7 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                           List<File> selectedImages = [];
                           final picker = ImagePicker();
                           final pickedFile = await picker.pickMultiImage(
-                              imageQuality: 1, maxHeight: 100, maxWidth: 100);
+                              imageQuality: 70, maxHeight: 100, maxWidth: 100);
                           List<XFile> xfilePick = pickedFile;
 
                           if (xfilePick.isNotEmpty) {
@@ -163,15 +163,11 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                               z.resim1 = tanim;
                               z.kitapId = gelenkitapid;
                               z.kayitYapan = kullanici.kullaniciAdi;
-                              // z.kayitTarihi = DateTime.now();
 
                               cont.ekleresimList?.add(z);
                             }
                           } else {
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Hiç Resim Seçilmedi!')));
+                            Get.snackbar("Hata", "Hiç Resim Seçilmedi!");
                           }
                         },
                       ),

@@ -151,7 +151,12 @@ class BodyWidget extends StatelessWidget {
                           .getSayfaFiltreOgrenciKitap(y)
                       : await Get.put(AnasayfaController())
                           .getSayfaFiltreOgrenciKitap(x);
-                  cont.isloading = false;
+
+                  if (cont.totalPageCount! > cont.simdikisayfa) {
+                    cont.isloading = true;
+                  } else {
+                    cont.isloading = false;
+                  }
                 }
               }
             }

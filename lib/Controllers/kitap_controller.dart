@@ -23,7 +23,6 @@ class KitapController extends GetxController {
   int? get gelenpagecount => _gelenpagecount.value;
   set gelenpagecount(int? value) => _gelenpagecount.value = value!;
 
-
   final _secilenkitap = 0.obs;
   int? get secilenkitap => _secilenkitap.value;
   set secilenkitap(int? value) => _secilenkitap.value = value!;
@@ -84,9 +83,7 @@ class KitapController extends GetxController {
     _sayfakitapList.refresh();
   }
 
-  void get clear {
-
-  }
+  void get clear {}
 
   Future<List<ListeKitap>?> getKitap(String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
@@ -112,10 +109,6 @@ class KitapController extends GetxController {
       return null;
     }
   }
-
-  
-
-
 
   Future<List<ListeKitap>?> getSayfaFiltreKitap(MetodModel x) async {
     metodModelFromJson(jsonEncode(x));
@@ -170,6 +163,8 @@ class KitapController extends GetxController {
       totalPageCount = (gelenpagecount! / 15).ceil();
 
       _sayfakitapList.addAll(kitapListesi);
+      
+
       isloading = false;
       return kitapListesi;
     } else {
@@ -193,7 +188,7 @@ class KitapController extends GetxController {
 
       if (response.statusCode == 200) {
         filtresayfa = false;
-        Kitap kitap = KitapFromJson(response.body);
+        Kitap kitap = kitapFromJson(response.body);
         return kitap;
       } else {
         return null;
