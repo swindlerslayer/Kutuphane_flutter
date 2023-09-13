@@ -43,6 +43,13 @@ class KitapController extends GetxController {
   bool get isloading => _isloading.value;
   set isloading(bool value) => _isloading.value = value;
 
+  
+  final _secilenbaslik = false.obs;
+  bool get secilenbaslik => _secilenbaslik.value;
+  set secilenbaslik(bool value) => _secilenbaslik.value = value;
+
+  RxList<bool> checkboxValues = [false].obs;
+
   final _filtresayfa = false.obs;
   bool get filtresayfa => _filtresayfa.value;
   set filtresayfa(bool value) => _filtresayfa.value = value;

@@ -39,6 +39,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
   final gelenresim = Rxn<String>();
   @override
   Widget build(BuildContext context) {
+    List<String>? secilenbaslikyazi;
     var yazarcont = Get.put(YazarController());
     var yayinevicont = Get.put(YayineviController());
     var kitapturcont = Get.put(KitapTurController());
@@ -257,6 +258,12 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                             final RecognizedText recognizedText =
                                 await textRecognizer.processImage(inputImage);
 
+                            kitcont.checkboxValues.clear();
+
+                            //checkboxValues listesine blokların sayısını kadar false değeri ekliyoruz
+                            kitcont.checkboxValues.value = List.generate(
+                                recognizedText.blocks.length, (index) => false);
+
                             // ignore: use_build_context_synchronously
                             final selectedString = await showDialog(
                               context: context,
@@ -264,56 +271,124 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                 children: [
                                   AlertDialog(
                                     content: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: recognizedText.blocks
-                                          .map(
-                                            (block) => Stack(
-                                              children: [
-                                                SizedBox(
-                                                  width: 310,
-                                                  child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      shadowColor:
-                                                          const Color.fromARGB(
-                                                              255, 0, 0, 0),
-                                                      foregroundColor:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              255,
-                                                              255,
-                                                              255),
-                                                      backgroundColor: const Color
-                                                              .fromARGB(
-                                                          255,
-                                                          32,
-                                                          32,
-                                                          32), // Background color
-                                                    ),
-                                                    //Elevated butonu sonuna checkbox ekleyebileceğim
-                                                    //bir widget ile değiştir
-                                                    onPressed: () =>
-                                                        Navigator.of(context)
-                                                            .pop(block.text),
-                                                    child: Text(block.text),
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: recognizedText.blocks
+                                              .map(
+                                                (block) => SizedBox(
+                                                  width: 350,
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 235,
+                                                        child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            shadowColor:
+                                                                const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    0,
+                                                                    0),
+                                                            foregroundColor:
+                                                                const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255),
+                                                            backgroundColor:
+                                                                const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    32,
+                                                                    32,
+                                                                    32), // Background color
+                                                          ),
+                                                          //Elevated butonu sonuna checkbox ekleyebileceğim
+                                                          //bir widget ile değiştir
+                                                          onPressed: () =>
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(block
+                                                                      .text),
+                                                          child:
+                                                              Text(block.text),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Obx(() =>
+                                                            Checkbox(
+                                                                value: kitcont
+                                                                        .checkboxValues[
+                                                                    //listedeki index değerini mapden gelen değere göre veriyorum
+                                                                    recognizedText
+                                                                        .blocks
+                                                                        .indexOf(
+                                                                            block)],
+                                                                onChanged:
+                                                                    (value) {
+                                                                  kitcont.checkboxValues[recognizedText
+                                                                          .blocks
+                                                                          .indexOf(
+                                                                              block)] =
+                                                                      value!; //value true ise seçili false ise seçili değil
+
+                                                                  //tiklenen checkbox indexindeki block.text'leri secilenbaslikyazi listesine ekliyoruz
+                                                                  if (kitcont
+                                                                          .checkboxValues[
+                                                                      recognizedText
+                                                                          .blocks
+                                                                          .indexOf(
+                                                                              block)]) {
+                                                                    secilenbaslikyazi =
+                                                                        [
+                                                                      ...?secilenbaslikyazi,
+                                                                      block.text
+                                                                    ];
+                                                                  } else {
+                                                                    secilenbaslikyazi = secilenbaslikyazi!
+                                                                        .where((element) =>
+                                                                            element !=
+                                                                            block.text)
+                                                                        .toList();
+                                                                  }
+                                                                })),
+                                                      )
+                                                    ],
                                                   ),
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Checkbox(
-                                                      value: block.text.isBlank,
-                                                      onChanged: (Value) {}),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                          .toList(),
+                                              )
+                                              .toList(),
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              if (secilenbaslikyazi != null) {
+                                                kitapadicontroller.clear();
+                                                for (var i = 0;
+                                                    i <
+                                                        secilenbaslikyazi!
+                                                            .length;
+                                                    i++) {
+                                                  kitapadicontroller.text +=
+                                                      " ${secilenbaslikyazi![i]}";
+                                                }
+                                                Get.back();
+                                                secilenbaslikyazi?.clear();
+                                              }
+                                            },
+                                            child: const Text("Seç"))
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
                             );
+
                             if (selectedString == null) return;
                             kitapadicontroller.text = selectedString;
                           },
