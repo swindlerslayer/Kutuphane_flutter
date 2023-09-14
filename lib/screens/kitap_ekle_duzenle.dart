@@ -239,8 +239,8 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                             final InputImage inputImage;
 
                             //Kameradan Fotoğraf çekiyor fotoğraf çekilmedi ise geri döndürüyor
-                            //kameranın arka kamerasını kullanıyor
                             final XFile? photo = await picker.pickImage(
+                                preferredCameraDevice: CameraDevice.rear,
                                 imageQuality: 50,
                                 maxHeight: 1000,
                                 maxWidth: 1000,
@@ -305,15 +305,16 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                                                     255,
                                                                     32,
                                                                     32,
-                                                                    32), // Background color
+                                                                    32), 
                                                           ),
-                                                          //Elevated butonu sonuna checkbox ekleyebileceğim
-                                                          //bir widget ile değiştir
-                                                          onPressed: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(block
-                                                                      .text),
+
+                                                          onPressed: () => Get.back(result : block.text)
+
+                                                              // Navigator.of(
+                                                              //         context)
+                                                              //     .pop(block
+                                                              //         .text)
+                                                                      ,
                                                           child:
                                                               Text(block.text),
                                                         ),
@@ -336,7 +337,7 @@ class KitapEkleDuzenleSayfasi extends StatelessWidget {
                                                                           .blocks
                                                                           .indexOf(
                                                                               block)] =
-                                                                      value!; //value true ise seçili false ise seçili değil
+                                                                      value!; 
 
                                                                   //tiklenen checkbox indexindeki block.text'leri secilenbaslikyazi listesine ekliyoruz
                                                                   if (kitcont

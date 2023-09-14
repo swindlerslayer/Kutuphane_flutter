@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/logincontrols.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
+import 'package:kutuphane_mobil_d/screens/anaekran.dart';
 import 'package:kutuphane_mobil_d/screens/loading.dart';
 import 'package:kutuphane_mobil_d/screens/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -170,7 +171,9 @@ class _LoginController {
         await loginController.loginUser(kullaniciAdi, parola);
 
     if (loggedInUser?.kullaniciAdi != null) {
-      Get.to(LoadingScreen(kullanici: loggedInUser!));
+      Get.to(LoadingScreen(
+        nextpage: NewScreen(kullanici: loggedInUser!),
+      ));
     } else {
       Get.defaultDialog(
           title: "Giriş Başarısız",

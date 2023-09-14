@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kutuphane_mobil_d/screens/loading.dart';
+import 'package:kutuphane_mobil_d/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,6 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black, //<-- SEE HERE
           ),
         ),
-        home: const LoadingScreen());
+        home: const LoadingScreen(nextpage: Login(),));
   }
 }

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:kutuphane_mobil_d/Controllers/kitap_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
-import 'package:kutuphane_mobil_d/screens/deneme.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
@@ -145,7 +144,13 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              Get.to(() => const Deneme());
+              // Get.to(() => LoadingScreenn(
+              //       nextpage: YayineviSayfasi(
+              //         kullanici: kullanici,
+              //         secim: 0,
+              //         toplusec: false,
+              //       ),
+              //     ));
             },
           ),
         ],
