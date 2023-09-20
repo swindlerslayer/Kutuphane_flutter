@@ -64,5 +64,5 @@ class TokenService {
 }
 
 class ApiEndPoints {
-  static const String baseUrl = 'http://192.168.1.199/';
+  static const String baseUrl = 'http://192.168.1.198/';
 }

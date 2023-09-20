@@ -165,6 +165,12 @@ class ResimKaydetmeSayfasi extends StatelessWidget {
                               z.kayitYapan = kullanici.kullaniciAdi;
 
                               cont.ekleresimList?.add(z);
+
+                              //convert file type to image
+                        
+                              //convert base64 to image
+                              
+
                             }
                           } else {
                             Get.snackbar("Hata", "Hiç Resim Seçilmedi!");

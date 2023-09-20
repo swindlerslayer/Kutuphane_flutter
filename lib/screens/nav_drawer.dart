@@ -5,9 +5,11 @@ import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:kutuphane_mobil_d/Model/Kullanici/kullanici.dart';
 import 'package:kutuphane_mobil_d/screens/kitapteslimekran.dart';
 import 'package:kutuphane_mobil_d/screens/kitapturuekran.dart';
+import 'package:kutuphane_mobil_d/screens/loading.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
+import 'package:kutuphane_mobil_d/screens/yaziciekran.dart';
 import 'AnaEkran.dart';
 import 'kitapekran.dart';
 
@@ -80,11 +82,12 @@ class NavDrawer extends StatelessWidget {
                   kullanici.parola.toString());
               Get.back();
 
-              Get.to(() => KitapSayfasi(
+              Get.to(() => LoadingScreen(
+                      nextpage: KitapSayfasi(
                     kullanici: kullanici,
                     secim: 0,
                     toplusec: false,
-                  ));
+                  )));
             },
           ),
           ListTile(
@@ -144,13 +147,7 @@ class NavDrawer extends StatelessWidget {
               Get.back();
               Get.delete<KitapController>();
 
-              // Get.to(() => LoadingScreenn(
-              //       nextpage: YayineviSayfasi(
-              //         kullanici: kullanici,
-              //         secim: 0,
-              //         toplusec: false,
-              //       ),
-              //     ));
+              Get.to(() => const MyApp());
             },
           ),
         ],

@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
-  static const String baseUrl = "http://192.168.1.199/api";
+  static const String baseUrl = "http://192.168.1.198/api";
 
   final _checkedstatus = true.obs;
   bool? get checkedstatus => _checkedstatus.value;
   set checkedstatus(bool? value) => _checkedstatus.value = value!;
 
-    final _loginstatus = false.obs;
+  final _loginstatus = false.obs;
   bool? get loginstatus => _loginstatus.value;
   set loginstatus(bool? value) => _loginstatus.value = value!;
 
