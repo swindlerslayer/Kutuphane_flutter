@@ -94,9 +94,9 @@ class KitapController extends GetxController {
 
   Future<List<ListeKitap>?> getKitap(String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/kitaplisteyeekle'),
@@ -136,7 +136,8 @@ class KitapController extends GetxController {
 
     xg.kitapFiltre != null ? filtresayfa = true : filtresayfa = false;
 
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
@@ -182,7 +183,8 @@ class KitapController extends GetxController {
   Future<Kitap?> getTekKitap(
       String kullaniciAdi, String parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     try {
       final response = await http.get(
@@ -207,7 +209,8 @@ class KitapController extends GetxController {
 
   Future<bool> silKitap(RxString kullaniciAdi, RxString parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -231,7 +234,8 @@ class KitapController extends GetxController {
 
   Future<String> ekleguncelleKitap(
       RxString kullaniciAdi, RxString parola, Kitap k) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/ekleduzenle');

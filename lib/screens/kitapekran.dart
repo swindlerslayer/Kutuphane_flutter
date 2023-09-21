@@ -13,10 +13,12 @@ import 'package:kutuphane_mobil_d/Controllers/kitapturu_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yayinevi_controller.dart';
 import 'package:kutuphane_mobil_d/Controllers/yazar_controller.dart';
 import 'package:image_picker/image_picker.dart';
-//import imagee class from package from C:\Users\deret\AppData\Local\Pub\Cache\hosted\pub.dev\image-3.3.0\lib\src\image.dart this file path
+
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+// ignore: depend_on_referenced_packages
 import 'package:image/image.dart' as img;
+
 import 'kitap_ekle_duzenle.dart';
 
 class KitapSayfasi extends StatelessWidget {
@@ -156,8 +158,6 @@ class BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final kitcont = Get.put(KitapController());
-
-    String optionprinttype = "58 mm";
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       MetodModel z = MetodModel();
@@ -385,110 +385,59 @@ class BodyWidget extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: GestureDetector(
                 onTap: () async {
-                  List<int> bytes = [];
+                  final isConnected =
+                      await PrintBluetoothThermal.connectionStatus;
+                  if (!isConnected) {
+                    Get.defaultDialog(
+                        title: "Yazıcı Bağlı Değil",
+                        middleText: "Yazıcıyı Bağlayınız",
+                        backgroundColor:
+                            const Color.fromARGB(255, 110, 57, 57));
+                  } else {
+                    //Kullandığım importlar :
+                    //import 'package:esc_pos_utils/esc_pos_utils.dart';
+                    // import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+                    // import 'package:image/image.dart' as img;
 
-                  final profile = await CapabilityProfile.load();
-                  //burada generator sınıfı ile yazıcıya gönderilecek verileri oluşturuyoruz
-                  final generator = Generator(
-                      optionprinttype == "58 mm"
-                          ? PaperSize.mm58
-                          : PaperSize.mm80,
-                      profile);
-                  bytes += generator.reset();
+                    String optionprinttype = "80 mm";
 
-                  final ImagePicker picker = ImagePicker();
-                  final XFile? photo = await picker.pickImage(
-                      imageQuality: 50,
-                      maxHeight: 1000,
-                      maxWidth: 1000,
-                      source: ImageSource.gallery);
-                  if (photo == null) null;
-                  var data = await photo?.readAsBytes();
+                    List<int> bytes = [];
 
-                  img.Image? image = img.decodeImage(data!);
+                    final profile = await CapabilityProfile.load();
+                    //burada generator sınıfı ile yazıcıya gönderilecek verileri oluşturuyoruz
+                    final generator = Generator(
+                        optionprinttype == "58 mm"
+                            ? PaperSize.mm58
+                            : PaperSize.mm80,
+                        profile);
+                    bytes += generator.reset();
 
-                  bytes += generator.image(image!);
+                    final ImagePicker picker = ImagePicker();
+                    final XFile? photo = await picker.pickImage(
+                        imageQuality: 100, source: ImageSource.gallery);
 
-                  // // bytes listesinin içerisine yazdırmak istediğimiz verileri ekliyoruz
+                    if (photo == null) null;
+                    var data = await photo?.readAsBytes();
 
-                  // //aşşağıdaki eklemeler generatora ait örneklerdir
-                  // bytes += generator.text(
-                  //     'Regular: aA bB cC dD eE fF gG hH iI jJ kK lL mM nN oO pP qQ rR sS tT uU vV wW xX yY zZ');
-                  // bytes += generator.text('Special 1: ñÑ àÀ èÈ éÉ üÜ çÇ ôÔ',
-                  //     styles: const PosStyles(codeTable: 'CP1252'));
-                  // bytes += generator.text('Special 2: blåbærgrød',
-                  //     styles: const PosStyles(codeTable: 'CP1252'));
+                    img.Image? image = img.decodeImage(data!);
+                    image = img.copyResize(image!, width: 650);
 
-                  // bytes += generator.text('Bold text',
-                  //     styles: const PosStyles(bold: true));
-                  // bytes += generator.text('Reverse text',
-                  //     styles: const PosStyles(reverse: true));
-                  // bytes += generator.text('Underlined text',
-                  //     styles: const PosStyles(underline: true), linesAfter: 1);
-                  // bytes += generator.text('Align left',
-                  //     styles: const PosStyles(align: PosAlign.left));
-                  // bytes += generator.text('Align center',
-                  //     styles: const PosStyles(align: PosAlign.center));
-                  // bytes += generator.text('Align right',
-                  //     styles: const PosStyles(align: PosAlign.right),
-                  //     linesAfter: 1);
+                    // FilePickerResult? result =
+                    //     await FilePicker.platform.pickFiles(
+                    //   type: FileType.custom,
+                    //   allowedExtensions: ['pdf'],
+                    // );
 
-                  // bytes += generator.row([
-                  //   PosColumn(
-                  //     text: 'col3',
-                  //     width: 3,
-                  //     styles: const PosStyles(
-                  //         align: PosAlign.center, underline: true),
-                  //   ),
-                  //   PosColumn(
-                  //     text: 'col6',
-                  //     width: 6,
-                  //     styles: const PosStyles(
-                  //         align: PosAlign.center, underline: true),
-                  //   ),
-                  //   PosColumn(
-                  //     text: 'col3',
-                  //     width: 3,
-                  //     styles: const PosStyles(
-                  //         align: PosAlign.center, underline: true),
-                  //   ),
-                  // ]);
+                    bytes += generator.image(image);
 
-                  // //Barkod
+                    bytes += generator.feed(2);
 
-                  // final List<int> barData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 4];
-                  // bytes += generator.barcode(Barcode.upcA(barData));
+                    List<int> ticket = bytes;
+       
+                        await PrintBluetoothThermal.writeBytes(ticket);
 
-                  // //QR Kod
-                  // bytes += generator.qrcode('example.com');
-
-                  // bytes += generator.text(
-                  //   'Text size 50%',
-                  //   styles: const PosStyles(
-                  //     fontType: PosFontType.fontB,
-                  //   ),
-                  // );
-                  // bytes += generator.text(
-                  //   'Text size 100%',
-                  //   styles: const PosStyles(
-                  //     fontType: PosFontType.fontA,
-                  //   ),
-                  // );
-                  // bytes += generator.text(
-                  //   'Text size 200%',
-                  //   styles: const PosStyles(
-                  //     height: PosTextSize.size2,
-                  //     width: PosTextSize.size2,
-                  //   ),
-                  // );
-
-                  // bytes += generator.feed(2);
-                  // //bytes += generator.cut();
-
-                  List<int> ticket = bytes;
-                  final result = await PrintBluetoothThermal.writeBytes(ticket);
-                  print("print test result:  $result");
-                  return;
+                    return;
+                  }
                 },
                 child: const CircleAvatar(
                   radius: 30,

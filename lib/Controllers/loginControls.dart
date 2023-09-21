@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
-  static const String baseUrl = "http://192.168.1.198/api";
+  static const String baseUrl = "http://192.168.1.199:1199/api";
 
   final _checkedstatus = true.obs;
   bool? get checkedstatus => _checkedstatus.value;
@@ -49,7 +49,9 @@ class LoginController extends GetxController {
   }
 
   Future<KullaniciGiris?> loginUser(String kullaniciAdi, String parola) async {
-    var token = await TokenService.getToken(
+    //call tokenservice as tokencontrol
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {

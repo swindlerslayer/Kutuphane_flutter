@@ -31,38 +31,34 @@ class TokenClass {
 }
 
 class TokenService {
-  static Future<TokenClass> getToken({
+   Future<TokenClass> getToken({
     var kullaniciAdi = '',
     var parola = '',
     bool loginMi = false,
   }) async {
-    var client = http.Client();
-    http.Response response;
     try {
       var url = Uri.parse('${ApiEndPoints.baseUrl}token');
       var headers = <String, String>{
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded'
       };
-
-      response = await client.post(url, headers: headers, body: {
+      var asd = await http.post(url, headers: headers, body: {
         'grant_type': 'password',
         'username': kullaniciAdi.toString(),
         'password': parola.toString()
       });
-    } finally {
-      client.close();
-    }
-
-    if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
-      return TokenClass.fromJson(jsonResponse);
-    } else {
-      throw Exception('Failed to get token.');
+      if (asd.statusCode == 200) {
+        var jsonResponse = json.decode(asd.body);
+        return TokenClass.fromJson(jsonResponse);
+      } else {
+        throw Exception('Failed to get token.');
+      }
+    } catch (e) {
+      return TokenClass(accessToken: "", tokenType: "", expiresIn: 0);
     }
   }
 }
 
 class ApiEndPoints {
-  static const String baseUrl = 'http://192.168.1.198/';
+  static const String baseUrl = 'http://192.168.1.199:1199/';
 }

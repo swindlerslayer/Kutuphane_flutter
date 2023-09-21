@@ -61,7 +61,8 @@ class YazarController extends GetxController {
 
     x.querry != null ? filtresayfa = true : filtresayfa = false;
 
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
@@ -99,7 +100,8 @@ class YazarController extends GetxController {
 
   Future<List<ListeYazar>?> getYazar(String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -125,7 +127,8 @@ class YazarController extends GetxController {
 //yazarsecimsifirla
  Future<bool> yazarSecimSifirla(String kullaniciAdi, String parola) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -150,7 +153,8 @@ class YazarController extends GetxController {
   Future<Yazar?> getTekYazar(
       String kullaniciAdi, String parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -176,7 +180,8 @@ class YazarController extends GetxController {
 
   Future<String> ekleguncelleYazar(
       String kullaniciAdi, String parola, Yazar k) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/yazarekleduzenle');
@@ -200,9 +205,9 @@ class YazarController extends GetxController {
 
   Future<bool> silYazar(RxString kullaniciAdi, RxString parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/yazarsil?ID=$id'),

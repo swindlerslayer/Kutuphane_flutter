@@ -98,9 +98,11 @@ class AnasayfaController extends GetxController {
     xg.sayfa = simdikisayfa;
 
     x.querry != null ? filtresayfa = true : filtresayfa = false;
-
-    var token = await TokenService.getToken(
+    
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
+
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
     ilk == true ? xg.sayfa = 0 : xg.sayfa = simdikisayfa;
@@ -143,7 +145,8 @@ class AnasayfaController extends GetxController {
   Future<OgrenciKitap?> getTekOgrenciKitap(
       String kullaniciAdi, String parola, int? iD) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -195,7 +198,9 @@ class AnasayfaController extends GetxController {
 
   Future<String> ekleguncelleOgrenciKitap(
       RxString kullaniciAdi, RxString parola, OgrenciKitap k) async {
-    var token = await TokenService.getToken(
+    
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/kitapogrenciekleduzenle');

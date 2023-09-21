@@ -16,7 +16,8 @@ class KitapTeslimController extends GetxController {
 
   Future<String> ekleguncelleKitapTeslim(
       String kullaniciAdi, String parola, OgrenciKitap k) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/kitapogrenciekleduzenle');

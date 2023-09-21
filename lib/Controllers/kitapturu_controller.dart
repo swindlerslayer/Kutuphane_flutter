@@ -62,7 +62,8 @@ class KitapTurController extends GetxController {
 
     x.querry != null ? filtresayfa = true : filtresayfa = false;
 
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: ka, parola: kp, loginMi: false);
 
     ilk == true ? simdikisayfa = 0 : simdikisayfa = simdikisayfa;
@@ -104,9 +105,9 @@ class KitapTurController extends GetxController {
     String parola,
   ) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/kitapturulisteyeekle'),
@@ -130,9 +131,9 @@ class KitapTurController extends GetxController {
   Future<KitapTur?> getTekKitapTur(
       String kullaniciAdi, String parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
-
     try {
       final response = await http.get(
         Uri.parse('$apilink/api/kitapturugetir?ID=$id'),
@@ -156,7 +157,8 @@ class KitapTurController extends GetxController {
 
   Future<String> ekleguncelleKitapTur(
       RxString kullaniciAdi, RxString parola, KitapTur k) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/kitapturuekleduzenle');
@@ -181,7 +183,8 @@ class KitapTurController extends GetxController {
   Future<bool> silKitapTuru(
       RxString kullaniciAdi, RxString parola, int? id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {

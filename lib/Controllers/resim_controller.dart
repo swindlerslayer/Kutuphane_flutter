@@ -25,7 +25,8 @@ class ResimController extends GetxController {
   Future<List<ListeResim>?> getResim(
       String kullaniciAdi, String parola, int id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -52,7 +53,8 @@ class ResimController extends GetxController {
   //topluresimsil
   Future<String> topluResimSil(String kullaniciAdi, String parola,
       List<ListeResim>? silinecekliste) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/topluresimsil');
@@ -83,7 +85,8 @@ class ResimController extends GetxController {
   Future<String?> getResimsil(
       String kullaniciAdi, String parola, int id) async {
     var apilink = ApiEndPoints.baseUrl;
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
 
     try {
@@ -107,7 +110,8 @@ class ResimController extends GetxController {
 
   Future<String> topluResimEkle(
       String kullaniciAdi, String parola, List<ListeResim>? k) async {
-    var token = await TokenService.getToken(
+    var tokencontrol = Get.put(TokenService());
+    var token = await tokencontrol.getToken(
         kullaniciAdi: kullaniciAdi, parola: parola, loginMi: false);
     var client = http.Client();
     var url = Uri.parse('${ApiEndPoints.baseUrl}api/topluresimekle');
