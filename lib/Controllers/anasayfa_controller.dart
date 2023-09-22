@@ -66,14 +66,6 @@ class AnasayfaController extends GetxController {
   AnasayfaFiltre get anasayfafiltre => _anasayfafiltre.value;
   set anasayfafiltre(AnasayfaFiltre value) => _anasayfafiltre.value = value;
 
-  //   final _kitapfiltre = KitapFiltre().obs;
-  // KitapFiltre get kitapfiltre => _kitapfiltre.value;
-  // set kitapfiltre(KitapFiltre value) => _kitapfiltre.value = value;
-
-  // final _kitapogrenci = <OgrenciKitapListe>[].obs;
-  // List<OgrenciKitapListe> get kitapogrenci => _kitapogrenci;
-  // set kitapogrenci(List<OgrenciKitapListe> value) =>
-  //     _kitapogrenci.value = value;
 
   void refResh() {
     _sayfaogrencikitapList.refresh();

@@ -11,10 +11,11 @@ import 'package:image/image.dart' as img;
 class YaziciSafa extends StatelessWidget {
   YaziciSafa({Key? key}) : super(key: key);
   final listResult = <BluetoothInfo>[].obs;
-  List<int> bytes = [];
 
   @override
   Widget build(BuildContext context) {
+    List<int> bytes = [];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Yazıcı Sayfası"),
@@ -85,7 +86,7 @@ class YaziciSafa extends StatelessWidget {
                     var data = await photo.readAsBytes();
                     final image = img.decodeImage(data);
                     var imagee = img.copyResize(image!, width: 600);
-                    bytes += generator.image(imagee);
+                    bytes += generator.image(imagee, align: PosAlign.center);
                     List<int> ticket = bytes;
                     await PrintBluetoothThermal.writeBytes(ticket);
                     return;
@@ -94,27 +95,21 @@ class YaziciSafa extends StatelessWidget {
                 child: const Text("Yazıcı Testi")),
             ElevatedButton(
                 onPressed: () async {
-                  // Initialize the renderer
                   String optionprinttype = "80 mm";
-
                   final profile = await CapabilityProfile.load();
                   final generator = Generator(
                       optionprinttype == "58 mm"
                           ? PaperSize.mm58
                           : PaperSize.mm80,
                       profile);
-
                   var result = await FilePicker.platform.pickFiles(
                       type: FileType.custom,
                       allowedExtensions: ['pdf'],
                       allowMultiple: false);
                   final pdf = PdfImageRendererPdf(path: result!.paths[0]!);
-
                   await pdf.open();
-
                   await pdf.openPage(pageIndex: 0);
                   final size = await pdf.getPageSize(pageIndex: 0);
-
                   final imge = await pdf.renderPage(
                     pageIndex: 0,
                     x: 0,
@@ -130,13 +125,15 @@ class YaziciSafa extends StatelessWidget {
 
                   //turn imge's Uint8List type into Image
                   final image = img.decodeImage(imge!);
-                  var imagee = img.copyResize(image!, width: 600);
+                  var imagee = img.copyResize(image!, width: 380);
 
-                  bytes += generator.reset();
-                  bytes += generator.image(imagee);
-                  bytes += generator.feed(5);
+                  bytes += generator.image(imagee, align: PosAlign.center);
+                  // bytes += generator.feed(5);
+
                   List<int> ticket = bytes;
+
                   await PrintBluetoothThermal.writeBytes(ticket);
+
                   return;
                 },
                 child: const Text("Test PDF"))
