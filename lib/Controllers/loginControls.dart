@@ -71,7 +71,7 @@ class LoginController extends GetxController {
         KullaniciController controller = KullaniciController();
         controller.value = kullanici.toString();
         Get.put(LoginController()).kullanicigiris = kullanici;
-
+        
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('kullaniciAdi', kullanici.kullaniciAdi!);
         await prefs.setString('parola', kullanici.parola!);

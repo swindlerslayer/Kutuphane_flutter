@@ -123,7 +123,7 @@ class Login extends StatelessWidget {
                             String kullaniciAdi = kullaniciadicontroller.text;
                             String parola = sifrecontroller.text;
 
-                            await cont.loginUser(kullaniciAdi, parola);
+                            //  await cont.loginUser(kullaniciAdi, parola);
                             cont0._loginUser(kullaniciAdi, parola);
                             cont.loginstatus = true;
                           },

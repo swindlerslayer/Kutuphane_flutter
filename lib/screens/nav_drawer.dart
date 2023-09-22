@@ -10,6 +10,7 @@ import 'package:kutuphane_mobil_d/screens/loading.dart';
 import 'package:kutuphane_mobil_d/screens/ogrenciekran.dart';
 import 'package:kutuphane_mobil_d/screens/yayineviekran.dart';
 import 'package:kutuphane_mobil_d/screens/yazarekran.dart';
+import 'package:kutuphane_mobil_d/screens/yaziciekran.dart';
 import 'AnaEkran.dart';
 import 'kitapekran.dart';
 
@@ -140,16 +141,16 @@ class NavDrawer extends StatelessWidget {
                   ));
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.settings),
-          //   title: const Text('settings'),
-          //   onTap: () async {
-          //     Get.back();
-          //     Get.delete<KitapController>();
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('settings'),
+            onTap: () async {
+              Get.back();
+              Get.delete<KitapController>();
 
-          //     Get.to(() => const MyApp());
-          //   },
-          // ),
+              Get.to(() => const MyApp());
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.print),
             title: const Text('Yazici Sayfasi'),
